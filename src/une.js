@@ -1,18 +1,18 @@
-import './math-utils.js';
+import './utils.js';
 import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.min.js';
 
 /**
- * Mune
+ * Une
  *
- * @type {Mune}
+ * @type {Une}
  */
-const Mune = (() => {
+const Une = (() => {
   /**
    *
    * @param {{}=} data
    */   
    
-  class Mune{
+  class Une{
     /**
      * Initialises the object
      *
@@ -148,7 +148,7 @@ const Mune = (() => {
 
   }
 
-  return Mune;
+  return Une;
 })();
 
-export default Mune;
+export default Une;
