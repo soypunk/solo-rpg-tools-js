@@ -47,7 +47,7 @@ const Mythic = (() => {
     /**
      *
      * @param {string} notation
-     * @returns {DiceRoll}
+     * @returns {]}
      */
     fateCheck(chaosFactor){
     // create a new instance of the DiceRoller
@@ -55,6 +55,69 @@ const Mythic = (() => {
       var rolls = roller.rollMany(['2d10','1d10']);
       return rolls;
     }
+    
+	statCheck(attribute_value=null, stat_check_modifier="", round=true) {
+	  var roller = new DiceRoller();
+	  attribute_value = Number(attribute_value)
+	  var baseline_value = attribute_value
+	  var result = ''
+	  var rolls = roller.roll(`2d10${stat_check_modifier}`)
+	  var total = rolls.total
+
+	  if (total < 3) {
+		  var modifier = (75 / 100) * attribute_value;
+		  attribute_value = attribute_value - modifier;
+		  result = "Very Weak -75%";
+	  } else if (total < 5) {
+		  var modifier = (50 / 100) * attribute_value;
+		  attribute_value = attribute_value - modifier;
+		  result = 'Weak -50%';
+	  } else if (total < 7) {
+		  var modifier = (10 / 100) * attribute_value;
+		  attribute_value = attribute_value - modifier;
+		  result = 'Less -10%';
+	  } else if (total < 12) {
+		  result = 'Expected Baseline';
+	  } else if (total < 15) {
+		  var modifier = (10 / 100) * attribute_value;
+		  attribute_value = attribute_value + modifier;
+		  result = 'More +10%';
+	  } else if (total < 17) {
+		  var modifier = (50 / 100) * attribute_value;
+		  attribute_value = attribute_value + modifier;
+		  result = 'Strong +50%';
+	  } else if (total < 19) {
+		  var modifier = (100 / 100) * attribute_value;
+		  attribute_value = attribute_value + modifier;
+		  result = 'Very Strong +100%';
+	  } else if (total < 21) {
+		  result = 'PC Baseline';
+	  } else if (total < 23) {
+		  var modifier = (10 / 100) * attribute_value;
+		  attribute_value = attribute_value + modifier;
+		  result = 'PC More +10%';
+	  } else if (total < 25) {
+		  var modifier = (50 / 100) * attribute_value;
+		  attribute_value = attribute_value + modifier;
+		  result = 'PC Strong +50%';
+	  } else if (total < 27) {
+		  var modifier = (100 / 100) * attribute_value;
+		  attribute_value = attribute_value + modifier;
+		  result = 'PC Very Strong +100%';
+	  }
+
+	  if (baseline_value != Number(0) && baseline_value !== null) {
+	  	  if (round) {
+	  	  	attribute_value = Math.round(attribute_value);
+	  	  }
+		  result = result + ' (' + attribute_value + ')';
+	  }
+	  return {
+		  'rolls': rolls.output,
+		  'total': total,
+		  'result': result
+	  }
+	}    
 
   }
 

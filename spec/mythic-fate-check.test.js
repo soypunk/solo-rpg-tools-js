@@ -2,16 +2,16 @@
 ;(() => {
   'use strict';
 
-  // require the dice-roller library
+  // require the Mythic library
   const { Mythic } = require('../lib/umd/bundle.js');
 
-  describe('Fate Check', () => {
+  describe('Mythic Fate Check', () => {
   	const chaosFactors = [3, 4, 5, 6];  	
   	let mythic;
   	
     beforeEach(() => {
-      // create a new instance of the Mythic
-      console.log("Setting up Mythic")
+      // create a new instance of Mythic
+      console.log("\nSetting up Mythic\n")
       mythic = new Mythic({
       	'chaosFactor': 4
       });
