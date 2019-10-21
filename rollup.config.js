@@ -15,7 +15,7 @@ export default {
   output: {
     file: `lib/${format}/bundle${production ? '.min' : ''}.js`,
     format: format,
-    name: 'mythicGME',
+    name: 'soloRPGTools',
   },
   plugins: [
     // lint the files

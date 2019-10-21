@@ -1,3 +1,4 @@
+import './utils.js';
 import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.min.js';
 
 /**
@@ -92,7 +93,7 @@ const Mune = (() => {
       }      
     }
     
-    npcStartingAttitude(){
+    npcStartingAttitude(modifier=""){
       var roller = new DiceRoller();
       var result = {
       	1: 'Hostile',
@@ -101,10 +102,12 @@ const Mune = (() => {
 		4: 'Neutral',
 		5: 'Friendly',
 		6: 'Friendly'
-      }    	
-      var roll = roller.roll('1d6');
+      }
+      	  
+	  var roll = roller.roll(`1d6${modifier}`);
       
-      var result = result[roll.total];
+      var total = Number(roll.total).clamp(1,6);
+      var result = result[total];
       
       return {
       	'output': roll.output,

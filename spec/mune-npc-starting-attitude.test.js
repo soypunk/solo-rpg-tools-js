@@ -22,5 +22,41 @@
 	});
     
   });
+  
+  describe('Mune NPC Starting Attitude (negative)', () => {
+  	const likelihoods = [0, 1, 2];  	
+  	let mune;
+  	
+    beforeEach(() => {
+      // create a new instance of Mune
+      console.log("\nSetting up Mune\n")
+      mune = new Mune();
+    });
+    
+	it(`Mune NPC Starting Attitude (negative)`, function(){
+		let result = mune.npcStartingAttitude("-1");
+		console.log(result);
+		console.log("Mune NPC Starting Attitude: " + result.result);
+	});
+    
+  });  
+  
+  describe('Mune NPC Starting Attitude (positive)', () => {
+  	const likelihoods = [0, 1, 2];  	
+  	let mune;
+  	
+    beforeEach(() => {
+      // create a new instance of Mune
+      console.log("\nSetting up Mune\n")
+      mune = new Mune();
+    });
+    
+	it(`Mune NPC Starting Attitude (positive)`, function(){
+		let result = mune.npcStartingAttitude("+1");
+		console.log(result);
+		console.log("Mune NPC Starting Attitude: " + result.result);
+	});
+    
+  });    
 
 })();
