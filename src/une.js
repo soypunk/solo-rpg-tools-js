@@ -1,5 +1,7 @@
-import './utils.js';
 import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.min.js';
+import { Utils } from './utils.js';
+
+const utils = new Utils();
 
 /**
  * Une
@@ -21,130 +23,141 @@ const Une = (() => {
      */
     constructor(data){}
     
-    /**
-     *
-     * @param {string} notation
-     * @returns {DiceRoll}
-     */
-    oracle(likely=1){
-    // create a new instance of the DiceRoller
-      var roller = new DiceRoller();
-      var notation = '';
-      
-      var result = {
-      	1: 'No, and...',
-      	2: 'No.',
-		3: 'No, but...',
-		4: 'Yes, but...',
-		5: 'Yes.',
-		6: 'Yes, and...'
-      }
+	modifier() {
+		var UNE_NPC_MODIFIER_TABLE = ["superfluous","inept","pleasant","lethargic","jovial","addicted","banal","insensitive","defiant","shrewd","conformist","logical","titled","obnoxious","liberal","nefarious","subtle","inexperienced","insightful","compliant","sensible","reputable","prying","tactless","destitute","untrained","wicked","oblivious","fanatic","conniving","romantic","lazy","refined","plebeian","careful","unreasonable","pessimistic","indispensable","childish","alluring","skilled","solemn","scholarly","pious","defective","neglectful","habitual","conservative","uneducated","optimistic","lively","meek","uncouth","inconsiderate","affluent","forthright","helpful","willful","cultured","despondent","idealistic","unconcerned","indifferent","revolting","mindless","unsupportive","generous","fickle","curious","passionate","rational","docile","elderly","touchy","devoted","coarse","cheery","sinful","needy","established","foolish","pragmatic","naive","dignified","unseemly","cunning","serene","privileged","pushy","dependable","delightful","thoughtful","glum","kind","righteous","miserly","hopeless","likable","corrupt","confident"];
+		return UNE_NPC_MODIFIER_TABLE[Math.floor(Math.random() * UNE_NPC_MODIFIER_TABLE.length)];
+	}
+	
+	noun() {
+		var UNE_NPC_NOUN_TABLE = ["gypsy","missionary","villager","mediator","performer","witch","outcast","magus","crook","magister","merchant","mercenary","conscript","civilian","serf","expert","caretaker","worker","activist","brute","commoner","hermit","actor","hero","inquisitor","judge","orator","herald","champion","lord","ranger","chieftain","highwayman","cleric","villain","occultist","pioneer","fortune-hunter","slave","professor","reverend","burglar","governor","gunman","servant","thug","vicar","scrapper","clairvoyant","charmer","drifter","officer","monk","patriarch","globetrotter","journeyman","explorer","homemaker","shopkeeper","sniper","statesman","warden","recluse","crone","courtier","astrologer","outlaw","steward","adventurer","priest","duelist","adept","polymath","soldier","tradesman","jack-of-all-trades","bum","magician","entertainer","hitman","aristocrat","sorcerer","traveler","craftsman","wizard","preacher","laborer","vagrant","scientist","beggar","artisan","master","apprentice","ascetic","tradesman","rogue","ascendant","politician","superior","warrior"];
+		return UNE_NPC_NOUN_TABLE[Math.floor(Math.random() * UNE_NPC_NOUN_TABLE.length)];
+	}	
+	
+	power(power_level=1) {
+		var roller = new DiceRoller();
+		var power_table = {
+			1: {
+				 1: 'much weaker',
+				 3: 'slightly weaker',
+				11: 'comparable',
+				91: 'slightly stronger',
+				99: 'much stronger'
+			},
+			2: {
+				 1: 'much weaker',
+				 5: 'slightly weaker',
+				16: 'comparable',
+				86: 'slightly stronger',
+				97: 'much stronger'
+			},
+			3: {
+				 1: 'much weaker',
+				 6: 'slightly weaker',
+				21: 'comparable',
+				81: 'slightly stronger',
+				96: 'much stronger'
+			},						
+			4: {
+				 1: 'much weaker',
+				 9: 'slightly weaker',
+				26: 'comparable',
+				76: 'slightly stronger',
+				93: 'much stronger'
+			},
+			5: {
+				 1: 'much weaker',
+				13: 'slightly weaker',
+				31: 'comparable',
+				71: 'slightly stronger',
+				89: 'much stronger'
+			}
+		}
+		var rolls = roller.roll('1d100')
+		return power_table[power_level][utils.getClosestKey(power_table[power_level], rolls.total)]		
+	}
+	
+	motivations(){
+		var motivations = [];
 
- 	  if (likely > 1) {
-        notation = '2d6-L';
-      } else if (likely < 1) {
-      	notation = '2d6-H';
-      } else {
-      	notation = '1d6';
-      }
-            
-      var roll = roller.roll(notation);
-      
-      return {
-      	'output': roll.output,
-      	'total': roll.total,
-      	'result': result[roll.total]
-      }
-    }
-    
-    portent(){
-	  var action_one_table = ["Attainment","Starting","Neglect","Fight","Recruit","Triumph","Violate","Oppose","Malice","Communicate","Persecute","Increase","Decrease","Abandon","Gratify","Inquire","Antagonize","Move","Waste","Truce","Expose","Haggle","Imprison","Release","Celebrate","Develop","Travel","Block","Harm","Debase","Overindulge","Adjourn","Adversity","Kill","Disrupt","Usurp","Create","Betray","Agree","Abuse","Excitement","Activity","Assist","Care","Negligence","Passion","Work","Control","Attract","Failure","Pursue","Vengeance","Proceedings","Dispute","Punish","Guide","Transform","Overthrow","Oppress","Change","Release","Befriend","Judge","Desert","Dominate","Procrastinate","Praise","Separate","Take","Break","Heal","Delay","Stop","Lie","Return","Imitate","Struggle","Inform","Bestow","Postpone","Oppress","Inspect","Ambush","Spy","Attach","Carry","Open","Carelessness","Ruin","Extravagance","Trick","Arrive","Propose","Divide","Refuse","Mistrust","Deceive","Cruelty","Intolerance","Trust"]
-	  var action_two_table = ["Goals","Dreams","Environment","Outside","Inside","Reality","Allies","Enemies","Evil","Good", "Emotions","Opposition","War","Peace","Innocent","Love","Spirit","Intellect","Ideas","Joy", "Advice","Plot","Competition","Prison","Illness","Food","Attention","Success","Failure","Travel", "Jealousy","Dispute","Home","Investment","Suffering","Wishes","Tactics","Stalemate","Randomness", "Misfortune","Victory","Dispute","Riches","Normal","Technology","Hope","Magic","Illusions","Portals", "Danger","Weapons","Animals","Weather","Elements","Nature","Masses","Leadership","Fame","Anger", "Information","Messages","Energy","Balance","Tension","Friendship","Physical","Project","Pleasures", "Pain","Possessions","Benefits","Plans","Lies","Expectations","Legal","Bureaucracy","Business", "Path","News","Exterior","Death","Disruption","Power","Burden","Intrigues","Fears","Ambush","Rumor", "Wounds","Extravagance","Representative","Adversities","Opulence","Liberty","Military","Mundane", "Trials","Masses","Vehicle","Art"]
-	  var action_one = action_one_table[Math.floor(Math.random() * action_one_table.length)]
-	  var action_two = action_two_table[Math.floor(Math.random() * action_two_table.length)]
-	  return {
-		  'result': action_one + ' ' + action_two,
-	  }	  
-    }
-    
-    intervention(){
-      var roller = new DiceRoller();
-      var result = {
-      	1: 'New entity',
-      	2: 'Entity positive',
-		3: 'Entity negative',
-		4: 'Advance plot',
-		5: 'Regress plot',
-		6: 'Wild'
-      }
-      var roll = roller.roll('1d6');
-      
-      var result = result[roll.total];
-      
-      if(roll.total == 6) {
-      	var portentResult = this.portent();
-      	result = result + ": " + portentResult.result;
-      }
-      
-      return {
-      	'output': roll.output,
-      	'total': roll.total,
-      	'result': result
-      }      
-    }
-    
-    npcStartingAttitude(modifier=""){
-      var roller = new DiceRoller();
-      var result = {
-      	1: 'Hostile',
-      	2: 'Hostile',
-		3: 'Neutral',
-		4: 'Neutral',
-		5: 'Friendly',
-		6: 'Friendly'
-      }
-      	  
-	  var roll = roller.roll(`1d6${modifier}`);
-      
-      var total = Number(roll.total).clamp(1,6);
-      var result = result[total];
-      
-      return {
-      	'output': roll.output,
-      	'total': roll.total,
-      	'result': result
-      }  
-    }
-    
-    twene(){
-      var roller = new DiceRoller();
-      var result = {
-      	1: 'Increase simple element',
-      	2: 'Decrease simple element',
-		3: 'Add simple element',
-		4: 'Remove simple element',
-		5: 'Increase major element',
-		6: 'Decrease major element',
-		7: 'Add major element',
-		8: 'Remove major element',
-		9: 'Wild positive',
-	   10: 'Wild negative'				
-      }    	
-      var roll = roller.roll('1d10');
-      
-      var result = result[roll.total];
-      
-      if(roll.total == 9 || roll.total == 10) {
-        var portentResult = this.portent();
-      	result = result + ": " + portentResult.result;
-      }      
-      
-      return {
-      	'output': roll.output,
-      	'total': roll.total,
-      	'result': result
-      }
-    }
+		var UNE_NPC_MOTIVATION_VERB_TABLE = ["advise","shepherd","take","work","manage","obtain","abuse","discover","accompany","suppress","attempt","indulge","deter","offend","proclaim","spoil","chronicle","acquire","guide","operate","oppress","fulfill","damage","learn","access","interact","drive","publicize","persecute","refine","create","review","burden","communicate","compose","abduct","aid","advocate","process","undermine","promote","follow","implement","report","explain","conceive","advance","understand","develop","discourage","blight","guard","collaborate","steal","attend","progress","conquer","strive","suggest","detect","distress","hinder","complete","weaken","execute","possess","plunder","compel","achieve","maintain","record","construct","join","secure","realize","embrace","encourage","assist","inform","convey","contact","agonize","defile","patronize","rob","pursue","comprehend","produce","depress","establish","associate","administer","institute","determine","overthrow","prepare","relate","account","seek","support"];
+		var UNE_NPC_MOTIVATION_VERB_PLURAL_FORM_TABLE = ["advises","shepherds","takes","works","manages","obtains","abuses","discovers","accompanies","suppresses","attempts","indulges","deters","offends","proclaims","spoils","chronicles","acquires","guides","operates","oppresses","fulfills","damages","learns","accesses","interacts","drives","publicizes","persecutes","refines","creates","reviews","burdens","communicates","composes","abducts","aids","advocates","processes","undermines","promotes","follows","implements","reports","explains","conceives","advances","understands","develops","discourages","blights","guards","collaborates","steals","attends","progresses","conquers","strives","suggests","detects","distresses","hinders","completes","weakens","executes","possesses","plunders","compels","achieves","maintains","records","constructs","joins","secures","realizes","embraces","encourages","assists","informs","conveys","contacts","agonizes","defiles","patronizes","robs","pursues","comprehends","produces","depresses","establishes","associates","administers","institutes","determines","overthrows","prepares","relates","accounts","seeks","supports"];
+
+		var UNE_NPC_MOTIVATION_NOUN_TABLE = [];
+		var UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_ONE = ["wealth", "hardship", "affluence", "resources","prosperity", "poverty", "opulence","deprivation","success", "distress", "contraband", "music","literature", "technology", "alcohol","medicines","beauty", "strength", "intelligence", "force"];
+		var UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_TWO = ["the wealthy", "the populous", "enemies","the public", "religion", "the poor", "family","the elite", "academia", "the forsaken", "the law","the government", "the oppressed", "friends","criminals", "allies", "secret societies","the world", "military", "the church"];
+		var UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_THREE = ["dreams", "discretion", "love", "freedom","pain", "faith", "slavery", "enlightenment","racism", "sensuality", "dissonance", "peace","discrimination", "disbelief", "pleasure","hate","happiness", "servitude", "harmony", "justice"];
+		var UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_FOUR = ["gluttony", "lust", "envy", "greed", "laziness","wrath", "pride", "purity", "moderation","vigilance", "zeal", "composure", "charity","modesty", "atrocities", "cowardice", "narcissism","compassion","valor", "patience"];
+		var UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_FIVE = ["advice", "propaganda","science","knowledge","communications","lies","myths","riddles","stories", "legends", "industry", "new religions","progress", "animals", "ghosts", "magic","nature","old religions", "expertise", "spirits"];
+		UNE_NPC_MOTIVATION_NOUN_TABLE.push(...UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_ONE);
+		UNE_NPC_MOTIVATION_NOUN_TABLE.push(...UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_TWO);
+		UNE_NPC_MOTIVATION_NOUN_TABLE.push(...UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_THREE);
+		UNE_NPC_MOTIVATION_NOUN_TABLE.push(...UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_FOUR);
+		UNE_NPC_MOTIVATION_NOUN_TABLE.push(...UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_FIVE);
+
+		var motivation_columns = {
+			 1: UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_ONE,
+			21: UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_TWO,
+			41: UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_THREE,
+			61: UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_FOUR,
+			81: UNE_NPC_MOTIVATION_NOUN_TABLE_COLUMN_FIVE
+		}
+
+		var motivation_columns_used = [];
+
+		var motivation_verb_rolls = [
+			Math.floor(Math.random() * 100),
+			Math.floor(Math.random() * 100),
+			Math.floor(Math.random() * 100)
+		];
+
+		do {
+			// Math.floor(Math.random() * UNE_NPC_NOUN_TABLE.length)
+			var motivation_noun_roll = Math.floor(Math.random() * 100) + 1;
+			var ck = utils.getClosestKey(motivation_columns, motivation_noun_roll);
+			if (motivation_columns_used.includes(ck)) { continue; }
+			var motivation_noun = UNE_NPC_MOTIVATION_NOUN_TABLE[motivation_noun_roll];
+			var mv_roll = motivation_verb_rolls.pop();
+			var motivation_verb = UNE_NPC_MOTIVATION_VERB_PLURAL_FORM_TABLE[mv_roll];
+			motivations.push(motivation_verb + ' ' + motivation_noun);
+		} while (motivations.length < 3);
+
+		return motivations;
+	}	
+	
+	npc() {
+		var sentence = '';
+		var npc = {
+			'modifier': this.modifier(),
+			'noun': this.noun(),
+			'power': this.power(),
+			'motivations': this.motivations()
+		}
+		
+		if (['a','e','i','o','u'].indexOf(npc['modifier'][0].toLowerCase()) >= 0) {
+			sentence = 'An '
+		} else {
+			sentence = 'A '
+		}
+		
+		var power = '';
+		if (npc['power'] == 'comparable') {
+			power = npc['power'] + ' to the party'
+		} else {
+			power = npc['power'] + ' than the party'
+		}
+		
+		var motivations = utils.arrayToSentence(npc['motivations'])
+		
+		sentence = sentence + npc['modifier'] + ' ' + npc['noun']
+		sentence = sentence + ' ' + power + ' ' + motivations + '.'
+		
+		return {
+			'rolls': false,
+			'total': false,
+			'result': sentence,
+			'extras': npc
+		}
+	}	
 
   }
 
