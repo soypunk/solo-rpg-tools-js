@@ -124,12 +124,12 @@ const Une = (() => {
 		return motivations;
 	}	
 	
-	npc() {
+	npc(power_level=1) {
 		var sentence = '';
 		var npc = {
 			'modifier': this.modifier(),
 			'noun': this.noun(),
-			'power': this.power(),
+			'power': this.power(power_level),
 			'motivations': this.motivations()
 		}
 		
