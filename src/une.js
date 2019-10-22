@@ -34,7 +34,7 @@ const Une = (() => {
 	}	
 	
 	power(power_level=1) {
-		var roller = new DiceRoller();
+		var roller = new DiceRoller()
 		var power_table = {
 			1: {
 				 1: 'much weaker',
@@ -156,6 +156,274 @@ const Une = (() => {
 			'total': false,
 			'result': sentence,
 			'extras': npc
+		}
+	}
+	
+	get moods() {
+		return [
+			'loved',
+			'friendly',
+			'peaceful',
+			'neutral',
+			'distrustful',
+			'hostile',
+			'hated'
+		]
+	}
+	
+	mood(relationship='neutral') {
+		var mood_table = {
+			      'loved': {
+					 1: 'withdrawn',
+					 2: 'guarded',
+					 7: 'cautious',
+					17: 'neutral',
+					32: 'sociable',
+					71: 'helpful',
+					86: 'forthcoming'
+			    },
+			   'friendly': {
+					 1: 'withdrawn',
+					 3: 'guarded',
+					 9: 'cautious',
+					21: 'neutral',
+					41: 'sociable',
+					71: 'helpful',
+					90: 'forthcoming'
+			   },
+			   'peaceful': {
+					 1: 'withdrawn',
+					 4: 'guarded',
+					12: 'cautious',
+					26: 'neutral',
+					56: 'sociable',
+					71: 'helpful',
+					94: 'forthcoming'
+			   },
+				'neutral': {
+					 1: 'withdrawn',
+					 6: 'guarded',
+					16: 'cautious',
+					31: 'neutral',
+					71: 'sociable',
+					71: 'helpful',
+					96: 'forthcoming'
+				},
+			'distrustful': {
+					 1: 'withdrawn',
+					 8: 'guarded',
+					19: 'cautious',
+					47: 'neutral',
+					77: 'sociable',
+					71: 'helpful',
+					98: 'forthcoming'
+				},
+				'hostile': {
+					 1: 'withdrawn',
+					12: 'guarded',
+					25: 'cautious',
+					62: 'neutral',
+					82: 'sociable',
+					71: 'helpful',
+					99: 'forthcoming'
+				},
+				  'hated': {
+					 1: 'withdrawn',
+					16: 'guarded',
+					31: 'cautious',
+					70: 'neutral',
+					85: 'sociable',
+					71: 'helpful',
+				   100: 'forthcoming'
+				}		
+		}
+		var roller = new DiceRoller()
+		var mood_rolls = roller.roll('1d100')
+		var mood_result = mood_table[relationship][utils.getClosestKey(mood_table[relationship], mood_rolls.total)]
+		return {
+			'rolls': mood_rolls,
+			'total': mood_rolls.total,
+			'result': mood_result,
+			'extras': false
+		}
+	}
+	
+	get demeanors() {
+		return [
+			'scheming',
+			'insane',
+			'friendly',
+			'hostile',
+			'inquisitive',
+			'knowing',
+			'mysterious',
+			'prejudiced'
+		]
+	}	
+	
+	importance(demeanor='') {
+		var roller = new DiceRoller()
+		var demeanor_table = {
+			 1: 'scheming',
+			13: 'insane',
+			25: 'friendly',
+			37: 'hostile',
+			50: 'inquisitive',
+			63: 'knowing',
+			76: 'mysterious',
+			89: 'prejudiced'
+		}
+		if (demeanor == '') {			
+			var demeanor_rolls = roller.roll('1d100')
+			demeanor = demeanor_table[utils.getClosestKey(demeanor_table, demeanor_rolls.total)]
+		}
+	
+		var bearing_table = {
+			'scheming': {
+					 1: 'intent',
+					11: 'bargain',
+					21: 'means',
+					31: 'proposition',
+					41: 'plan',
+					51: 'compromise',
+					61: 'agenda',
+					71: 'arrangement',
+					81: 'negotiation',
+					91: 'plot'
+			},
+			'insane': {
+					 1: 'madness',
+					11: 'fear',
+					21: 'accident',
+					31: 'chaos',
+					41: 'idiocy',
+					51: 'illusion',
+					61: 'turmoil',
+					71: 'confusion',
+					81: 'façade',
+					91: 'bewilderment'
+			},
+			'friendly': {
+					 1: 'alliance',
+					11: 'comfort',
+					21: 'gratitude',
+					31: 'shelter',
+					41: 'happiness',
+					51: 'support',
+					61: 'promise',
+					71: 'delight',
+					81: 'aid',
+					91: 'celebration'
+			},
+			'hostile': {
+					 1: 'death',
+					11: 'capture',
+					21: 'judgment',
+					31: 'combat',
+					41: 'surrender',
+					51: 'rage',
+					61: 'resentment',
+					71: 'submission',
+					81: 'injury',
+					91: 'destruction'
+			},
+			'inquisitive': {
+					 1: 'questions',
+					11: 'investigation',
+					21: 'interest',
+					31: 'demand',
+					41: 'suspicion',
+					51: 'request',
+					61: 'curiosity',
+					71: 'skepticism',
+					81: 'command',
+					91: 'petition'
+			},
+			'knowing': {
+					 1: 'report',
+					11: 'effects',
+					21: 'examination',
+					31: 'records',
+					41: 'account',
+					51: 'news',
+					61: 'history',
+					71: 'telling',
+					81: 'discourse',
+					91: 'speech'
+			},
+			'mysterious': {
+					 1: 'rumor',
+					11: 'uncertainty',
+					21: 'secrets',
+					31: 'misdirection',
+					41: 'whispers',
+					51: 'lies',
+					61: 'shadows',
+					71: 'enigma',
+					81: 'obscurity',
+					91: 'conundrum'
+			},
+			'prejudiced': {
+					 1: 'reputation',
+					11: 'doubt',
+					21: 'bias',
+					31: 'dislike',
+					41: 'partiality',
+					51: 'belief',
+					61: 'view',
+					71: 'discrimination',
+					81: 'assessment',
+					91: 'difference'
+			}
+		}
+		var bearing_rolls = roller.roll('1d100')
+		var bearing = bearing_table[demeanor][utils.getClosestKey(bearing_table[demeanor], bearing_rolls.total)]
+		
+		var focus_table = {
+			 1: 'current scene',
+			 4: 'last story',
+			 7: 'equipment',
+			10: 'parents',
+			13: 'history',
+			16: 'retainers',
+			19: 'wealth',
+			22: 'relics',
+			25: 'last action',
+			28: 'skills',
+			31: 'superiors',
+			34: 'fame',
+			37: 'campaign',
+			40: 'future action',
+			43: 'friends',
+			46: 'allies',
+			49: 'last scene',
+			52: 'contacts',
+			55: 'flaws',
+			58: 'antagonist',
+			61: 'rewards',
+			64: 'experience',
+			67: 'knowledge',
+			70: 'recent scene',
+			73: 'community',
+			76: 'treasure',
+			79: 'the character',
+			82: 'current story',
+			85: 'family',
+			88: 'power',
+			91: 'weapons',
+			94: 'previous scene',
+			97: 'enemy'
+		}
+		var focus_rolls = roller.roll('1d100')
+		var focus = focus_table[utils.getClosestKey(focus_table, focus_rolls.total)]
+		
+		var result = `The ${demeanor} NPC speaks of ${bearing} regarding (the PC’s) ${focus}.`
+		
+		return {
+			'rolls': false,
+			'total': false,
+			'result': result,
+			'extras': false
 		}
 	}	
 
