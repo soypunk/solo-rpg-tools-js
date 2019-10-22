@@ -25,12 +25,14 @@ export default {
     // handle commonJS modules
     commonjs(),
     !es6 ? babel({
+      presets: ["@babel/preset-env"],
+      plugins: ["@babel/plugin-transform-spread"],
       exclude: 'node_modules/**',
     }) : null,
     // minify for production
     production ? terser() : null,
     banner({
       file: path.join(__dirname, 'banner.txt')
-    }),
+    })  
   ],
 };
