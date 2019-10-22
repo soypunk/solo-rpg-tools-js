@@ -3,6 +3,10 @@ import { Utils } from './utils.js';
 
 const utils = new Utils();
 
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 /**
  * Poi
  *
@@ -670,26 +674,26 @@ const Poi = (() => {
 		var habit = utils.getRandom(habit_table)[0]
 		
 		var result = `Person of Interest:
-## Motive	 
+*Motive*  
 ${motive_type.capitalize()}, ${motive_type_definition}
 ${motive}
 
-## Capability
+*Capability*  
 ${capability.capitalize()}, ${capability_definition} (Source: ${capability_source})
 
-## Opportunity
+*Opportunity*  
 ${opportunity}
 
-## Connection
+*Connection*  
 ${connection}
 
-## Visual Trait
+*Visual Trait*  
 ${trait}
 
-## Initial Interaction Disposition
+*Initial Interaction Disposition*  
 ${interaction}
 
-## General Interaction Habits
+*General Interaction Habits*  
 ${habit}
 `
 		
@@ -700,7 +704,7 @@ ${habit}
 			'extras': false
 		}
     }
-    
+        
     dealOffered() {
 		var table = [
 			'As an act of generosity by the NPC',
@@ -783,6 +787,16 @@ ${habit}
 			'result': result,
 			'extras': false
 		}    
+    }
+    
+    get locations() {
+    	return [
+    		'Rural',
+    		'Slum',
+    		'Starport',    		
+    		'Station',    		
+    		'Urban'    		
+    	]
     }
     
     locationStarport() {
