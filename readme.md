@@ -12,7 +12,7 @@ I need to document all the various tools. I've not used these on a web page or w
 
 Generally though, you can do something like this:
 
-    require('Utilities/solo-rpg-tools.min.js');
+    require('lib/umd/bundle.min.js');
 
 	// setup the basics
 	var mythic = new soloRPGTools.Mythic();
