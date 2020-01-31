@@ -1,5 +1,5 @@
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
 const { terser } = require('rollup-plugin-terser');
 const { eslint } = require('rollup-plugin-eslint');
 import babel from 'rollup-plugin-babel';

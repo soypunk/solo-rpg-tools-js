@@ -1,4 +1,4 @@
-import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.min.js';
+import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.js';
 import { Utils } from './utils.js';
 
 const utils = new Utils();

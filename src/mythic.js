@@ -1,4 +1,4 @@
-import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.min.js'
+import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.js';
 import { Utils } from './utils.js'
 
 const utils = new Utils()
@@ -76,7 +76,7 @@ const Mythic = (() => {
 	fateCheck(chaos_factor=4, probability=0, yes_favors_player=true) {
 		var result = ''
 		var roller = new DiceRoller()
-		var rolls = roller.rollMany(['2d10','1d10'])
+		var rolls = roller.roll('2d10','1d10')
 		var favorability = 0
 		
 		if (chaos_factor == 3) {
