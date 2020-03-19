@@ -562,6 +562,18 @@ const ZozerSolo = (() => {
       var roller = new DiceRoller();
       var rolls = roller.roll('2d6'+mod);
       var result = ship_encounter_major_route_table[utils.getClosestKey(ship_encounter_major_route_table, rolls.total)];
+      
+      if (result == "Scout") {
+         var ship_result = this.scout_ship_encount();
+      } else if (result == "Special") {
+         var ship_result = this.special_ship_encount();
+      } else if (result == "Small Transport") {
+         var ship_result = this.small_transport_ship_encount();
+      } else if (result == "Large Transport") {
+         var ship_result = this.large_transport_ship_encount();
+      } else if (result == "Military") {
+         var ship_result = this.military_ship_encount();
+      }
 
       return {
          'rolls': rolls,
@@ -590,6 +602,18 @@ const ZozerSolo = (() => {
          12: "Industrial",
          13: "Large Transport"
       }
+   
+      if (result == "Frontier") {
+         var ship_result = this.frontier_ship_encount();      
+      } else if (result == "Industrial") {      
+         var ship_result = this.industrial_ship_encount();
+      } else if (result == "Small Transport") {
+         var ship_result = this.small_transport_ship_encount();      
+      } else if (result == "Large Transport") {
+         var ship_result = this.large_transport_ship_encount();      
+      } else if (result == "Military") {
+         var ship_result = this.military_ship_encount();      
+      }   
    
       var roller = new DiceRoller();
       var rolls = roller.roll('2d6'+mod);
