@@ -562,17 +562,29 @@ const ZozerSolo = (() => {
       var roller = new DiceRoller();
       var rolls = roller.roll('2d6'+mod);
       var result = ship_encounter_major_route_table[utils.getClosestKey(ship_encounter_major_route_table, rolls.total)];
+
+      var ship_result = false;
+      var ship_reaction = false; 
       
       if (result == "Scout") {
-         var ship_result = this.scout_ship_encount();
+         ship_result = this.scout_ship_encounter();
+         ship_reaction = this.scout_reaction();
       } else if (result == "Special") {
-         var ship_result = this.special_ship_encount();
+         ship_result = this.special_ship_encounter();
+         ship_reaction = this.transport_reaction();
       } else if (result == "Small Transport") {
-         var ship_result = this.small_transport_ship_encount();
+         ship_result = this.small_transport_ship_encounter();
+         ship_reaction = this.transport_reaction();
       } else if (result == "Large Transport") {
-         var ship_result = this.large_transport_ship_encount();
+         ship_result = this.large_transport_ship_encounter();
+         ship_reaction = this.transport_reaction();
       } else if (result == "Military") {
-         var ship_result = this.military_ship_encount();
+         ship_result = this.military_ship_encounter();
+         ship_reaction = this.military_reaction();
+      }
+      
+      if (ship_result !== false) {
+      	result = result + " - " + ship_result + "\n" + ship_reaction;
       }
 
       return {
@@ -603,21 +615,42 @@ const ZozerSolo = (() => {
          13: "Large Transport"
       }
    
-      if (result == "Frontier") {
-         var ship_result = this.frontier_ship_encount();      
-      } else if (result == "Industrial") {      
-         var ship_result = this.industrial_ship_encount();
-      } else if (result == "Small Transport") {
-         var ship_result = this.small_transport_ship_encount();      
-      } else if (result == "Large Transport") {
-         var ship_result = this.large_transport_ship_encount();      
-      } else if (result == "Military") {
-         var ship_result = this.military_ship_encount();      
-      }   
-   
       var roller = new DiceRoller();
       var rolls = roller.roll('2d6'+mod);
       var result = ship_encounter_frontier_route_table[utils.getClosestKey(ship_encounter_frontier_route_table, rolls.total)];
+
+      var ship_result = false;
+      var ship_reaction = false; 
+   
+	  if (result == "Frontier") {
+		ship_result = this.frontier_ship_encounter();
+        var military_types = ['Patrol','Escort'];
+        var scout_types = ['Scout'];
+         
+		if (military_types.some(v => ship_result.includes(v))) {
+			ship_reaction = this.military_reaction();
+		} else if (scout_types.some(v => ship_result.includes(v))) {
+			ship_reaction = this.scout_reaction();
+		} else {
+			ship_reaction = this.frontier_reaction();
+		} 
+      } else if (result == "Industrial") {      
+         ship_result = this.industrial_ship_encounter();
+         ship_reaction = this.industrial_reaction();
+      } else if (result == "Small Transport") {
+         ship_result = this.small_transport_ship_encounter();
+         ship_reaction = this.transport_reaction();
+      } else if (result == "Large Transport") {
+         ship_result = this.large_transport_ship_encounter(); 
+         ship_reaction = this.transport_reaction();     
+      } else if (result == "Military") {
+         ship_result = this.military_ship_encounter();
+         ship_reaction = this.military_reaction();
+      }
+      
+      if (ship_result !== false) {
+      	result = result + " - " + ship_result + "\n" + ship_reaction;
+      }
 
       return {
          'rolls': rolls,
@@ -812,6 +845,854 @@ const ZozerSolo = (() => {
          'extras': false
       }
    }
+   
+   frontier_reaction() {
+      var frontier_reaction_table = {
+         3: "Fugitives from imperial law, they need a new ship...",
+         6: "Debris and wreckage from the rolled ship",
+         8: "Radio silence, they fear pirates",
+        10: "Ignore you, but polite",
+        11: "Asks for info on world you’ve just left",
+        13: "Asks for help with a repair",
+        14: "Crew are hostile and suspicious, warning you away",
+        16: "Medical emergency, they have no doctor or supplies"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = frontier_reaction_table[utils.getClosestKey(frontier_reaction_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   military_reaction() {
+      var military_reaction_table = {
+         3: "Warn you of an unidentified ship in this system",
+         7: "Need some civilian spare parts from your ship",
+         8: "Asking for info on world just left",
+         9: "Ignore you, will not answer comms",
+        10: "Ignore you, but are polite",
+        12: "Asking for sensor logs",
+        13: "Security Checks",
+        14: "Boarding",
+        15: "Warn you of piracy in this system",
+        17: "One of your crew is wanted, see security checks"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = military_reaction_table[utils.getClosestKey(military_reaction_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   transport_reaction() {
+      var transport_reaction_table = {
+         3: "Thinks you are a pirate, based on rumour",
+         6: "Transport matches a ship that went missing last year",
+         8: "Comms are out, radio silence",
+         9: "Medical emergency, their doctor is ill!",
+        10: "Ignore you, but polite",
+        12: "Asks for info on world you’ve just left",
+        13: "Requires help with repair, please!",
+        14: "Require assistance with violent passenger/crewman",
+        16: "Cargo in space from that ship. But no ship.",
+        17: "Hijacked vessel, unusual trajectory/call signs"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = transport_reaction_table[utils.getClosestKey(transport_reaction_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   industrial_reaction() {
+      var industrial_reaction_table = {
+         3: "Thinks you are a pirate, based on rumour",
+         6: "Thinks you are from rival company, warns you away",
+         8: "Comms are out, radio silence",
+         9: "Medical emergency, their doctor is ill!",
+        10: "Ignore you, but polite",
+        12: "Asks for info on world you’ve just left",
+        13: "Requires help with repair, please!",
+        14: "Require assistance with violent crewman",
+        16: "Refined ore in space from that ship. But no ship.",
+        17: "Hijacked vessel, unusual trajectory/call signs"
+      }
+            
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = industrial_reaction_table[utils.getClosestKey(industrial_reaction_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   scout_reaction() {
+      var scout_reaction_table = {
+         3: "Scout in distress; it has returned from a failed mission",
+         6: "Warn you away from a gravitational disturbance",
+         8: "On way to map a moon",
+         9: "Mapping gravitation anomalies",
+        10: "Launching a nav beacon",
+        11: "Asks for info on world you’ve just left",
+        12: "Friendly hail, ask about world you have come from",
+        13: "Ignore you, but are polite",
+        14: "Ask for your sensor logs",
+        15: "Mapping jump wakes, stay clear",
+        16: "Need a civilian spare part",
+        17: "Looking for a missing X-Boat"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = scout_reaction_table[utils.getClosestKey(scout_reaction_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   starting_situation() {
+   /*
+2D,Starting Situation
+2-3,Hijack. The free trader your PCs are travelling on has been hijacked by three of the
+"",passengers (possibly with help from a crew-member – it is still unclear). One hijacker
+"","has barricaded himself into the engineering section, the others are on the bridge. All"
+"",the crewmembers (including the passengers – the PCs) have been locked inside a
+"",single stateroom. The crew have no combat experience and are fearful of being
+"",spaced. What do you do?
+4,"Manslaughter. It was a simple job, provide protection and company for a rich"
+"",traveller to this backwater world. But he’s gotten into a fight that wasn’t his fault and
+"","accidentally killed someone. Now the heat is on, be it the cops, a local gang or"
+"",whatever. Get to the starport and off-world – fast.
+5,Pirates. The free trader your PCs are travelling on has been intercepted by a scout
+"",ship that demands to dock otherwise it will launch a full salvo of missiles. Travelling
+"","only between ‘safe’ systems, the free trader is unarmed. The crew have no combat"
+"",experience and are about to be boarded in 15 minutes. What do you do?
+5,AWOL. The PCs are being paid to get a military officer to the starport where a ship is
+"","waiting to take him off-world. He may be a defector, a spy, a coward or simply be"
+"","disillusioned. The military of the planet do not intend him to leave, however."
+6,"The Package. Paid to carry a small package off-world, the PCs leave the patron’s"
+"",premises just before gunmen arrive to kill him. Now they want the package and will kill
+"",anyone who has touched it. Get off world quickly!
+7,Stuck. There is an emergency on planet that the PCs are caught up in. Travel is
+"",curtailed and if they don’t get to the starport in 3 days the last transports will leave and
+"",there will be no way off planet for weeks or months.
+8-9,Arrested. One of the PCs has been held by security at the hotel for some (real or
+"",imagined) past crime until the police arrive. The hotel security officer has no idea the
+"",suspect has friends in the building ...
+10-11,"Missing. One of the PCs (choose or determine randomly) is missing, despite the"
+"",group having booked passage on a starliner leaving in three days’ time. The reason
+"",for the disappearance should be linked to one of the PC’s hooks if possible.
+12,Low Berth. Low berth pods open automatically and the PCs get out. They are on a
+"","ship, but there seems to be no crew onboard. What type of ship is it? Where are"
+"","they? What happened? The SOLO Player might decide between alien infestation,"
+"","piracy or hijacking, or some strange jump drive anomaly."
+   */
+   }
+   
+   patron() {
+   /*
+D66,Patron,D66,Patron
+11,Naval Officer,41,Corporate Official
+12,Reporter,42,Scientist
+13,Hunter,43,Spy
+14,Soldier,44,Broker
+15,Diplomat,45,Technician
+16,Army Officer,46,Financier
+21,Noble,51,Government Official
+22,Marine Officer,52,Scout Pilot
+23,Belter,53,Doctor
+24,Bureaucrat,54,Corporate Boss
+25,Starport Official,55,Local Military Officer
+26,Peasant/Farmer,56,Pilot
+31,Assassin,61,Smuggler
+32,Avenger,62,Researcher
+33,Merchant,63,Engineer
+34,Rogue,64,Mercenary
+35,Professor,65,Police Officer
+36,Gangster,66,Ship-Owner
+*/
+   }
+   
+   mission() {
+   /*   
+D66,Mission,D66,Mission
+11,Explore a moon or asteroid,41,Protect someone
+12,Explore ruins,42,Assist someone
+13,Salvage,43,Rescue someone
+14,Survey area,44,Join Expedition
+15,Capture animal,45,Infiltrate Group
+16,Hijack vehicle or ship,46,Find Missing Ship
+21,Assassination,51,Find Missing Goods
+22,Theft,52,Join Expedition
+23,Blackmail,53,Provide Protection on a Journey
+24,Burglary,54,Trick Someone
+25,Blackmail,55,Bribe
+26,Discredit,56,Sabotage
+31,Investigate Theft,61,Find Missing Person
+32,Investigate Murder,62,Transport Special Item
+33,Investigate Mystery,63,Transport Illegal Goods
+34,Investigate Accident,64,Transport Data
+35,Research a target,65,Transport Dangerous Cargo
+36,Spy on a Location,66,Transport Person
+*/
+   }
+   
+   mission_target() {
+   	/*
+D66,Mission Target,D66,Mission Target
+11,Yacht,41,Remote Base
+12,Free Trader,42,Orbital Station
+13,Security Ship,43,Starport
+14,Naval Craft,44,City Building
+15,Cargo Ship,45,Underground Vault or Bunker
+16,Orbital Station,46,Nightclub
+21,Artwork,51,Crime Gang
+22,Chemical Canister,52,Corporation
+23,Data Chip,53,Intelligence Agency
+24,Money or Bonds,54,Media Corporation
+25,Prototype,55,Planetary Government
+26,Weapon,56,Local Police
+31-,Illegal Cargo,61-,Roll on Patron
+33,,63,
+34-,Cargo,64-,Roll on Patron
+36,,66,
+*/
+   }
+   
+   onboard_event_passenger() {
+   /*
+d66,Encounter
+11,Hijack or piracy or both
+12,There is an incident amongst the crew and they turn to the PC for help.
+13,"What the problem is will probably revolve one of the PCs skills, status or situation."
+14,"An accident aboard ship requires repair, may involve an injury or some"
+"",inconvenience. See Ship Malfunction Table.
+15,Fire in the cargo area – an electrical fault in the cargo bed rollers.
+16,Demanding passenger is a friend of destination’s port manager.
+21,Passenger is an inspector for the government who is authorized a tour of the ship.
+22,"Crewman becomes sullen, uncommunicative and makes mistakes, but will not discuss."
+23,"Recycling systems require maintenance, it’s a messy job."
+24,"Find out some useful info from a passenger about the destination world, use it to either get half"
+"","price living costs at the starport, a +1 on any Admin roll, or re-roll a cargo result during a cargo"
+"",search. Make a Contact.
+25,"Crewman’s or passenger’s fresher is broken , the stateroom is flooded!"
+26,"Jump field misaligning, requires spot retuning of the drive, very dangerous."
+31,Cargo containers have shifted due to grav compensator malfunction. Need re-setting.
+32,There's one obnoxious passenger people try to avoid. This trip will be miserable  unless
+"","someone deals with him, which skill will work with him/her? (1) Streetwise, (2) Carouse, (3)"
+"","Admin, (4) Bribery, (5) Leader, 6) Social Standing. Liaison is always appropriate. Make a"
+"",suitable roll to deal with this person.
+33,"Sensors are producing false readings. Or are they? If so, why?"
+34,Cargo container explosion and chemical fire.
+35,Two passengers have a blazing and unresolved argument. It needs resolving!
+36,"A passenger shows too much interest in another, and attempts entry into his/her cabin."
+41,"Typical trip, with highs and lows."
+42,"Fuel pump fails – reactor put on stand-by, something ingested during fuel scooping?"
+43,"Power failure – several tripped fuses, shuts down power in parts of engineering."
+44,"Meet one of your contacts who needs your help. Is it financial, legal,"
+"",administrative or personal?
+45,Passenger declares he has seen a gun in another passenger’s stateroom.
+46,A passenger falls mysteriously ill.
+51,Security patrol ship makes contact in outer system or close to main world. (1) checks registry;
+"","moves on; (2) asks for passenger lists, is looking for a fugitive; (3) asks for cargo lists, is"
+"","checking for customs irregularities; (4-5) will board, spend 1-3 hours conducting a routine"
+"",search then move on. Roll 5+ for PC to avoid some cargo or personal irregularity which leads
+"",to his or her put under scrutiny/fined/delayed or detained; (6) the starship is breaking the law
+"",and will be accompanied to the starport where it will be impounded and investigated. Can the
+"","PC help with Bribery or Admin or other skills in preventing this?? If not, everyone is detained at"
+"","the starport for 1-3 weeks, cargoes included. On a second roll of 10+ the panicked starship"
+"",captain makes a run for it and the patrol ship will be forced to fire on the fugitive vessel.
+52,Crewman has an affair with a passenger.
+53,Gambling passenger takes everyone’s money and causes bother ...
+54,Meet a fellow traveller as a potential Contact. Roll on the reaction table to make their
+"","acquaintance, roll on Patron table to determine their identity. When met again, roll reaction"
+"","result or less for assistance, cheap cargo, help in dealing with a problem, etc."
+55,Captain runs a crew training session: see Starship Training Table.
+56,Theft from a passenger stateroom or luggage area.
+61,"Captain is incapacitated, roll for a simultaneous event/crisis that needs resolving!"
+62,Engineering problem requires all crew to help replace a huge component. See Ship
+"",Malfunction Table
+63,"Crewman has a crisis of doubt, failure of duty. He/she shuts down."
+64,"One of the stewards is: (1) rude, (2) corrupt, (3) missing, (4) exploitative, (5) thieving, (6) under"
+"",pressure from a passenger.
+65,"Passenger is extremely reclusive, will not come out of his cabin."
+66,"Mysterious death of passenger or crew, was it murder?"
+   */
+   }
+   
+   onboard_event_nonpassenger() {
+   /*
+D66,Encounter
+11,Piracy or hijack.
+12,Ship Malfunction. Check table.
+13,"What the problem is will probably revolve one of the PCs skills, status or situation."
+14,"An accident aboard ship requires repair, may involve an injury or some"
+"",inconvenience. See Ship Malfunction Table.
+15,Fire in the cargo area – an electrical fault in the cargo bed rollers.
+16,"Crewman is very ill, but the reason is a little mysterious."
+21,Ship Malfunction. Check table.
+22,"Crewman becomes sullen, uncommunicative and makes mistakes, but will not discuss."
+23,"Recycling systems require maintenance, it’s a messy job."
+24,"Typical trip, with highs and lows."
+25,"Crewman’s fresher is broken , the stateroom is flooded!"
+26,"Jump field misaligning, requires spot retuning of the drive, very dangerous."
+31,Cargo containers have shifted due to grav compensator malfunction. Need re-setting.
+32,"Typical trip, with highs and lows."
+33,"Sensors are producing false readings. Or are they? If so, why?"
+34,Cargo container explosion and chemical fire.
+35,Two crewmen have a blazing and unresolved argument. It needs resolving!
+36,"Typical trip, with highs and lows."
+41,"Typical trip, with highs and lows."
+42,"Fuel pump fails – reactor put on stand-by, something ingested during fuel scooping?"
+43,"Power failure – several tripped fuses, shuts down power in parts of engineering."
+44,Strange readings on the bridge suggest there might be a stowaway.
+45,The ship computer is acting oddly. Why? Is it malfunctioning? Has it been reprogrammed?
+46,It appears you have a cargo on-board – that doesn’t belong to you ...
+51,Security patrol ship makes contact in outer system or close to main world. (1) checks registry;
+"","moves on; (2) asks for passenger lists, is looking for a fugitive; (3) asks for cargo lists, is"
+"","checking for customs irregularities; (4-5) will board, spend 1-3 hours conducting a routine"
+"",search then move on. Roll 5+ for PC to avoid some cargo or personal irregularity which leads
+"",to his or her put under scrutiny/fined/delayed or detained; (6) the starship is breaking the law
+"",and will be accompanied to the starport where it will be impounded and investigated. Can the
+"","PC help with Bribery or Admin or other skills in preventing this?? If not, everyone is detained"
+"","at the starport for 1-3 weeks, cargoes included. On a second roll of 10+ the panicked starship"
+"",captain makes a run for it and the patrol ship will be forced to fire on the fugitive vessel.
+52,Ship Malfunction. Check table.
+53,Shipboard romance.
+54,Holiday or commemoration celebration.
+55,Captain runs a crew training session: see Starship Training Table.
+56,Crew entertainment evening.
+61,"Captain is incapacitated, roll for a simultaneous event/crisis that needs resolving!"
+62,Engineering problem requires all crew to help replace a huge component.
+63,"Crewman has a crisis of doubt, failure of duty. He/she shuts down."
+64,The captain shuts him or herself off. It is quite mysterious.
+65,Captain runs a crew training session: see Starship Training Table.
+66,Ship Malfunction. Check table.   
+   */
+   }
+   
+   ship_malfunction(){
+   /*
+D66,Ship Malfunction
+11,Airlock malfunctions
+12,Grav Plates
+13,Water Recycling
+14,Computer Glitch
+15,Turret Mechanisms
+16,Flooding
+21,Fusion overheat
+22,Plasma leak
+23,Air Recycling
+24,Ship’s Boat drive
+25,Manoeuvre drive
+26,Jump Drive calibration
+31,Security lock-outs
+32,Long range sensor ghosting
+33,Sensor hardware failure
+34,Hull stresses
+35,Micrometeoroid strike
+36,Heating/Life support problems
+41,Jump Drive trigger
+42,Jump field generator
+43,Fuel pump problem
+44,Gas build-up
+45,Radiation leak
+46,Fusion plant sensor failure
+51,Plasma coil replacement
+52,Computer core failures
+53,Cockpit display glitch
+54,Inertial compensators failing
+55,Missile targeting errors
+56,Missile loader jamming
+61,Laser weapon over-heat
+62,Bay-door jamming
+63,Coolant leak
+64,Undercarriage stress weakness
+65,Kitchen malfunction
+66,Waste disposal problem   
+   */
+   }
+   
+   training_duties() {
+   /*
+2D,Training Duties,2D,Training Duties
+2,Nav Training,8,Power fluctuation
+3,Fuel-Leak,9,Hijack
+4,Depressurization,10,Computer Malfunction
+5,Seminar,11,Zero-G Training
+6,Fire,12,Combat
+7,Individual training,,   
+   */
+   }
+   
+   world_encounter_travellers(){
+   /*
+Travellers 
+d66,World Encounter
+11,Crime. Roll UNDER law level to avoid a random non-lethal crime costing you Cr200 x 1d6.
+12,Renowned restaurant
+13,Sudden weather change may affect travel plans
+14,"Political coup or revolution causes chaos, for travel, security and trade."
+15,"Sudden restriction on movement, unless you can find a way to avoid it"
+16,A Patron wants to hire your services.
+21,Invited to a posh function
+22,Ruined structure holds your interest
+23,Discover a landed spacecraft. Why is it there?
+24,Interesting or potentially dangerous encounter with some local wildlife.
+25,Overhear some scandal about a local big-shot (politician/gangster/corporate/celebrity)
+26,"Holiday or festival celebrations slow things down, but become an enjoyable diversion."
+31,Job opportunity comes up that will last up to three days and pay Cr8000 plus 1d6 x Cr1000.
+32,"The local community is either not what it seems, or very welcoming"
+33,"Discover a wonderful little-known retreat, a place to relax - or to hide."
+34,Security check. Roll the Law Level or less to avoid a complete check of papers and a search of
+"",belongings and vehicle.
+35,Patron offers you a short-term courier job to your next destination.
+36,Transport delays
+41,Meet a fellow traveller as a potential Contact. Roll on reaction table to make their acquaintance.
+"","Record the reaction result. Require a result of 8+ ('interested') for a friendship. When met again,"
+"",roll reaction result or less for assistance. Roll on Patron table to determine their identity.
+42,Crime. Roll UNDER law level to avoid a random non-lethal crime costing you Cr200 x 1d6.
+43,Harassed by a group of locals. Roll on Interesting Individuals Table.
+44,"Learn a secret on planet, political, corporate, etc. you can profit from this, if you decide. If so, roll"
+"","Streetwise to get away with it and gain Cr10-60,000, fail and face being arrested, pursued or"
+"",shipped off planet.
+45,Pick up a rumour of some missing fortune out in the wilderness.
+46,"You are offered the chance to make extra money at a job lasting one day and paying Cr1000, or"
+"",a favour.
+51,"Find yourself travelling with a group of interesting locals, gain useful information about the world."
+52,"Local crisis; bush-fire, earthquake, hurricane, rioting."
+53,Investment opportunity arises on some local planetary business venture; you may gamble a
+"","multiple of Cr1,000 up to Cr10,000. Roll Gambler 8+ or Broker 8+ and if you succeed you gain"
+"","half-again in profit, if you fail you lose your stake. The result occurs by the end of the week."
+54,Interesting Individuals (Colourful Locals) make life hell for you.
+55,You are offered the chance to take part in a risky but rewarding venture by a Patron.
+56,"Introduced to local entertainments, spending hundreds of credits (Cr100 x 1d6) but gaining a"
+"",friend and memories of a good time!
+61,Job opportunity comes up that will last up to three days and pay Cr1000 plus 1d6 x Cr100. Roll
+"",on the patron tables.
+62,"You get ill. Roll 1d6, on 1-3 it is some bizarre local disease requiring an expensive local doctor"
+"","who will cost you Cr600, otherwise you are bedridden each day till you successfully roll End 10+"
+63,"You are approached to smuggle illegal goods off-planet. If you accept, roll Bribery 8+ to"
+"",succeed. There may be other complications. If you refuse you may make an enemy of the
+"",smuggler.
+64,Meet a local as a potential Contact. Record the reaction result. Require a result of 8+
+"","('interested') for a friendship. When met again, roll reaction result or less for assistance. Roll on"
+"",Patron table to determine their identity.
+65,"Embroiled in legal trouble. A Lawyer with Admin 8+ roll will sort out the problem quickly,"
+"",otherwise you may have to resort to bribery or other methods to get out of the situation.
+66,"Another off-worlder befriends you, they are in a spot of bother it soon transpires, would you"
+"","help? There may be payment, or a favour."
+
+   */
+   }
+   
+   world_encounter_traders(){
+   /*
+Traders
+D66,World Encounter
+11,Crime. Roll UNDER law level to avoid a random non-lethal crime costing you Cr200 x 1D6.
+12,Renowned restaurant
+13,Sudden weather change may affect travel plans
+14,"Trade agents of a large megacorporation are on planet, making normal trade difficult."
+15,"Sudden restriction on movement, unless you can find a way to avoid it"
+16,Another trader is after your preferred lot of trade goods.
+21,Invited to a posh function
+22,Ruined structure holds your interest
+23,Discover a landed spacecraft. Why is it there?
+24,Interesting or potentially dangerous encounter with some local wildlife.
+25,Local situation and manner of seller make you suspicious and consider rethinking your
+"",purchase.
+26,"Holiday or festival celebrations slow things down, but become an enjoyable diversion."
+31,Seller involved in legal trouble and you risk getting embroiled
+32,"Community is either not what it seems, or very welcoming"
+33,"Discover a wonderful little-known retreat, a place to relax - or to hide."
+34,Security check. Roll the Law Level or less to avoid a complete check of papers and a search of
+"",belongings and vehicle.
+35,Patron offers you a short-term courier job to your next destination.
+36,Transport delays
+41,Hard times on the planet mean few trade goods for purchase
+42,Valuable trade goods are on offer at a great deal. Why?
+43,Harassed by a group of locals
+44,"Learn a secret on planet, political, corporate, etc. you can profit from this, if you decide. If so, roll"
+"","Streetwise to get away with it and gain Cr10-60,000, fail and face being arrested, pursued or"
+"",shipped off planet.
+45,You need to travel to a restricted area and travel incognito with a forged ID. Goods will be more
+"",valuable (gain +1 bonus on the buying roll). If caught you will be sent back to the starport.
+46,"You are offered the chance to make extra money at a job lasting one day and paying Cr1000, or"
+"",a favour.
+51,"Find yourself travelling with a group of interesting locals, gain useful information about the world"
+"","and a tip (+1 to find a dealer) on this, or your next, visit."
+52,"Local crisis; bush-fire, earthquake, hurricane, rioting. If you have a cargo of particular use in the"
+"",crisis you can sell for 3x the rolled price.
+53,Investment opportunity arises on some local planetary business venture; you may gamble a
+"","multiple of Cr1,000 up to Cr10,000. Roll Gambler 8+ or Broker 8+ and if you succeed you gain"
+"","half-again in profit, if you fail you lose your stake. The result occurs by the end of the week."
+54,Goods are on offer direct from the grower/manufacturer. It is top quality stuff that will sell with a
+"",+1 bonus.
+55,You are offered the chance to take part in a risky but rewarding adventure or expedition.
+56,"Introduced to local entertainments, spending hundreds of credits (Cr100 x 1D6) but gaining a"
+"",friend and memories of a good time!
+61,Job opportunity comes up that will last up to three days and pay Cr1000 plus 1D6 x Cr100.
+62,"You get ill. Roll 1D6, on 1-3 it is some bizarre local disease requiring an expensive local doctor"
+"","who will cost you Cr600, otherwise you are bedridden each day till you successfully roll End 10+"
+63,"You are approached to smuggle illegal goods off-planet. If you accept, roll Bribery 8+ to"
+"",succeed. There may be other complications. If you refuse you may make an enemy of the
+"",smuggler.
+64,"Boom economy at the moment. This week, every dealer has three cargoes for you to choose"
+"",from.
+65,"Embroiled in legal trouble. A lawyer with Admin 8+ roll will sort out the problem quickly,"
+"",otherwise you may have to resort to bribery or other methods to get out of the situation.
+66,"Another off-worlder befriends you, they are in a spot of bother it soon transpires, would you"
+"","help? There may be payment, or a favour."
+
+   */
+   }   
+   
+   onboard_event_merchant(){
+   /*
+d66,Encounter
+11,Hijack or piracy or both
+12,There is an incident amongst the crew and they turn to the PC for help.
+13,"What the problem is will probably revolve one of the PCs skills, status or"
+"",situation.
+14,"An accident aboard ship requires repair, may involve an injury or some"
+"",inconvenience.
+15,Fire in the cargo area – an electrical fault in the cargo bed rollers.
+16,Demanding passenger is a friend of destination’s port manager.
+21,Passenger is an inspector for the government who will tour of the ship.
+22,"Crewman becomes sullen, uncommunicative and makes mistakes, but will not"
+"",discuss.
+23,"Recycling systems require maintenance, it’s a messy job."
+24,"Find out some useful info from a passenger about the destination world, use it"
+"","to either get half price living costs at the starport, a +1 on any Admin roll, or re-"
+"",roll a cargo result during the Cargo Search phase.
+25,"Crew fresher is broken , the stateroom is flooded!"
+26,"Jump field misaligning, requires spot retuning of the drive, very dangerous."
+31,Cargo containers have shifted due to grav compensator malfunction. Need re-
+"",setting.
+32,There's one obnoxious passenger people try to avoid. This trip will be
+"","miserable  unless someone deals with him, which skill will work with him/her?"
+"","(1) Streetwise, (2) Carousing, (3) Admin, (4) Bribery, (5) Leader, 6) Social"
+"",Standing. Liaison is always appropriate.
+33,"Sensors are producing false readings. Or are they? If so, why?"
+34,Cargo container explosion and chemical fire.
+35,Two passengers have a blazing and unresolved argument. It needs resolving!
+36,"A passenger shows too much interest in another, and attempts entry into"
+"",his/her cabin.
+41,"Typical trip, with highs and lows."
+42,"Fuel pump fails – reactor put on stand-by, something ingested during fuel"
+"",scooping.
+43,"Power failure – several tripped fuses, shuts down power in parts of"
+"",engineering.
+44,"Meet one of your contacts who needs your help. Is it financial, legal,"
+"",administrative or personal?
+45,Passenger declares he has seen a gun in another passenger’s stateroom.
+46,A passenger falls mysteriously ill.
+51,Security patrol ship makes contact in outer system or close to main world. (1)
+"","checks registry, moves on (2) asks for passenger lists, is looking for a fugitive"
+"","(3) asks for cargo lists, is checking for customs irregularities, (4-5) will board,"
+"",spend 1-3 hours conducting a routine search then move on. Roll 5+ for PC to
+"",avoid some cargo or personal irregularity which leads to his or her put under
+"",scrutiny/fined/delayed or detained (6) the starship is breaking the law and will
+"",be accompanied to the starport where it will be impounded and investigated.
+"",Can the PC help with bribery or admin or other skills in preventing this?? If not
+"","everyone is detained at the starport for 1-3 weeks, cargos included. On a"
+"",second roll of 10+ the panicked starship captain makes a run for it and the
+"",patrol ship will be forced to fire on the fugitive vessel.
+52,Crewman has an affair with a passenger.
+53,Gambling passenger takes everyone’s money and causes bother ...
+54,Meet a fellow Traveller as a potential Contact. Roll on Traveller reaction table
+"","to make their acquaintance, roll on Patron table to determine their identity."
+"",Record the reaction result. Require a result of 8+ ('interested') for a friendship.
+"","When met again, roll reaction result or less for assistance, cheap cargo, help in"
+"","dealing with a problem, etc."
+55,Captain runs a crew training session on procedure/law/fire safety/hijacking/first
+"",aid etc.
+56,Theft from a passenger stateroom or luggage area.
+61,"Captain is incapacitated, roll for a simultaneous event/crisis that needs"
+"",resolving!
+62,Engineering problem requires all crew to help replace a huge component.
+63,"Crewman has a crisis of doubt, failure of duty. He/she shuts down."
+64,"One of the stewards is: (1) rude, (2) corrupt, (3) missing, (4) exploitative, (5)"
+"","thieving, (6) under pressure from a passenger."
+65,"Passenger is extremely reclusive, will not come out of his cabin."
+66,"Mysterious death of passenger or crew, was it murder?"
+   
+   */
+   } 
+   
+   sector_threat_level(){
+   /*
+1D6,Threat,Notice to Ship Commanders
+"",Level,
+1-3,0,Caution
+4,1,Expect Trouble
+5,2,Action Required
+6,3,Urgent Action Required   
+   */
+   }
+   
+   onboard_event_military(){
+   /*
+D66,Event
+11-,Ship Malfunction
+16,
+21,"Contraband found, unidentified"
+22,Identified contraband
+23,Crewman receives bad news
+24,Crewman receives very good news
+25,Bullying issue
+26,Poor standards of duty or dress
+31,Shipboard Training
+32,Crew performance poor
+33,Crewman saves another’s life
+34,Insubordination
+35,Incident of fighting
+36,Illness
+41,Mistakes made on duty
+42,Shipboard Training
+43,Conflicting personalities cause problems
+44,Award or decoration due
+45,In-ship Competition
+46,Crew entertainment evening
+51,Shipboard Training
+52,Item stolen
+53,Cross training course established
+54,Holiday or commemoration celebration
+55,"Poor timekeeping, persistent"
+56,Injury
+61,"Food spoils, emergency rations!"
+62,Crewman AWOL on world/station
+63,Crewman completed some tests/experiments
+64,Shipboard romance
+65,Rivalry turns into bitter feud
+66,"Sabotage or wounding, who & why?"
+   
+   */
+   }
+
+   traffic(){
+   /*
+"♦ ♥",Scheduled Traffic
+"♣",Private Traffic
+"♠",Unknown Traffic   
+   */
+   } 
+   
+   private_traffic(){
+   /*
+3D6,PRIVATE TRAFFIC  ♣
+3,Shuttle
+4,Corporate Liner
+5,Salvage Ship
+6,Free Trader
+7,Shuttle/Launch
+8,Lab Ship
+9,Cargo Carrier Charter
+10,Scout
+11,Free Trader
+12,Yacht or Safari Ship
+13,Survey Ship
+14,Mining Barge
+15,Mercenary Transport
+16,Mining Support Ship
+17,Prospector
+18,Scout
+19,Free Trader
+20,Private Security Ship
+   
+   */
+   }   
+
+   unknown_traffic(){
+   /*
+3D6,UNKNOWN TRAFFIC♠
+3,Scheduled ship – off its normal route. Why?
+4,Scout on top secret business
+5,"Ship in catastrophic crisis – fire, fuel leak, etc."
+6,Transport ship with wrong transponder codes. Why are they wrong?
+7,Malfunctioning drone of some kind
+8,Scheduled ship – off its normal route. Due to an error.
+9,Stolen transport ship – transponder codes are slightly irregular.
+10,"Small asteroid with attached mining beacons, or prospectors on-site"
+11,Ship damaged – comms out
+12,Satellite or beacon not responding
+13,Dumped debris of no worth
+14,Dumped debris including item/s with active power sources
+15,"Lifeboat – coasting. Anyone, or thing, onboard?"
+16,Hostile scout
+17,"Dumped cargo, why was it dumped? What is it?"
+18,Hostile raider on patrol
+19,"Hostile attack underway, roll for identity of private/scheduled vessel"
+20,"Wrecked ship, victim of pirate attack"
+21,"Hostile ship, loading booty onboard"
+22,"Ship fragments and frozen bodies, victims of an attack"
+23,Hostile squadron
+24,Survey Ship with special sensor arrays
+25,Hostile Carrier
+26,"Dumped cargo, why was it dumped? What is it?"
+
+Unknown Traffic Dice Modifiers:
+""
+THREAT LEVEL 1+2[Expect Trouble]
+THREAT LEVEL 2+4[Action Required]
+THREAT LEVEL 3+6[Urgent Action Required]
+OUTER SYSTEM+2
+
+   */
+   }  
+   
+   scheduled_traffic(){
+   /*
+3D6,SCHEDULED TRAFFIC,♦ ♥
+3,Shuttle,
+4,Subsidized Merchant,
+5,X-Boat Service Ship,
+6,Shuttle/Launch,
+7,Free Trader,
+8,Subsidized Merchant,
+9,Destroyer,
+10,Bulk Cargo Hauler,
+11,Passenger Liner,
+12,Fighter,
+13,General Cargo Ship,
+14,Frigate or Patrol Ship,
+15,Passenger Liner,
+16,System Defence Boat (SDB),
+17,X-Boat Service Ship,
+18,General Cargo Ship,
+19,Cruiser or Battleship,
+20,Military Carrier with Escorts,
+
+   */
+   }     
+
+   ship_secrets(){
+   /*
+D66,SHIP SECRETS,,
+11,Ship has been hijacked,31,All the crew are ill
+12,Ship being used for opportunistic,32,No crew board ... why?
+"",piracy,,
+13,Ship wanted for crime out-,33,Stolen goods are in the cargo
+"",system,,hold
+14,Cargo problem. Assistance,34,"No licence, paperwork out of"
+"",required!,,date
+15,Ship wanted for crime in-system,35,Crew have found some valuable
+"",,,junk
+16,"Captain unstable, crew about to",36,"Hostile scout, identifying possible"
+"",mutiny,,targets
+21,Crew have rescued a lifeboat,41,"Smuggled goods onboard,"
+"",survivor,,hidden
+22,Very overdue for maintenance,42,Crew report seeing unusual ship
+"",checks,,activity
+23,Ship in trouble – malfunction,43,Ship has attacked a suspected
+"",,,pirate
+24,Ship damaged,44,Crewman or passenger is a
+"",,,wanted criminal
+25,Hostage incident onboard,45,All crew in low berths ... why?
+26,Crewman very ill,46,Drug use rampant on board
+"",,51-,This ship is normal
+"",,66,
+   
+   */
+   } 
+
+   ship_damage(){
+   /*
+2D6,External Hit (Vessel),Internal Hit (Vessel),Small Craft
+2,Hull,Structure,Hull
+3,Sensors,Power Plant,Power Plant
+4,M-Drive,J-Drive,Hold
+5,Turret,Bay,Fuel
+6,Hull,Structure,Hull
+7,Armor,Crew,Armor
+8,Hull,Structure,Hull
+9,Fuel,Hold,Turret
+10,M-Drive,J-Drive,M-Drive
+11,Sensors,Power Plant,Crew
+12,Hull,Bridge,Bridge   
+   */
+   } 
+
+   crew_damage(){
+   /*
+Roll,Normal Damage,Radiation Damage
+4 or,Lucky escape – no damage,Lucky escape – no radiation
+less,,
+5–8,One random crew member suffers,One random crew member suffers
+"",2D6 damage,2D6x10 rads
+9–10,One random crew member suffers,One random crew member suffers
+"",4D6 damage,4D6x10 rads
+11,All crew suffer 2D6 damage,All crew suffer 2D6x10 rads
+12,All crew suffer 4D6 damage,All crew suffer 4D6x10 rads
+   
+   */
+   } 
+   
+   ship_malfunction_naval(){
+   /*
+D66,Event
+11-,Ship Malfunction
+16,
+21,Data from one of the missions is wiped accidentally.
+22,"An onboard craft is serviced, and found to be malfunctioning."
+23,"Captain is incapacitated, roll for a simultaneous event/crisis that needs"
+"",resolving!
+24,An organism has gotten on board and is causing trouble.
+25,A strange virus hits the crew. Is there a cure? Where has it come from?
+26,"Typical trip, with highs and lows."
+31,Shipboard Training
+32,Crew performance poor
+33,Crewman saves another’s life
+34,Routine maintenance on a large piece of kit requires everyone’s help
+35,"Typical trip, with highs and lows."
+36,Illness
+41,Mistakes made on duty
+42,Shipboard Training
+43,Conflicting personalities cause problems
+44,Award or decoration due
+45,In-ship Competition
+46,Crew entertainment evening
+51,Shipboard Training
+52,Item stolen
+53,Cross training course established
+54,Holiday or commemoration celebration
+55,Injury – someone is to blame
+56,Injury
+61,"Sensors are producing strange readings. Or are they? If so, why?"
+62,Crewman goes missing on next world
+63,Crewman completed some tests/experiments
+64,Shipboard romance
+65,Rivalry turns into bitter feud
+66,"Sabotage or wounding, who & why?"   
+   */
+   }           
    
     /*
     blank lookup
