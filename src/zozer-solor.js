@@ -20,21 +20,21 @@ const ZozerSolo = (() => {
     
     homeworld(table=false) {
       var table_a = [
-         'Agricultural',
-         'Asteroid/Ice-Capped/Vacuum',
-         'Desert',
-         'Fluid Oceans',
-         'Garden',
-         'High Technology'
+         "Agricultural",
+         "Asteroid/Ice-Capped/Vacuum",
+         "Desert",
+         "Fluid Oceans",
+         "Garden",
+         "High Technology"
       ];
       
       var table_b = [
-         'High Population',
-         'Industrial',
-         'Low Technology',
-         'Poor',
-         'Rich',
-         'Waterworld'
+         "High Population",
+         "Industrial",
+         "Low Technology",
+         "Poor",
+         "Rich",
+         "Waterworld"
       ];
 
       var rolls = [];
@@ -313,7 +313,7 @@ const ZozerSolo = (() => {
       }
    }
 
-   bad_consequence(mod='') {
+   bad_consequence(mod="") {
       var bad_consequence_table = {
          2: "Death",
          5: "Serious Injury",
@@ -342,13 +342,13 @@ const ZozerSolo = (() => {
       }      
    }
    
-   good_consequence(mod='') {
+   good_consequence(mod="") {
       var good_consequence_table = {
          2: "The task took half the expected time",
          6: "Tracks covered, no evidence left behind",
          7: "Hear a rumour or discover a valuable piece of information",
          9: "Find a useful or valuable piece of kit",
-         11: "Make a Contact or friend
+         11: "Make a Contact or friend"
       }
    
       var roller = new DiceRoller();
@@ -417,16 +417,16 @@ const ZozerSolo = (() => {
          16: "Belters",
          21: "Drunken Crew",
          22: "Fugitives",
-         23: "",
-         24: "",
-         25: "",
-         26: "",
-         31: "",
-         32: "",
-         33: "",
-         34: "",
+         23: "Government Officials",
+         24: "Guards",
+         25: "Hunters and Guides",
+         26: "Law Enforcers on Patrol",
+         31: "Local Performers",
+         32: "Maintenance Crew",
+         33: "Merchants",
+         34: "Military Personnel on Leave",
          35: "Peasants",
-         36: "",
+         36: "Noble with Entourage",
          41: "Political Dissident",
          42: "Potential Patron",
          43: "Public Demonstration",
@@ -435,28 +435,17 @@ const ZozerSolo = (() => {
          46: "Researchers",
          51: "Riotous Mob",
          52: "Security Troops",
-         53: "",
-         54: "",
-         55: "",
-         56: "",
-         61: "",
-         62: "",
-         63: "",
-         64: "",
-         65: "",
+         53: "Servant Robots",
+         54: "Soldiers on Patrol",
+         55: "Street Vendors",
+         56: "Technicians",
+         61: "Thugs",
+         62: "Tourists",
+         63: "Traders",
+         64: "Vigilantes",
+         65: "Workers",
          66: "Player’s Choice"
       }
-        /*
-23,Government Officials,53,Servant Robots
-24,Guards,54,Soldiers on Patrol
-25,Hunters and Guides,55,Street Vendors
-26,Law Enforcers on Patrol,56,Technicians
-31,Local Performers,61,Thugs
-32,Maintenance Crew,62,Tourists
-33,Merchants,63,Traders
-34,Military Personnel on Leave,64,Vigilantes
-35,Noble with Retinue,65,Workers
-   */ 
       
       var roller = new DiceRoller();
       var rolls = roller.roll('1d6 + 1d6*10');
@@ -470,8 +459,338 @@ const ZozerSolo = (() => {
       }   
    }
    
+   npc_reaction(mod="") {   
+      var npc_reaction_table = {
+         2: "Hostile (NPC will actively work against the PCs.)",
+         4: "Guarded (NPC does not trust the PCs. Will show no favours.)",
+         6: "Neutral (Treats PCs like everyone else. Unconcerned.)",
+         9: "Friendly (There is some point of connection or common interest. They may show some favour to the PCs.)",
+         11: "Allied (NPC finds a common cause with the PCs and show favour assist or help further the cause of the group.)"
+      }
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6'+mod);
+      var result = npc_reaction_table[utils.getClosestKey(npc_reaction_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   starport_event() {
+      var starport_event_table = {
+         11: "Starport Shutdown - 1 week. Issue is a labour dispute, accident, festival/holiday or security problem.",
+         12: "Your cargo is in the wrong place and your ship can't wait till whenever for it to be moved. Will Bribery or Admin help here?",
+         13: "Your ship or ship's crew are in trouble, perhaps legally, perhaps personally or perhaps mechanically. They may need assistance.",
+         14: "Customs - Roll 5+ for the cargo to clear customs. If not, there may be a 1 week delay or a duty to pay (1%). Is there a way around it? An Admin roll, on 10+ will find a loophole.",
+         15: "Red Tape - Transfer papers contain irregularities. Bribery or Admin should smooth the way.",
+         16: "Security - Security at starports is always high, you and your cargo are searched. The search will throw up some issue to do with your cargo or luggage you were unaware of on a 6 on 1d6. Arrest? Detention? Week-long delay? Set-up by a rival trader or a spurned seller? Roleplay the results.",
+         21: "Meet a fellow traveller as a potential Contact. Roll on reaction table to make their acquaintance, roll on Patron table to determine their identity. Record the reaction result. Require a result of 8+ ('interested') for a friendship. When met again, roll reaction result or less for assistance, cheap cargo, help in dealing with a problem, etc.",
+         22: "Meet one of your contacts who needs your help. Is it financial, legal, administrative or personal?",
+         23: "Your cargo is pilfered or damaged, reduce amount by 10-60% (1d6?)",
+         24: "Bunch of asteroid miners in port causing trouble all week for port officials and other travellers.",
+         25: "Meet a minor celebrity/dignitary/notable in the company of a couple of aides/guards.",
+         26: "Port personnel confuse you with someone else; roll 1d6 and on 1-3 this is good, on 4-6 it is bad. A quick ID check should sort it out – shouldn’t it?",
+         31: "A ship has limped into port this week with damage and crew casualties.",
+         32: "Meet one of your contacts – they are desperate for help.",
+         33: "Find a great hang-out/bar/cafe/restaurant at the port. Perfect for hiding away, making deals or wooing someone.",
+         34: "Mysterious ship landed at the port, no-one allowed to see it or go near it, though there are plenty of rumours around.",
+         35: "Warehouse has cargoes available for auction in order to get rid of them. Determine goods, determine price; player puts in a bid. Roll 8+ to get the cargo at your price., -1 if bidding over half, -2 if bidding half or less than, -4 if bidding a quarter or less than of the price.",
+         36: "Free trader crew arrested and their ship seized.",
+         41: "Someone needs to get off-world fast ... but it’s not as simple as that ....",
+         42: "One of your skills is recognized by a port employee ... they have a little problem, could you help them with it?",
+         43: "Fire alarm keeps going off – everyone is jumpy and nervous.",
+         44: "You are approached to smuggle illegal goods off-planet. If you accept, roll Bribery 8+ to succeed. There may be other complications. If you refuse you may make an enemy of the smuggler.",
+         45: "A cargo seized by customs is going cheap. You can pick it up for a bonus (+2 on purchase table). Do the original owners want it back, though?",
+         46: "Military ships in port causing a variety of problems for other travellers.",
+         51: "Meet a fellow traveller as a potential Contact. Roll on reaction table to make their acquaintance, roll on Patron table to determine their identity. Record the reaction result. Require a result of 8+ ('interested') for a friendship. When met again, roll reaction result or less for assistance, cheap cargo, help in dealing with a problem, etc.",
+         52: "Meet a fellow traveller as a potential Contact. Roll on reaction table to make their acquaintance, roll on Patron table to determine their identity. Record the reaction result. Require a result of 8+ ('interested') for a friendship. When met again, roll reaction result or less for assistance, cheap cargo, help in dealing with a problem, etc.",
+         53: "Meet a fellow traveller as a potential Contact. Roll on reaction table to make their acquaintance, roll on Patron table to determine their identity. Record the reaction result. Require a result of 8+ ('interested') for a friendship. When met again, roll reaction result or less for assistance, cheap cargo, help in dealing with a problem, etc.",
+         54: "Meet one of your contacts.",
+         55: "Meet one of your contacts.",
+         56: "Meet one of your contacts.",
+         61: "Nothing out of the ordinary occurs.",
+         62: "Nothing out of the ordinary occurs.",
+         63: "Nothing out of the ordinary occurs.",
+         64: "Nothing out of the ordinary occurs.",
+         65: "Nothing out of the ordinary occurs.",
+         66: "Nothing out of the ordinary occurs."
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   ship_encounter_major_route(mod="", comm_route=false) {
+      /*
+      A,B,C Starports
+      
+      +1 Pop 8+
+      +1 Naval Base
+      -1 Scout Base
+      -1 C Class starport
+      ----
+      Piracy Warning - 12+ on 2D
+      ----
+      - Scout result: Roll 3D if on an X-Boat link
+      */
+      var ship_encounter_major_route_table = {
+         2: "-",
+         5: "Scout",
+         6: "Special",
+         7: "Small Transport",
+         8: "Large Transport",
+         9: "Large Transport",
+         10: "Military",
+         11: "Large Transport",
+         12: "Military",
+         13: "Large Transport",
+         14: "Special"
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6'+mod);
+      var result = ship_encounter_major_route_table[utils.getClosestKey(ship_encounter_major_route_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   ship_encounter_frontier_route(mod="") {
+      /*
+      D,E,X Starports
+      
+      +1 Pop 6+
+      -1  X Class starport
+      ----
+      Piracy Warning - 11+ on 2D
+      ----
+      - Scout result: Roll 3D if on an X-Boat link
+      */   
+      var ship_encounter_frontier_route_table = {
+         2: "-",
+         9: "Frontier",
+         10: "Small Transport",
+         11: "Military",
+         12: "Industrial",
+         13: "Large Transport"
+      }
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6'+mod);
+      var result = ship_encounter_frontier_route_table[utils.getClosestKey(ship_encounter_frontier_route_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+
+   scout_ship_encounter(roll='2d6') {
+      var scout_ship_table = {
+         2: "Surveyor 400",
+         5: "Scout 100",
+         6: "Fast Scout 100",
+         7: "Scout 100",
+         9: "Modular Scout 125",
+         10: "Scout 100",
+         12: "Extended Fast Scout 150",
+         13: "X-Boat Tender",
+         15: "X-Boat awaiting pickup"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll(roll='2d6');
+      var result = scout_ship_table[utils.getClosestKey(scout_ship_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   industrial_ship_encounter() {
+      var industrial_ship_table = {
+         2: "Ore Carrier 1000",
+         5: "Mining Derrick 600",
+         6: "Tanker Tender 1000",
+         7: "Mining Cutter 50 YY",
+         8: "Prospecting Ship 100",
+         9: "Lab Ship 400",
+         10: "Salvage Cruiser 2000",
+         12: "Mobile Teaching Hospital 200"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = industrial_ship_table[utils.getClosestKey(industrial_ship_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+
+   small_transport_ship_encounter() {
+      var small_transport_table = {
+         3: "Merchant 200",
+         4: "Subsidized Merchant 400",
+         6: "Frontier Trader 400",
+         7: "Merchant 300",
+         8: "Small Craft (Starport Authority)",
+         9: "Small Craft (Corporate)",
+         10: "Modular Starship 300",
+         11: "Far Trader 200",
+         12: "Small Craft (Industrial/Science)",
+         13: "Subsidized Merchant 400",
+         14: "Free Trader 200",
+         15: "Small Craft (Personal)",
+         16: "Light Transport 200",
+         17: "Far Trader 200",
+         18: "Merchant 300"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = small_transport_table[utils.getClosestKey(small_transport_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   large_transport_ship_encounter() {
+      var large_transport_table = {
+         2: "Long Liner 1000",
+         5: "Freighter 3000",
+         6: "Bulk Cargo Hauler 5000",
+         7: "Subsidised Liner 600",
+         8: "Merchant Transport 500",
+         9: "Cargo Carrier 1000",
+         10: "Frontier Transport 2000",
+         11: "Ore Carrier 1000"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = large_transport_table[utils.getClosestKey(large_transport_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   military_ship_encounter() {
+      var military_ship_table = {
+         2: "Mercenary Cruiser 800",
+         5: "Light Patrol Craft 200",
+         6: "Close Escort 400",
+         7: "Patrol Cruiser 400",
+         8: "Fleet Courier 400",
+         9: "Battlecruiser 1250",
+         10: "Destroyer Escort 1000 DE",
+         11: "SDB 400",
+         12: "Fleet Squadron in Transit"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = military_ship_table[utils.getClosestKey(military_ship_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   special_ship_encounter() {
+      var special_ship_table = {
+         2: "Fat Corsair 400",
+         3: "Emergency Response Boat 100",
+         4: "Personal Transport 100",
+         5: "Express Courier 200",
+         6: "Merchant Courier 100",
+         7: "Yacht 150",
+         8: "Small Craft (Private)",
+         10: "Lab Ship 400",
+         11: "Safari Ship 200"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = special_ship_table[utils.getClosestKey(special_ship_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }      
+   }
+   
+   frontier_ship_encounter() {
+      var frontier_table = {
+         3: "Cargo/Escape pod",
+         4: "Derelict vessel",
+         5: "Mining Derrick 600",
+         6: "Scout 100",
+         7: "Fat Corsair 400",
+         8: "Surveyor 400",
+         9: "Far Trader 200",
+         10: "Patrol Cruiser 400",
+         11: "Frontier Trader 400",
+         12: "Prospecting Ship 100",
+         13: "Scout 100",
+         14: "Safari Ship 200",
+         15: "Close Escort 400",
+         16: "Pirate squadron!",
+         17: "Fast Scout 100",
+         18: "Asteroid Hermit"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = frontier_table[utils.getClosestKey(frontier_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
     /*
-    blank d66
+    blank lookup
     
     d66_table_lookup() {
       var value_table = {
