@@ -41,8 +41,12 @@ class Utils {
 	}
 	
 	isObject(val) {
-    	return val != null && typeof val === 'object' && Array.isArray(val) === false;
+    	    return val != null && typeof val === 'object' && Array.isArray(val) === false;
 	}
+	
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }	
 }
 
 export { Utils }
