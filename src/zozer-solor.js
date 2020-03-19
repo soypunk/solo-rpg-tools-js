@@ -65,6 +65,10 @@ const ZozerSolo = (() => {
          "High Law"
       ]
       
+      if (law_level === false && !law_level in law_level_skills_table) {         
+         var law_level = law_levels[Math.floor(Math.random() * law_levels.length)];
+      }
+      
       var law_level_skills_table = {
          "No Law": "Gun Combat-0",
          "Low Law": "Gun Combat-0",
@@ -72,8 +76,10 @@ const ZozerSolo = (() => {
          "High Law": "Melee Combat-0"
       }
 
+      var result = law_level_skills_table[law_level];
+
       return {
-         'rolls': rolls,
+         'rolls': null,
          'total': null,
          'result': result,
          'extras': null
@@ -286,6 +292,122 @@ const ZozerSolo = (() => {
       }
     }
     
+    character_reaction() {
+      var character_reaction_table = {
+         1: "Seeks Solace. The PC is overcome by guilt, fear loneliness, remorse or simply retreats to a regular addiction. Drugs or alcohol may be used (but not necessarily) and the PC will withdraw, both physically and socially, perhaps threatening the mission at hand. A PC with Liaison, Carousing or a decent Edu score might be able to make a skill roll to help the PC, or else the Player can roleplay this out.",
+         2: "Panic/Anxiety. Something is eating at the character, and rather than withdraw or seek solace, the PC displays their anxiety and panic. They can’t get much done and may even pose a danger to others if not handled well. What is causing the anxiety? It depends on the situation.",
+         3: "Looses Temper. The situation has gotten to the PC who vents their anger at everyone around them. This is different to an argument – everyone gets it this time! Exactly what has triggered this bout of bad temper depends on the current situation.",
+         4: "Stubborn. A choice has been made and the PC does not like it. They refuse to co-operate unless things are changed. This may not be the result of a large ego, but a passionate belief, a sense of safety or moral duty. It all depends on the current situation.",
+         5: "Argument with another PC. There is a blazing row. Perhaps it is the culmination of a period of rivalry or jealousy, or based on a grudge. Other PCs may get involved and choose a side, if they have ties with one of those arguing."
+      }
+
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6');
+      var result = character_reaction_table[utils.getClosestKey(character_reaction_table, rolls.total)];
+    
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+
+   bad_consequence(mod='') {
+      var bad_consequence_table = {
+         2: "Death",
+         5: "Serious Injury",
+         6: "Minor injury",
+         7: "Trapped, lost or delayed",
+         8: "Part of the mission was failed or incriminating evidence left behind",
+         9: "Damage to a useful or valuable piece of kit",
+         10: "Seriously upset or antagonise an NPC",
+         11: "The task takes four times longer than planned"
+
+      }
+      
+      var roller = new DiceRoller();
+      if (mod == 'safe') {
+         var rolls = roller.roll('1d6+6');
+      } else {
+         var rolls = roller.roll('2d6'+mod);
+      }
+      var result = bad_consequence_table[utils.getClosestKey(bad_consequence_table, rolls.total)];
+      
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }      
+   }
+   
+   good_consequence(mod='') {
+      var good_consequence_table = {
+         2: "The task took half the expected time",
+         6: "Tracks covered, no evidence left behind",
+         7: "Hear a rumour or discover a valuable piece of information",
+         9: "Find a useful or valuable piece of kit",
+         11: "Make a Contact or friend
+      }
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6'+mod);
+      var result = good_consequence_table[utils.getClosestKey(good_consequence_table, rolls.total)];
+            
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   tell_me_more_person() {
+      var tell_me_more_person_table = [
+         "Bad, bad, bad.",
+         "Untrustworthy; if he can double-cross he might",
+         "OK but Quirky",
+         "OK, or so he seems",
+         "Decent, don’t worry",
+         "Honest, good, dependable"
+      ];
+      
+      var rolls = [];
+      rolls[0] = Math.floor(Math.random() * tell_me_more_person_table.length);
+      var result = tell_me_more_person_table[rolls[0]];
+      
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   tell_me_more_situation() {
+      var tell_me_more_situation_table = [
+         "The worst possible thing happens",
+         "Bad stuff happens. But it’s not yet catastrophic.",
+         "OK for now",
+         "OK for now",
+         "We’re good.",
+         "The best result possible!"
+      ];
+      
+      var rolls = [];
+      rolls[0] = Math.floor(Math.random() * tell_me_more_situation_table.length);
+      var result = tell_me_more_situation_table[rolls[0]];
+      
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }   
+   
+   
     /*
     blank d66
     
@@ -327,9 +449,7 @@ const ZozerSolo = (() => {
          64: "",
          65: "",
          66: ""
-      }
-      
-      
+      }   
       
       var roller = new DiceRoller();
       var rolls = roller.roll('1d6 + 1d6*10');
