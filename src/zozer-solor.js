@@ -405,8 +405,70 @@ const ZozerSolo = (() => {
          'result': result,
          'extras': false
       }
-   }   
+   }
    
+   colorful_locals() {
+      var colorful_locals_table = {
+         11: "Adventurers",
+         12: "Alien Starship Crew",
+         13: "Ambushing Brigands",
+         14: "Bandits",
+         15: "Beggars",
+         16: "Belters",
+         21: "Drunken Crew",
+         22: "Fugitives",
+         23: "",
+         24: "",
+         25: "",
+         26: "",
+         31: "",
+         32: "",
+         33: "",
+         34: "",
+         35: "Peasants",
+         36: "",
+         41: "Political Dissident",
+         42: "Potential Patron",
+         43: "Public Demonstration",
+         44: "Religious Pilgrims",
+         45: "Reporters",
+         46: "Researchers",
+         51: "Riotous Mob",
+         52: "Security Troops",
+         53: "",
+         54: "",
+         55: "",
+         56: "",
+         61: "",
+         62: "",
+         63: "",
+         64: "",
+         65: "",
+         66: "Player’s Choice"
+      }
+        /*
+23,Government Officials,53,Servant Robots
+24,Guards,54,Soldiers on Patrol
+25,Hunters and Guides,55,Street Vendors
+26,Law Enforcers on Patrol,56,Technicians
+31,Local Performers,61,Thugs
+32,Maintenance Crew,62,Tourists
+33,Merchants,63,Traders
+34,Military Personnel on Leave,64,Vigilantes
+35,Noble with Retinue,65,Workers
+   */ 
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = colorful_locals_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
    
     /*
     blank d66
