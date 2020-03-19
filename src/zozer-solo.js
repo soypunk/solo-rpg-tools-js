@@ -41,12 +41,12 @@ const ZozerSolo = (() => {
       rolls[0] = Math.floor(Math.random() * table_a.length);
       if (table === false) {         
          rolls[1] = Math.floor(Math.random() * table_b.length);
-         var result = table_a[)];
-         result = result + " " + table_b[rolls[0]];
+         var result = table_a[rolls[0]];
+         result = result + " " + table_b[rolls[1]];
       } else if (table === "a") {
          var result = table_a[Math.floor(rolls[0])];      
       } else {
-         var result = table_b[Math.floor(rolls[0]];
+         var result = table_b[Math.floor(rolls[0])];
       }         
       
       return {
