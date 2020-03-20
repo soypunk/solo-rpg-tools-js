@@ -16,7 +16,33 @@ const ZozerSolo = (() => {
      * @constructor
      * @param data
      */
-    constructor(data){}
+    constructor(data){}   
+
+    get law_levels() {
+    	return [
+			 "No Law",
+			 "Low Law",
+			 "Medium Law",
+			 "High Law"		
+    	]
+    } 
+    
+    get trade_codes() {
+    	return [
+			 "Agricultural",
+			 "Asteroid/Ice-Capped/Vacuum",
+			 "Desert",
+			 "Fluid Oceans",
+			 "Garden",
+			 "High Technology",
+			 "High Population",
+			 "Industrial",
+			 "Low Technology",
+			 "Poor",
+			 "Rich",
+			 "Waterworld"		
+    	]
+    }    
     
     homeworld(table=false) {
       var table_a = [
