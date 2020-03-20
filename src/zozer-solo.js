@@ -1647,19 +1647,17 @@ d66,Encounter
    }
    
    sector_threat_level(){
-   /*
-1D6,Threat,Notice to Ship Commanders
-"",Level,
-1-3,0,Caution
-4,1,Expect Trouble
-5,2,Action Required
-6,3,Urgent Action Required   
-   */
-      var sector_threat_table = {}
+      var sector_threat_table = [
+         "Caution",
+         "Expect Trouble",
+         "Action Required",
+         "Urgent Action Required"
+      ]
       
       var roller = new DiceRoller();
-      var rolls = roller.roll('1d6');
-      var result = sector_threat_table[utils.getClosestKey(sector_threat_table, rolls.total)];
+      var rolls = roller.roll('1d6-3');
+      var total = rolls.total < 0 ? 0 : rolls.total;
+      var result = "Threat Level: " + total + " - " + sector_threat_table[total];
 
       return {
          'rolls': rolls,
@@ -1721,134 +1719,156 @@ D66,Event
       }
    }
 
-   traffic(){
+   traffic(card_suit){
    /*
 "♦ ♥",Scheduled Traffic
 "♣",Private Traffic
-"♠",Unknown Traffic   
+"♠",Unknown Traffic
    */
+      var result = false;
+      if (card_suit == "♦" || card_suit == "♥") {
+         result = this.scheduled_traffic();
+      } else if (card_suit == "♣") {
+         result = this.private_traffic();
+      } else {
+         result = this.unknown_traffic();
+      }
+      if (result) {
+         return result.result;
+      } else {
+         return false;
+      }
    } 
    
-   private_traffic(){
-   /*
-3D6,PRIVATE TRAFFIC  ♣
-3,Shuttle
-4,Corporate Liner
-5,Salvage Ship
-6,Free Trader
-7,Shuttle/Launch
-8,Lab Ship
-9,Cargo Carrier Charter
-10,Scout
-11,Free Trader
-12,Yacht or Safari Ship
-13,Survey Ship
-14,Mining Barge
-15,Mercenary Transport
-16,Mining Support Ship
-17,Prospector
-18,Scout
-19,Free Trader
-20,Private Security Ship
-   
-   */
-      var private_traffic_table = {}
+   private_traffic(outer_system=false){
+      var private_traffic_table = {
+         3: "Shuttle",
+         4: "Corporate Liner",
+         5: "Salvage Ship",
+         6: "Free Trader",
+         7: "Shuttle/Launch",
+         8: "Lab Ship",
+         9: "Cargo Carrier Charter",
+         10: "Scout",
+         11: "Free Trader",
+         12: "Yacht or Safari Ship",
+         13: "Survey Ship",
+         14: "Mining Barge",
+         15: "Mercenary Transport",
+         16: "Mining Support Ship",
+         17: "Prospector",
+         18: "Scout",
+         19: "Free Trader",
+         20: "Private Security Ship"
+      }
       
       var roller = new DiceRoller();
-      var rolls = roller.roll('3d6');
+      var mods = "";
+      if (outer_system) {
+         mods = "+2";
+      }
+      var rolls = roller.roll('3d6'+mods);
       var result = private_traffic_table[utils.getClosestKey(private_traffic_table, rolls.total)];
 
       return {
          'rolls': rolls,
          'total': rolls.total,
-         'result': result,
+         'result': "Private Traffic: " + result,
          'extras': false
       }
    }   
 
-   unknown_traffic(){
-   /*
-3D6,UNKNOWN TRAFFIC♠
-3,Scheduled ship – off its normal route. Why?
-4,Scout on top secret business
-5,"Ship in catastrophic crisis – fire, fuel leak, etc."
-6,Transport ship with wrong transponder codes. Why are they wrong?
-7,Malfunctioning drone of some kind
-8,Scheduled ship – off its normal route. Due to an error.
-9,Stolen transport ship – transponder codes are slightly irregular.
-10,"Small asteroid with attached mining beacons, or prospectors on-site"
-11,Ship damaged – comms out
-12,Satellite or beacon not responding
-13,Dumped debris of no worth
-14,Dumped debris including item/s with active power sources
-15,"Lifeboat – coasting. Anyone, or thing, onboard?"
-16,Hostile scout
-17,"Dumped cargo, why was it dumped? What is it?"
-18,Hostile raider on patrol
-19,"Hostile attack underway, roll for identity of private/scheduled vessel"
-20,"Wrecked ship, victim of pirate attack"
-21,"Hostile ship, loading booty onboard"
-22,"Ship fragments and frozen bodies, victims of an attack"
-23,Hostile squadron
-24,Survey Ship with special sensor arrays
-25,Hostile Carrier
-26,"Dumped cargo, why was it dumped? What is it?"
-
-Unknown Traffic Dice Modifiers:
-""
-THREAT LEVEL 1+2[Expect Trouble]
-THREAT LEVEL 2+4[Action Required]
-THREAT LEVEL 3+6[Urgent Action Required]
-OUTER SYSTEM+2
-
-   */
-      var unknown_traffic_table = {}
+   unknown_traffic(threat_level=0,outer_system=false){
+      var unknown_traffic_table = {
+         3: "Scheduled ship – off its normal route. Why?",
+         4: "Scout on top secret business",
+         5: "Ship in catastrophic crisis – fire, fuel leak, etc.",
+         6: "Transport ship with wrong transponder codes. Why are they wrong?",
+         7: "Malfunctioning drone of some kind",
+         8: "Scheduled ship – off its normal route. Due to an error.",
+         9: "Stolen transport ship – transponder codes are slightly irregular.",
+         10: "Small asteroid with attached mining beacons, or prospectors on-site",
+         11: "Ship damaged – comms out",
+         12: "Satellite or beacon not responding",
+         13: "Dumped debris of no worth",
+         14: "Dumped debris including item's with active power sources",
+         15: "Lifeboat – coasting. Anyone, or thing, onboard?",
+         16: "Hostile scout",
+         17: "Dumped cargo, why was it dumped? What is it?",
+         18: "Hostile raider on patrol",
+         19: "Hostile attack underway, roll for identity of private/scheduled vessel",
+         20: "Wrecked ship, victim of pirate attack",
+         21: "Hostile ship, loading booty onboard",
+         22: "Ship fragments and frozen bodies, victims of an attack",
+         23: "Hostile squadron",
+         24: "Survey Ship with special sensor arrays",
+         25: "Hostile Carrier",
+         26: "Dumped cargo, why was it dumped? What is it?"
+      }
+      
+      var mod_value = 0;
+      var mods = "+";
+      
+      if (outer_system) {
+         mod_value = mod_value + 2;
+      }
+      
+      if (threat_level == 1) {
+         mod_value = mod_value + 2;
+      } else if (threat_level == 2) {
+         mod_value = mod_value + 4;
+      } else if (threat_level == 3) {
+         mod_value = mod_value + 6;
+      }
+      
+      mods = mods + mod_value;      
       
       var roller = new DiceRoller();
-      var rolls = roller.roll('3d6');
+      var rolls = roller.roll('3d6'+mods);
       var result = unknown_traffic_table[utils.getClosestKey(unknown_traffic_table, rolls.total)];
 
       return {
          'rolls': rolls,
          'total': rolls.total,
-         'result': result,
+         'result': "Unknown Traffic: " + result,
          'extras': false
       }
    }  
    
-   scheduled_traffic(){
-   /*
-3D6,SCHEDULED TRAFFIC,♦ ♥
-3,Shuttle,
-4,Subsidized Merchant,
-5,X-Boat Service Ship,
-6,Shuttle/Launch,
-7,Free Trader,
-8,Subsidized Merchant,
-9,Destroyer,
-10,Bulk Cargo Hauler,
-11,Passenger Liner,
-12,Fighter,
-13,General Cargo Ship,
-14,Frigate or Patrol Ship,
-15,Passenger Liner,
-16,System Defence Boat (SDB),
-17,X-Boat Service Ship,
-18,General Cargo Ship,
-19,Cruiser or Battleship,
-20,Military Carrier with Escorts,
-
-   */
-      var scheduled_traffic_table = {}
+   scheduled_traffic(outer_system=false){
+      var scheduled_traffic_table = {
+         3: "Shuttle",
+         4: "Subsidized Merchant",
+         5: "X-Boat Service Ship",
+         6: "Shuttle/Launch",
+         7: "Free Trader",
+         8: "Subsidized Merchant",
+         9: "Destroyer",
+         10: "Bulk Cargo Hauler",
+         11: "Passenger Liner",
+         12: "Fighter",
+         13: "General Cargo Ship",
+         14: "Frigate or Patrol Ship",
+         15: "Passenger Liner",
+         16: "System Defence Boat (SDB)",
+         17: "X-Boat Service Ship",
+         18: "General Cargo Ship",
+         19: "Cruiser or Battleship",
+         20: "Military Carrier with Escorts"
+      }
    
       var roller = new DiceRoller();
-      var rolls = roller.roll('3d6');
+      var mods = "";
+      if (outer_system) {
+         mods = "+2";
+      }
+      var rolls = roller.roll('3d6'+mods);
       var result = scheduled_traffic_table[utils.getClosestKey(scheduled_traffic_table, rolls.total)];
 
       return {
          'rolls': rolls,
          'total': rolls.total,
-         'result': result,
+         'result': "Scheduled Traffic: " + result,
          'extras': false
       }
    }     
