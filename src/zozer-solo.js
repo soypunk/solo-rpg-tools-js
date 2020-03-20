@@ -584,7 +584,7 @@ const ZozerSolo = (() => {
       }
       
       if (ship_result !== false) {
-      	result = result + " - " + ship_result + "\n" + ship_reaction;
+      	result = result + " - " + ship_result.result + "\n" + ship_reaction.result;
       }
 
       return {
@@ -649,7 +649,7 @@ const ZozerSolo = (() => {
       }
       
       if (ship_result !== false) {
-      	result = result + " - " + ship_result + "\n" + ship_reaction;
+      	result = result + " - " + ship_result.result + "\n" + ship_reaction.result;
       }
 
       return {
