@@ -264,7 +264,7 @@ const ZozerSolo = (() => {
          } else {
             result = result + "villain.";
          }
-      } else if (rolls.total == 46) {
+      } else if (rolls.total == 63) {
          var sub_rolls = roller.roll('1d6');
          var result = "Were betrayed by a close friend. Today you are ";
          if (sub_rolls.total < 3) {
