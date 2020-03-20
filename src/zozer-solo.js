@@ -117,19 +117,17 @@ const ZozerSolo = (() => {
     trade_code_skills(trade_code=false) {
       var trade_code_skills_table = {
          "Agricultural": "Farming-0",
-         "Asteroid": "Zero-G-0",
+         "Asteroid/Ice-Capped/Vacuum": "Zero-G-0",
          "Desert": "Survival-0",
          "Fluid Oceans": "Watercraft-0",
          "Garden": "Animals-0",
          "High Technology": "Computer-0",
          "High Population": "Streetwise-0",
-         "Ice-Capped": "Zero-G-0",
          "Industrial": "Broker-0",
          "Low Technology": "Survival-0",
          "Poor": "Animals-0",
          "Rich": "Carousing-0",
-         "Water World": "Watercraft-0",
-         "Vacuum": "Zero-G-0"
+         "Water World": "Watercraft-0"
       }
       
       if (trade_code === false && !trade_code in trade_code_skills_table) {
