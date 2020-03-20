@@ -1655,6 +1655,18 @@ d66,Encounter
 5,2,Action Required
 6,3,Urgent Action Required   
    */
+      var sector_threat_table = {}
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6');
+      var result = sector_threat_table[utils.getClosestKey(sector_threat_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
    }
    
    onboard_event_military(){
@@ -1740,6 +1752,18 @@ D66,Event
 20,Private Security Ship
    
    */
+      var private_traffic_table = {}
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = private_traffic_table[utils.getClosestKey(private_traffic_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    }   
 
    unknown_traffic(){
@@ -1778,6 +1802,18 @@ THREAT LEVEL 3+6[Urgent Action Required]
 OUTER SYSTEM+2
 
    */
+      var unknown_traffic_table = {}
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = unknown_traffic_table[utils.getClosestKey(unknown_traffic_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    }  
    
    scheduled_traffic(){
@@ -1803,6 +1839,18 @@ OUTER SYSTEM+2
 20,Military Carrier with Escorts,
 
    */
+      var scheduled_traffic_table = {}
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = scheduled_traffic_table[utils.getClosestKey(scheduled_traffic_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    }     
 
    ship_secrets(){
@@ -1863,6 +1911,18 @@ D66,SHIP SECRETS,,
 11,Sensors,Power Plant,Crew
 12,Hull,Bridge,Bridge   
    */
+      var ship_damage_table = {}
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = ship_damage_table[utils.getClosestKey(ship_damage_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
    } 
 
    crew_damage(){
@@ -1878,7 +1938,19 @@ less,,
 12,All crew suffer 4D6 damage,All crew suffer 4D6x10 rads
    
    */
-   } 
+      var crew_damage_table = {}
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = crew_damage_table[utils.getClosestKey(crew_damage_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
    
    ship_malfunction_naval(){
    /*
