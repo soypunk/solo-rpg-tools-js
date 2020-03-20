@@ -1016,15 +1016,15 @@ const ZozerSolo = (() => {
          4: "Pirates. The free trader your PCs are travelling on has been intercepted by a scout ship that demands to dock otherwise it will launch a full salvo of missiles. Travelling only between ‘safe’ systems, the free trader is unarmed. The crew have no combat experience and are about to be boarded in 15 minutes. What do you do?",
          5: "AWOL. The PCs are being paid to get a military officer to the starport where a ship is waiting to take him off-world. He may be a defector, a spy, a coward or simply be disillusioned. The military of the planet do not intend him to leave, however.",
          6: "The Package. Paid to carry a small package off-world, the PCs leave the patron’s premises just before gunmen arrive to kill him. Now they want the package and will kill anyone who has touched it. Get off world quickly!",
-         7: "Stuck. There is an emergency on planet that the PCs are caught up in. Travel is curtailed and if they don’t get to the starport in 3 days the last transports will leave and there will be no way off planet for weeks or months."
-         8: "Arrested. One of the PCs has been held by security at the hotel for some (real or imagined) past crime until the police arrive. The hotel security officer has no idea the suspect has friends in the building ..."
+         7: "Stuck. There is an emergency on planet that the PCs are caught up in. Travel is curtailed and if they don’t get to the starport in 3 days the last transports will leave and there will be no way off planet for weeks or months.",
+         8: "Arrested. One of the PCs has been held by security at the hotel for some (real or imagined) past crime until the police arrive. The hotel security officer has no idea the suspect has friends in the building ...",
         10: "Missing. One of the PCs (choose or determine randomly) is missing, despite the group having booked passage on a starliner leaving in three days’ time. The reason for the disappearance should be linked to one of the PC’s hooks if possible.",
         12: "Low Berth. Low berth pods open automatically and the PCs get out. They are on a ship, but there seems to be no crew onboard. What type of ship is it? Where are they? What happened? The SOLO Player might decide between alien infestation, piracy or hijacking, or some strange jump drive anomaly." 
       }
       
       var roller = new DiceRoller();
       var rolls = roller.roll('2d6');
-      var result = starting_situation_tableutils.getClosestKey(starting_situation_table, rolls.total)];
+      var result = starting_situation_table[utils.getClosestKey(starting_situation_table, rolls.total)];
 
       return {
          'rolls': rolls,
