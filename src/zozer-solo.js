@@ -1720,11 +1720,6 @@ D66,Event
    }
 
    traffic(card_suit){
-   /*
-"♦ ♥",Scheduled Traffic
-"♣",Private Traffic
-"♠",Unknown Traffic
-   */
       var result = false;
       if (card_suit == "♦" || card_suit == "♥") {
          result = this.scheduled_traffic();
