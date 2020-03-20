@@ -83,41 +83,38 @@ const ZozerSolo = (() => {
       }
     }
     
-    law_level_skills(law_level=false) {    
+    law_level_skills(law_level=false) {
+      var rolls = [];    
       var law_levels = [
          "No Law",
          "Low Law",
          "Medium Law",
          "High Law"
       ]
-      
-      if (law_level === false && !law_level in law_level_skills_table) {         
-         var law_level = law_levels[Math.floor(Math.random() * law_levels.length)];
-      }
-      
+
       var law_level_skills_table = {
          "No Law": "Gun Combat-0",
          "Low Law": "Gun Combat-0",
          "Medium Law": "Gun Combat-0",
          "High Law": "Melee Combat-0"
       }
+      
+      if (law_level === false && !law_level in law_level_skills_table) {
+      	 rolls[0] = (Math.floor(Math.random() * law_levels.length));
+         law_level = law_levels[rolls[0]];
+      }
 
       var result = law_level_skills_table[law_level];
 
       return {
-         'rolls': null,
+         'rolls': rolls,
          'total': null,
          'result': result,
-         'extras': null
+         'extras': {"law_level":law_level}
       }
    }
 
     trade_code_skills(trade_code=false) {
-      if (trade_code === false && !trade_code in trade_code_skills_table) {
-         var trade_code_table = Math.random() < 0.5 ? "a" : "b";
-         var trade_code = homeworld(trade_code_table);
-      }
-    
       var trade_code_skills_table = {
          "Agricultural": "Farming-0",
          "Asteroid": "Zero-G-0",
@@ -134,6 +131,11 @@ const ZozerSolo = (() => {
          "Water World": "Watercraft-0",
          "Vacuum": "Zero-G-0"
       }
+      
+      if (trade_code === false && !trade_code in trade_code_skills_table) {
+         var trade_code_table = Math.random() < 0.5 ? "a" : "b";
+         trade_code = this.homeworld(trade_code_table).result;
+      }      
 
       var result = trade_code_skills_table[trade_code];
 
