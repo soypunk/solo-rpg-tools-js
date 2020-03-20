@@ -548,7 +548,7 @@ const ZozerSolo = (() => {
       
       var roller = new DiceRoller();
       var rolls = roller.roll('1d6 + 1d6*10');
-      var result = value_table[rolls.total]
+      var result = starport_event_table[rolls.total]
 
       return {
          'rolls': rolls,
