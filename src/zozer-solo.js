@@ -1250,6 +1250,19 @@ d66,Encounter
 65,"Passenger is extremely reclusive, will not come out of his cabin."
 66,"Mysterious death of passenger or crew, was it murder?"
    */
+      var onboard_event_passenger_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = onboard_event_passenger_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
    }
    
    onboard_event_nonpassenger() {
@@ -1301,6 +1314,20 @@ D66,Encounter
 65,Captain runs a crew training session: see Starship Training Table.
 66,Ship Malfunction. Check table.   
    */
+      var onboard_event_nonpassenger_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = onboard_event_passenger_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   
    }
    
    ship_malfunction(){
@@ -1343,6 +1370,20 @@ D66,Ship Malfunction
 65,Kitchen malfunction
 66,Waste disposal problem   
    */
+      var ship_malfunction_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = ship_malfunction_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   
    }
    
    training_duties() {
@@ -1355,6 +1396,19 @@ D66,Ship Malfunction
 6,Fire,12,Combat
 7,Individual training,,   
    */
+      var training_duties_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll("2d6");
+      var result = training_duties_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    }
    
    world_encounter_travellers(){
@@ -1416,6 +1470,19 @@ d66,World Encounter
 "","help? There may be payment, or a favour."
 
    */
+      var world_encounter_travellers_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = world_encounter_travellers_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    }
    
    world_encounter_traders(){
@@ -1478,7 +1545,20 @@ D66,World Encounter
 "","help? There may be payment, or a favour."
 
    */
-   }   
+      var world_encounter_traders_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = world_encounter_traders_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
    
    onboard_event_merchant(){
    /*
@@ -1551,7 +1631,20 @@ d66,Encounter
 66,"Mysterious death of passenger or crew, was it murder?"
    
    */
-   } 
+      var onboard_events_merchant_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = onboard_events_merchant_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
    
    sector_threat_level(){
    /*
@@ -1601,6 +1694,19 @@ D66,Event
 66,"Sabotage or wounding, who & why?"
    
    */
+      var onboard_events_military_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = onboard_events_military_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    }
 
    traffic(){
@@ -1727,6 +1833,19 @@ D66,SHIP SECRETS,,
 "",,66,
    
    */
+      var ship_secrets_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = ship_secrets_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    } 
 
    ship_damage(){
@@ -1798,7 +1917,20 @@ D66,Event
 65,Rivalry turns into bitter feud
 66,"Sabotage or wounding, who & why?"   
    */
-   }           
+      var ship_malfunction_naval_table = {
+      }   
+   
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = ship_malfunction_naval_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
    
     /*
     blank lookup
