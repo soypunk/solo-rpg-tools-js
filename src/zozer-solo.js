@@ -1035,73 +1035,160 @@ const ZozerSolo = (() => {
    }
    
    patron() {
-   /*
-D66,Patron,D66,Patron
-11,Naval Officer,41,Corporate Official
-12,Reporter,42,Scientist
-13,Hunter,43,Spy
-14,Soldier,44,Broker
-15,Diplomat,45,Technician
-16,Army Officer,46,Financier
-21,Noble,51,Government Official
-22,Marine Officer,52,Scout Pilot
-23,Belter,53,Doctor
-24,Bureaucrat,54,Corporate Boss
-25,Starport Official,55,Local Military Officer
-26,Peasant/Farmer,56,Pilot
-31,Assassin,61,Smuggler
-32,Avenger,62,Researcher
-33,Merchant,63,Engineer
-34,Rogue,64,Mercenary
-35,Professor,65,Police Officer
-36,Gangster,66,Ship-Owner
-*/
+      var patron_table = {
+         11: "Naval Officer",
+         12: "Reporter",
+         13: "Hunter",
+         14: "Soldier",
+         15: "Diplomat",
+         16: "Army Officer",
+         21: "Noble",
+         22: "Marine Officer",
+         23: "Belter",
+         24: "Bureaucrat",
+         25: "Starport Official",
+         26: "Peasant/Farmer",
+         31: "Assassin",
+         32: "Avenger",
+         33: "Merchant",
+         34: "Rogue",
+         35: "Professor",
+         36: "Gangster",
+         41: "Corporate Official",
+         42: "Scientist",
+         43: "Spy",
+         44: "Broker",
+         45: "Technician",
+         46: "Financier",
+         51: "Government Official",
+         52: "Scout Pilot",
+         53: "Doctor",
+         54: "Corporate Boss",
+         55: "Local Military Officer",
+         56: "Pilot",
+         61: "Smuggler",
+         62: "Researcher",
+         63: "Engineer",
+         64: "Mercenary",
+         65: "Police Officer",
+         66: "Ship-Owner"
+      }
+ 
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = patron_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+ 
    }
    
    mission() {
-   /*   
-D66,Mission,D66,Mission
-11,Explore a moon or asteroid,41,Protect someone
-12,Explore ruins,42,Assist someone
-13,Salvage,43,Rescue someone
-14,Survey area,44,Join Expedition
-15,Capture animal,45,Infiltrate Group
-16,Hijack vehicle or ship,46,Find Missing Ship
-21,Assassination,51,Find Missing Goods
-22,Theft,52,Join Expedition
-23,Blackmail,53,Provide Protection on a Journey
-24,Burglary,54,Trick Someone
-25,Blackmail,55,Bribe
-26,Discredit,56,Sabotage
-31,Investigate Theft,61,Find Missing Person
-32,Investigate Murder,62,Transport Special Item
-33,Investigate Mystery,63,Transport Illegal Goods
-34,Investigate Accident,64,Transport Data
-35,Research a target,65,Transport Dangerous Cargo
-36,Spy on a Location,66,Transport Person
-*/
+      var mission_table = {
+         11: "Explore a moon or asteroid",
+         12: "Explore ruins",
+         13: "Salvage",
+         14: "Survey area",
+         15: "Capture animal",
+         16: "Hijack vehicle or ship",
+         21: "Assassination",
+         22: "Theft",
+         23: "Blackmail",
+         24: "Burglary",
+         25: "Blackmail",
+         26: "Discredit",
+         31: "Investigate Theft",
+         32: "Investigate Murder",
+         33: "Investigate Mystery",
+         34: "Investigate Accident",
+         35: "Research a target",
+         36: "Spy on a Location",
+         41: "Protect someone",
+         42: "Assist someone",
+         43: "Rescue someone",
+         44: "Join Expedition",
+         45: "Infiltrate Group",
+         46: "Find Missing Ship",
+         51: "Find Missing Goods",
+         52: "Join Expedition",
+         53: "Provide Protection on a Journey",
+         54: "Trick Someone",
+         55: "Bribe",
+         56: "Sabotage",
+         61: "Find Missing Person",
+         62: "Transport Special Item",
+         63: "Transport Illegal Goods",
+         64: "Transport Data",
+         65: "Transport Dangerous Cargo",
+         66: "Transport Person"        
+      }
+ 
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = mission_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    }
    
    mission_target() {
-   	/*
-D66,Mission Target,D66,Mission Target
-11,Yacht,41,Remote Base
-12,Free Trader,42,Orbital Station
-13,Security Ship,43,Starport
-14,Naval Craft,44,City Building
-15,Cargo Ship,45,Underground Vault or Bunker
-16,Orbital Station,46,Nightclub
-21,Artwork,51,Crime Gang
-22,Chemical Canister,52,Corporation
-23,Data Chip,53,Intelligence Agency
-24,Money or Bonds,54,Media Corporation
-25,Prototype,55,Planetary Government
-26,Weapon,56,Local Police
-31-,Illegal Cargo,61-,Roll on Patron
-33,,63,
-34-,Cargo,64-,Roll on Patron
-36,,66,
-*/
+      var mission_target_table = {
+         11: "Yacht",
+         12: "Free Trader",
+         13: "Security Ship",
+         14: "Naval Craft",
+         15: "Cargo Ship",
+         16: "Orbital Station",
+         21: "Artwork",
+         22: "Chemical Canister",
+         23: "Data Chip",
+         24: "Money or Bonds",
+         25: "Prototype",
+         26: "Weapon",
+         31: "Illegal Cargo",
+         32: "Illegal Cargo",
+         33: "Illegal Cargo",
+         34: "Cargo",
+         35: "Cargo",
+         36: "Cargo",
+         41: "Remote Base",
+         42: "Orbital Station",
+         43: "Starport",
+         44: "City Building",
+         45: "Underground Vault or Bunker",
+         46: "Nightclub",
+         51: "Crime Gang",
+         52: "Corporation",
+         53: "Intelligence Agency",
+         54: "Media Corporation",
+         55: "Planetary Government",
+         56: "Local Police",
+         61: "Roll on Patron",
+         62: "Roll on Patron",
+         63: "Roll on Patron",
+         64: "Roll on Patron",
+         65: "Roll on Patron",
+         66: "Roll on Patron"      
+      }   
+
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = mission_target_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    }
    
    onboard_event_passenger() {
