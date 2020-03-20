@@ -611,6 +611,9 @@ const ZozerSolo = (() => {
       
       if (ship_result !== false) {
       	result = result + " - " + ship_result.result + "\n" + ship_reaction.result;
+      	if (rolls.total > 11) {
+      		result = result + "\n Piracy Warning!";
+      	}
       }
 
       return {
@@ -676,6 +679,9 @@ const ZozerSolo = (() => {
       
       if (ship_result !== false) {
       	result = result + " - " + ship_result.result + "\n" + ship_reaction.result;
+      	if (rolls.total > 10) {
+      		result = result + "\n Piracy Warning!";
+      	}      	
       }
 
       return {
