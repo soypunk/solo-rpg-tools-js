@@ -1911,22 +1911,20 @@ D66,SHIP SECRETS,,
       }
    } 
 
-   ship_damage(){
-   /*
-2D6,External Hit (Vessel),Internal Hit (Vessel),Small Craft
-2,Hull,Structure,Hull
-3,Sensors,Power Plant,Power Plant
-4,M-Drive,J-Drive,Hold
-5,Turret,Bay,Fuel
-6,Hull,Structure,Hull
-7,Armor,Crew,Armor
-8,Hull,Structure,Hull
-9,Fuel,Hold,Turret
-10,M-Drive,J-Drive,M-Drive
-11,Sensors,Power Plant,Crew
-12,Hull,Bridge,Bridge   
-   */
-      var ship_damage_table = {}
+   external_ship_damage(){
+      var ship_damage_table = {
+      	2: "Hull",
+      	3: "Sensors",
+      	4: "M-Drive",
+      	5: "Turret",
+      	6: "Hull",
+      	7: "Armor",
+      	8: "Hull",
+      	9: "Fuel",
+       10: "M-Drive",
+       11: "Sensors",
+       12: "Hull"	
+      }
       
       var roller = new DiceRoller();
       var rolls = roller.roll('2d6');
@@ -1940,20 +1938,68 @@ D66,SHIP SECRETS,,
       }   
    } 
 
-   crew_damage(){
-   /*
-Roll,Normal Damage,Radiation Damage
-4 or,Lucky escape – no damage,Lucky escape – no radiation
-less,,
-5–8,One random crew member suffers,One random crew member suffers
-"",2D6 damage,2D6x10 rads
-9–10,One random crew member suffers,One random crew member suffers
-"",4D6 damage,4D6x10 rads
-11,All crew suffer 2D6 damage,All crew suffer 2D6x10 rads
-12,All crew suffer 4D6 damage,All crew suffer 4D6x10 rads
+   internal_ship_damage(){
+      var ship_damage_table = {
+      	2: "Structure",
+      	3: "Power Plant",
+      	4: "J-Drive",
+      	5: "Bay",
+      	6: "Structure",
+      	7: "Crew",
+      	8: "Structure",
+      	9: "Hold",
+       10: "J-Drive",
+       11: "Power Plant",
+       12: "Bridge"	      
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = ship_damage_table[utils.getClosestKey(ship_damage_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
    
-   */
-      var crew_damage_table = {}
+   small_craft_damage(){
+      var ship_damage_table = {
+      	2: "Hull",
+      	3: "Power Plant",
+      	4: "Hold",
+      	5: "Fuel",
+      	6: "Hull",
+      	7: "Armor",
+      	8: "Hull",
+      	9: "Turret",
+       10: "M-Drive",
+       11: "Crew",
+       12: "Bridge"	      
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = ship_damage_table[utils.getClosestKey(ship_damage_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   } 
+
+   crew_damage_normal(){
+      var crew_damage_table = {
+      	2: "Lucky escape – no damage",
+      	5: "One random crew member suffers",
+      	9: "One random crew member suffers",
+       11: "All crew suffer 2d6 damage",
+       12: "All crew suffer 4d6 damage"
+      }
       
       var roller = new DiceRoller();
       var rolls = roller.roll('2d6');
@@ -1966,6 +2012,27 @@ less,,
          'extras': false
       }
    }
+   
+   crew_damage_radiation(){
+      var crew_damage_table = {
+      	2: "Lucky escape – no radiation less",
+      	5: "One random crew member suffers",
+      	9: "One random crew member suffers",
+       11: "All crew suffer 2d6x10 rads",
+       12: "All crew suffer 4d6x10 rads"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = crew_damage_table[utils.getClosestKey(crew_damage_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }   
    
    ship_malfunction_naval(){
    /*
