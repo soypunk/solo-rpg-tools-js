@@ -18,7 +18,7 @@ class Utils {
             taken[x] = --len in taken ? taken[len] : len
         }
         return result
-    }    
+    }
     
     getClosestKey(arr, target, u) {
         if (arr.hasOwnProperty(target)) {
