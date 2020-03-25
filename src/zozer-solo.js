@@ -2025,19 +2025,20 @@ const ZozerSolo = (() => {
       var rolls = roller.roll('1d6 + 1d6*10');
       var result = value_table[rolls.total]
 
-      if (rolls.total > 50 && rolls.total 57) {
+      if (rolls.total > 50 && rolls.total < 57) {
+         // These results all deal with a celebrity. To help we'll generate a random type of celeb
+         // to inspire the result
          var subroll = roller.roll('1d6');
          var celebrity_table = {
-            1: Noble/Politician (Duke, Count etc.),
-            2: Noble/Politician (Duke, Count etc.),
-            3: Business Mogul (very rich non noble),
-            4: Performer or Artist (Singer, Actor, Sculptor etc),
-            5: Scholar or Religious Figure (Academic, head of faith or for that region),
-            6: Military figure or Hero (head of planetary military, imperial naval, marine or armed forces figure, medal clad military hero)
+            1: "Noble/Politician (Duke, Count etc.)",
+            2: "Noble/Politician (Duke, Count etc.)",
+            3: "Business Mogul (very rich non noble)",
+            4: "Performer or Artist (Singer, Actor, Sculptor etc)",
+            5: "Scholar or Religious Figure (Academic, head of faith or for that region)",
+            6: "Military figure or Hero (head of planetary military, imperial naval, marine or armed forces figure, medal clad military hero)"
          }
-         var celebrity_result = celebrity_table[subroll.total];
-         
-         result = result + . Celebrity: + celebrity_result;
+         var celebrity_result = celebrity_table[subroll.total];         
+         result = result + ". Celebrity: " + celebrity_result;
       }
 
       return {
