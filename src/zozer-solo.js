@@ -1981,6 +1981,73 @@ const ZozerSolo = (() => {
       }
    }
    
+   tns() {
+      var value_table = {
+         11: "Civil War or Inter-state War begins, ends, escalates, peace talks commence, etc.",
+         12: "Imperial Navy deployed in increased patrols, interdicts a planet, battles with pirates/enemy vessels, etc.",
+         13: "Imperial Marines or Army deployed in police action, counter insurgency or raid",
+         14: "Government Changes: Revolution by people or coup by military occurs, overthrowing current administration. Consider change in Govt Code. OR Democratic process has seen a change of government (applicable for Govt Codes 4, 7, A, B)",
+         15: "Change within Government: Government remains the same but a major figure within it has left due to scandal, age, family reasons, health, growing senility etc, or has died in office",
+         16: "Change within Government: A new figure has emerged as the effective ruler of government and is ushered in into office in an elaborate ceremony, e.g., coronation if a noble (Govts 3, 5, A & B), or swearing in if a representative (Govts 4, 7-9). Could also be a member of the supreme judiciary body.",
+         21: "Change in Laws: New laws have been introduced or rescinded, that impinge greatly on personal freedoms, for example the right to search a residence without a warrant, the right for governments to monitor bank accounts etc.",
+         22: "Civil unrest has broken out on world over some particular issue such as harsh new laws being introduced, the government being caught in immoral activity, ethnic or minority persecution, immigration issues etc, or a crime wave occurs.",
+         23: "Major Crime Bust or Legal Event occurs: A criminal organization has been broken open due to diligent law enforcement work and/or information provided by an informant. Or a legal case of great significance has begun, is in process, or has concluded.",
+         24: "A major contract has been signed between a system and a company to produce a particular product: e.g., small arms, starships, computers, nylon stockings, etc. Or a company has announced a new product, e.g., Vanilla Coke, the latest Android House Servant, a really big gun, etc.",
+         25: "A major company has merged with another or been acquired by a larger company. Concerns about reduced competition or the loss of a national asset might surface.",
+         26: "Big Business: A major company has announced massive losses, restructuring required or even has gone bankrupt, which will greatly impact on that particular system (for example they could have been the major employer on that world).",
+         31: "Natural Disaster: Earthquake, Fire, Storms, Flood, Drought, Space Debris, Plague, Pestilence, Famine, Mass Extinction, etc.",
+         32: "Natural Disaster: Earthquake, Fire, Storms, Flood, Drought, Space Debris, Plague, Pestilence, Famine, Mass Extinction, etc.",
+         33: "Natural Disaster: Earthquake, Fire, Storms, Flood, Drought, Space Debris, Plague, Pestilence, Famine, Mass Extinction, etc.",
+         34: "Natural Disaster: Earthquake, Fire, Storms, Flood, Drought, Space Debris, Plague, Pestilence, Famine, Mass Extinction, etc.",
+         35: "Natural Disaster: Earthquake, Fire, Storms, Flood, Drought, Space Debris, Plague, Pestilence, Famine, Mass Extinction, etc.",
+         36: "Natural Disaster: Earthquake, Fire, Storms, Flood, Drought, Space Debris, Plague, Pestilence, Famine, Mass Extinction, etc.",
+         41: "Accident: Explosion, major transport accident (e.g., rail derailment or aircraft crash), bio-weapon loosed, habitat or life support compromised, etc.",
+         42: "Accident: Explosion, major transport accident (e.g., rail derailment or aircraft crash), bio-weapon loosed, habitat or life support compromised, etc.",
+         43: "Accident: Explosion, major transport accident (e.g., rail derailment or aircraft crash), bio-weapon loosed, habitat or life support compromised, etc.",
+         44: "Accident: Explosion, major transport accident (e.g., rail derailment or aircraft crash), bio-weapon loosed, habitat or life support compromised, etc.",
+         45: "Amber zone applied or lifted on planet; Red zone downgraded to Amber or Amber increased to Red. Determine cause for the new rating. If being applied as opposed to taken off anything that threatens the well being of others makes a good example: natural disaster from disasters or conflict from political are good reasons.",
+         46: "Amber zone applied or lifted on planet; Red zone downgraded to Amber or Amber increased to Red. Determine cause for the new rating. If being applied as opposed to taken off anything that threatens the well being of others makes a good example: natural disaster from disasters or conflict from political are good reasons.",
+         51: "Celebrity (or partner) has given birth, had a true clone made, etc.",
+         52: "Celebrity has died of natural causes, tragic or bizarre accident, assassinated, is gravely ill, diagnosed with a rare disease, etc.",
+         53: "Celebrities relationship status has changed: Got married, divorced, split up, hooked up with someone (preferably famous in their own right with a similar sounding name) etc.",
+         54: "Celebrity caught in a Scandal: Bribery, Drugs, Disgusting Fetish for culturally obscene act, Sex, fraud, criminal, revealed as a covert Psi, etc. May go to trial and be covered extensively by tabloid press (with the broadsheets also giving less coverage but largely commenting on the immoral actions of the tabloid press, while still giving enough details to satisfy their high brow clients).",
+         55: "Celebrity caught in a Scandal: Bribery, Drugs, Disgusting Fetish for culturally obscene act, Sex, fraud, criminal, revealed as a covert Psi, etc. May go to trial and be covered extensively by tabloid press (with the broadsheets also giving less coverage but largely commenting on the immoral actions of the tabloid press, while still giving enough details to satisfy their high brow clients).",
+         56: "Celebrity is touring the region: fact finding, performing, attending awards ceremony, visiting with sick children for charity etc.",
+         61: "Competition or Sport: Major sporting event concludes (trophy/award handed out) or starts. Or winners of prestigious awards are announced, e.g., actor’s guild awards, TAS reporter of the year, the Imperial Academy of Sciences etc. For lower population planets the competition or sport is probably weird (hence it appearing as a 'quirky' news item: for example nude ice hockey, dwarf tossing, Vargr shaving or the like)",
+         62: "Festival commences/concludes: A major festival or celebration starts or concludes, and probably has some wacky elements or customs. For example: on Roup (Regina) or Florida (Terra/United States) the law level is reduced several places for a week to allow people to let off steam; The festival of the dead commences which has the living honoring dead relatives by dancing in the street wearing masks made up to look like them; etc. The lower the population the more unusual or outré the festivals",
+         63: "Weird Customs: An unusual custom, calling for conduct far outside the social norms for where the story is appearing, is revealed for that planet (the World Builders Guide by Digest Group Publications had some great examples). For example: Judges must wash the feet of a leper to prove their worth to judge others; social standing is indicated by hair color; law enforcers must sing the recently arrested their rights; everyone sits down at the same time for a meal. Go nuts.",
+         64: "Mystery solved or Discovery: A ship which disappeared many years ago has re-appeared, the owners of ancient ruins identified, technological breakthrough has occurred in a particular field of sophont endeavor, a missing celebrity turns up, etc.",
+         65: "Mystery occurs: Ship disappears, ruins belonging to an unknown race discovered, entire city goes psychotic for exactly 10.1 minutes, etc.",
+         66: "CHOOSE"
+      }      
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      if (rolls.total > 50 && rolls.total 57) {
+         var subroll = roller.roll('1d6');
+         var celebrity_table = {
+            1: Noble/Politician (Duke, Count etc.),
+            2: Noble/Politician (Duke, Count etc.),
+            3: Business Mogul (very rich non noble),
+            4: Performer or Artist (Singer, Actor, Sculptor etc),
+            5: Scholar or Religious Figure (Academic, head of faith or for that region),
+            6: Military figure or Hero (head of planetary military, imperial naval, marine or armed forces figure, medal clad military hero)
+         }
+         var celebrity_result = celebrity_table[subroll.total];
+         
+         result = result + . Celebrity: + celebrity_result;
+      }
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
     /*
     blank lookup
     
