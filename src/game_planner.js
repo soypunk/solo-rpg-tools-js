@@ -381,18 +381,23 @@ const GamePlanner = (() => {
      * @param {integer} table_item_index
      * @returns {result}
      */
-    get_result_by_table_name(table, table_item_index=false){		
+    get_result_by_table_name(table="", table_item_index=false) {		
 		var roll = table_item_index;
-		if (table_index === false) {
+		if (table_item_index === false) {
 			roll = Math.floor(Math.random() * this[table+"_items"].length);
 		}
 		var result = this[table+"_items"][roll];
-		var next_table = this.tables[this[table+"_next"][roll]];
+		var next_table_index = this[table+"_next"][roll];
+		var next_table = this.tables[next_table_index];
+		
+		table = table.replace("_items","");
+		table = table.replace("_next","");
+		table = table.replace("_"," ");
 		
         return {
             'rolls': [roll],
             'total': roll,
-            'result': result + "(" + next_table + ")",
+            'result': table + " - " + result + " (" + next_table_index + ")",
             'extras': {
             	'next': next_table
             }
@@ -405,8 +410,8 @@ const GamePlanner = (() => {
      * @param {integer} table_item_index
      * @returns {result}
      */
-    get_result_by_table_index(table_index, table_item_index=false){
-    	var table = this.tables[table_index];    	
+    get_result_by_table_index(table_index=1, table_item_index=false) {
+    	var table = this.tables[table_index];
     	return this.get_result_by_table_name(table, table_item_index);
     }
     
