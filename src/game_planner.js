@@ -252,8 +252,8 @@ const GamePlanner = (() => {
 	get creeping_doom_next() { return [12,16,31,26,35,20] }
 	get failure_items() { return [
 		"Accident", "Sabotage", "Wear and tear",
-		"Faulty material", "Operator error", "Corrosion"] }}
-	get failure_next() { return [40,35,33,36,13,33] }}
+		"Faulty material", "Operator error", "Corrosion"] }
+	get failure_next() { return [40,35,33,36,13,33] }
 	get hopes_and_dreams_items() { return [
 		"Inheritance lost", "Loved one leaves", "Holiday venue destroyed",
 		"Criminal record", "Poor health", "Irrational fear"] }
@@ -392,7 +392,7 @@ const GamePlanner = (() => {
         return {
             'rolls': [roll],
             'total': roll,
-            'result': result + "(+"next_table")",
+            'result': result + "(" + next_table + ")",
             'extras': {
             	'next': next_table
             }
