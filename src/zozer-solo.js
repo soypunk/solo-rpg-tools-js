@@ -2023,7 +2023,7 @@ const ZozerSolo = (() => {
       
       var roller = new DiceRoller();
       var rolls = roller.roll('1d6 + 1d6*10');
-      var result = value_table[rolls.total]
+      var result = value_table[rolls.total];
 
       if (rolls.total > 50 && rolls.total < 57) {
          // These results all deal with a celebrity. To help we'll generate a random type of celeb
@@ -2049,7 +2049,34 @@ const ZozerSolo = (() => {
       }
    }
    
-   alt_life_event(table=false) {
+   get alt_life_event_types() {
+   	  return [
+   	  	"Personal Development",
+   	  	"Transformative Event"
+   	  ];
+   }
+   
+   get alt_life_event_tables() {
+   	  return [
+   	  	"Single Life",
+   	  	"Love Life",
+   	  	"Relationships",
+   	  	"Changes",
+   	  	"Discovery",
+   	  	"Turning Point",
+        "Health",
+        "Career",
+        "Finacial",
+		"Law and Crime",
+		"Social Conflict",
+		"Major Event"   	  	
+   	  ];
+   }   
+   
+   alt_life_event(table=false, sub_table=false) {
+   
+      var rolls = [];      
+   
       var personal_development_table = [
          "Single Life",
          "Love Life",
@@ -2067,6 +2094,26 @@ const ZozerSolo = (() => {
          "Major Event"
       ];
       
+      if (table === false || table === 0) {
+      	var random_table_index = Math.floor(Math.random() * this.alt_life_event_types.length);
+      	rolls.push(random_table_index);
+      	table = this.alt_life_event_types[random_table_index];
+      }
+      
+      var sub_table_index = 0;
+      
+      if (sub_table === false || sub_table === 0) {
+		  if (table == "Personal Development") {
+			sub_table_index = Math.floor(Math.random() * personal_development_table.length);
+			sub_table = personal_development_table[sub_table_index];
+		  } else if (table == "Transformative Event") {
+			sub_table_index = Math.floor(Math.random() * transformative_event_table.length);
+			sub_table = transformative_event_table[sub_table_index];
+		  }
+	  }
+	        
+      rolls.push(sub_table_index); 
+      
       var sub_tables = {
          "Single Life": [
             "Start/End an affair",
@@ -2074,8 +2121,7 @@ const ZozerSolo = (() => {
             "Start/End an affair",
             "Start/End an affair",
             "Move into/out of a living-together arrangement",
-            "Have a falling-out/
-reconciliation"                                    
+            "Have a falling-out/reconciliation"
          ],
          "Love Life": [
             "Fall in love with someone",
@@ -2118,18 +2164,83 @@ reconciliation"
             "A relative dies (and maybe leaves an inheritance)"
          ],
          "Health": [
+			"You are diagnosed with a serious disease or disorder",
+			"You are badly injured",
+			"You have a mental/emotional breakdown/ disorder",
+			"You require/donate a transplant organ",
+			"You get a minor body modification (tattoo, piercing, etc.)",
+			"You decide on a major body modification (prosthetic limb, organ, etc.)"
          ],
          "Career": [
+			"You get a new job/assignment",
+			"You lose your position",
+			"You get a new supervisor or partner",
+			"You have a major success",
+			"You have a major failure",
+			"You feel your career is stagnating"
          ],
          "Finacial": [
+			"You make a major purchase (home, vehicle, land, etc.)",
+			"You find yourself deeply in debt",
+			"You get out of debt/declare bankruptcy",
+			"You invest with great success",
+			"You invest with major losses",
+			"You go on public assistance/receive a grant"
          ],
          "Law and Crime": [
+			"You become involved in a crime/conspiracy",
+			"You are the victim of a crime/conspiracy",
+			"You become involved in a lawsuit",
+			"You get into trouble with the law",
+			"You are publicly accused of a crime",
+			"You are affected by a new law/enforcement crackdown"
          ],
          "Social Conflict": [
+			"You betray/are betrayed by someone you trust",
+			"You join/oppose a controversial social movement",
+			"You are caught up in a feud/factional conflict",
+			"You encounter discrimination/ intolerance",
+			"You encounter oppression/ exploitation",
+			"You make an enemy/encounter an old enemy"
          ],
          "Major Event": [
+			"You survive a major disaster, natural or otherwise",
+			"You are caught up in a war/armed uprising",
+			"You experience a famine/other severe shortage",
+			"You are caught up in violent civil disorder/rioting/ protests",
+			"You experience a kidnapping/ hostage crisis/ terror attack",
+			"You are caught up in political upheaval/ revolution"
          ]
-      }
+      };    
+      var sub_table_item_index = Math.floor(Math.random() * sub_tables[sub_table].length);
+      var result = sub_table + ": " + sub_tables[sub_table][sub_table_item_index];
+      rolls.push(sub_table_item_index);
+      
+      return {
+         'rolls': rolls,
+         'total': null,
+         'result': result,
+         'extras': null
+      } 
+   }
+   
+   other_involved_people() {
+	  var other_involved_people_table = [
+		"A relative or one of your children, if any",
+		"A sibling",
+		"A parent/guardian",
+		"A lover/spouse/partner/close friend",
+		"A firend/hero/mentor",
+		"A rival/enemy/ex-spouse/ex-lover"
+	  ];
+      var rolls = [];
+      rolls[0] = Math.floor(Math.random() * other_involved_people_table.length);
+      return {
+         'rolls': rolls,
+         'total': rolls[0],
+         'result': other_involved_people_table[rolls[0]],
+         'extras': null
+      }      
    }
    
     /*
