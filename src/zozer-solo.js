@@ -2049,6 +2049,89 @@ const ZozerSolo = (() => {
       }
    }
    
+   alt_life_event(table=false) {
+      var personal_development_table = [
+         "Single Life",
+         "Love Life",
+         "Relationships",
+         "Changes",
+         "Discovery",
+         "Turning Point"
+      ];
+      var transformative_event_table = [
+         "Health",
+         "Career",
+         "Finacial",
+         "Law and Crime",
+         "Social Conflict",
+         "Major Event"
+      ];
+      
+      var sub_tables = {
+         "Single Life": [
+            "Start/End an affair",
+            "Start/End an affair",
+            "Start/End an affair",
+            "Start/End an affair",
+            "Move into/out of a living-together arrangement",
+            "Have a falling-out/
+reconciliation"                                    
+         ],
+         "Love Life": [
+            "Fall in love with someone",
+            "Fall madly in love with someone",
+            "Get pregnant/Get someone pregnant",
+            "Become celibate for a long period",
+            "Confront your lover with a serous problem",
+            "Question your sexual lifestyle, role, or orientation"
+         ],
+         "Relationships": [
+            "Get engaged to be married/Get betrothed",
+            "Get married/enter a long-term pact",
+            "Have fights with partner",
+            "Go for counseling with partner",
+            "Separate from partner",
+            "Split up/Get a Divorce/Terminate pact"
+         ],
+         "Changes": [
+            "Change your religion/sect/ philosophy",
+            "Change your political affiliation",
+            "Change your home",
+            "Join an important organization",
+            "Perform a major Rite of Passage",
+            "Become a celebrity"
+         ],
+         "Discovery": [
+            "Try a new sport/ recreational activity",
+            "Become an ardent fan of an athlete/ artist/performer",
+            "Become involved in visual art/new musical form",
+            "Volunteer for charity/ development/ community",
+            "Become involved in the media",
+            "Try a new drug"
+         ],
+         "Turning Point": [
+            "Reveal a secret to someone/learn someone's secret",
+            "Become a colonist/ pilgrim/seeker/ wanderer",
+            "Become/Cease to be a recluse/loner/ outcast/hermit",
+            "Encounter an important person from your past",
+            "Have an experience which changes your worldview",
+            "A relative dies (and maybe leaves an inheritance)"
+         ],
+         "Health": [
+         ],
+         "Career": [
+         ],
+         "Finacial": [
+         ],
+         "Law and Crime": [
+         ],
+         "Social Conflict": [
+         ],
+         "Major Event": [
+         ]
+      }
+   }
+   
     /*
     blank lookup
     
