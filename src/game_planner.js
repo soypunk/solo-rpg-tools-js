@@ -258,10 +258,10 @@ const GamePlanner = (() => {
 		"Inheritance lost", "Loved one leaves", "Holiday venue destroyed",
 		"Criminal record", "Poor health", "Irrational fear"] }
 	get hopes_and_dreams_next() { return [15,38,28,8,39,31] }
-	get hordes_of_the_things() { return [
+	get hordes_of_the_things_items() { return [
 		"Intelligent aliens", "Alien animals", "Insects",
 		"Micro-bots", "Fighter craft", "Mobile fungi"] }
-	get hordes_of_the_things() { return [20,42,11,5,27,28] }
+	get hordes_of_the_things_next() { return [20,42,11,5,27,28] }
 	get kidnap_items() { return [
 		"Protagonist", "Sibling or parent", "Employer",
 		"Extended family", "Friend / Neighbor", "Child"] }
