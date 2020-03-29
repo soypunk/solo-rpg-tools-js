@@ -1285,7 +1285,7 @@ const ZozerSolo = (() => {
    
       var roller = new DiceRoller();
       var rolls = roller.roll('1d6 + 1d6*10');
-      var result = onboard_event_passenger_table[rolls.total]
+      var result = onboard_event_nonpassenger_table[rolls.total]
 
       return {
          'rolls': rolls,
