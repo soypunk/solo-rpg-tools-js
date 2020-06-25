@@ -2338,7 +2338,7 @@ const ZozerSolo = (() => {
             
       var result = anomaly_surface_table[utils.getClosestKey(anomaly_surface_table, rolls.total)];
 
-      if (if ([12].indexOf(rolls.total ) > -1) {
+      if ([12].indexOf(rolls.total) > -1) {
          var is_abandoned_roll = roller.rol('1d6');
          if (is_abandoned_roll.total > 4) {
             result = result.replace('Abandoned ','Active ');
@@ -2368,7 +2368,7 @@ const ZozerSolo = (() => {
             
       var result = anomaly_space_table[utils.getClosestKey(anomaly_space_table, rolls.total)];
 
-      if (if ([2,4,8,11].indexOf(rolls.total ) > -1) {
+      if ([2,4,8,11].indexOf(rolls.total) > -1) {
          var is_abandoned_roll = roller.rol('1d6');
          if (is_abandoned_roll.total > 4) {
             result = result.replace('Abandoned ','Active ');
