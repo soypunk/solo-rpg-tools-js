@@ -2262,6 +2262,66 @@ const ZozerSolo = (() => {
       }
    }
 
+   scout_system_type() {
+      var system_type_table = {
+         2: "Inner System",
+         10: "Outer System"
+      }
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = system_type_table[utils.getClosestKey(system_type_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   scout_inner_system_type() {
+      var inner_system_type_table = {
+         2: "Hellhole World",
+         4: "Planetoid Belt",
+         5: "Desert World",
+         7: "Garden World",
+         9: "Water World",
+         11: "Rocky Planet",
+         12: "Hot Jupiter"
+      }
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = inner_system_type_table[utils.getClosestKey(inner_system_type_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }      
+   }
+   
+   scout_outer_system_type() {
+      var outer_system_type_table = {
+         2: "Hellhole World",
+         4: "Desert World",
+         6: "Iceball World",
+         8: "Rocky Planet",
+         10: "Planetoid Belt",
+         12: "Gas Giant"      
+      }
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = outer_system_type_table[utils.getClosestKey(outer_system_type_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }      
+   }
+
    scout_anomaly_surface() {
       var anomaly_surface_table = {
          2: "Humans. What are they doing here?",
@@ -2343,7 +2403,7 @@ const ZozerSolo = (() => {
          'total': rolls.total,
          'result': result,
          'extras': false
-      }   
+      }
    }
    
    scout_garden_world_terrain_types() {
