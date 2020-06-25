@@ -2463,10 +2463,10 @@ const ZozerSolo = (() => {
          52: "Anomaly (Orbit): see sub-table",
          53: "Anomaly (Orbit): see sub-table",
          54: "Anomaly (Orbit): see sub-table",
-         55: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; "Megafauna (large animals); 6 Interesting or bizarre behaviours",
-         56: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; "Megafauna (large animals); 6 Interesting or bizarre behaviours",
-         61: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; "Megafauna (large animals); 6 Interesting or bizarre behaviours",
-         62: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; "Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         55: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         56: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         61: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         62: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; Megafauna (large animals); 6 Interesting or bizarre behaviours",
          63: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 Carnivorous plants; 5-6 Large tree-type plants",
          64: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 Carnivorous plants; 5-6 Large tree-type plants",
          65: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 Carnivorous plants; 5-6 Large tree-type plants",
@@ -2484,6 +2484,58 @@ const ZozerSolo = (() => {
          'extras': false
       }   
    }
+   
+   scout_desert_targets() {
+      var value_table = {
+         11: "Intelligent Alien Life: see sub-table",
+         12: "Intelligent Alien Life: see sub-table",
+         13: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         14: "Volcano: 1D6: 1-2 In mountain chain; 3-4 Solitary; 5-6 Seabed.",
+         15: "Weather: 1D6: 1-2 Dust devils; 3-4 High winds; 5 Fog Banks; 6 Hurricane.",
+         16: "Sinkholes. 1D6: 1-2 Lead to cave systems; 3-4 Extinct Lava tubes; 5-6 Seasonal.",
+         21: "Dry Lake or Sea: 1D6: 1-2 Shape or location odd; 3-4 Soft or liquid beneath; 5-6 Patterned.",
+         22: "Linear Features. 1D6: 1-2 Fault line; 3-4 Volcanic rock formation; 5-6 Vegetation.",
+         23: "Tectonic Plate Boundary: 1D6: 1-2 Rift valley on land; 3-4 Ocean trench; 5-6 Mid-ocean ridge.",
+         24: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         25: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         26: "Fumaroles (Thermal Vents): 1D6: 1-2 Steam vents; 3-4 Lava landscape; 5-6 Poison gas vents.",
+         31: "Fumaroles (Thermal Vents): 1D6: 1-2 Steam vents; 3-4 Lava landscape; 5-6 Poison gas vents.",
+         32: "Dust Storm: 1D6: 1-2 Extensive, almost global; 3-4 High, almost to space; 5-6 Very abrasive.",
+         33: "Dust Storm: 1D6: 1-2 Extensive, almost global; 3-4 High, almost to space; 5-6 Very abrasive.",
+         34: "Sand Dunes: 1D6: 1-3 Very high; 4-6 Unusual shapes and formations.",
+         35: "Depression: 1D6: 1-2 Quicksands; 3-4 Salt marsh; 5 Salt Pans, 6 Oases.",
+         36: "Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         41: "Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         42: "Dry River Bed: 1D6: 1-2 Very long; 3-4 Alluvial fan; 5-6 Eroded deep canyon",
+         43: "Dry River Bed: 1D6: 1-2 Very long; 3-4 Alluvial fan; 5-6 Eroded deep canyon",
+         44: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         45: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         46: "Anomaly (Surface): see sub-table",
+         51: "Anomaly (Surface): see sub-table",
+         52: "Anomaly (Orbit): see sub-table",
+         53: "Anomaly (Orbit): see sub-table",
+         54: "Anomaly (Orbit): see sub-table",
+         55: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         56: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         61: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         62: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         63: "Plant Life (Flora): 1D6: 1 Interesting ecosystem; 2-4 Plants in extreme environments; 5 carnivorous plants; 6 Tree-type plants.",
+         64: "Plant Life (Flora): 1D6: 1 Interesting ecosystem; 2-4 Plants in extreme environments; 5 carnivorous plants; 6 Tree-type plants.",
+         65: "Plant Life (Flora): 1D6: 1 Interesting ecosystem; 2-4 Plants in extreme environments; 5 carnivorous plants; 6 Tree-type plants.",
+         66: "Plant Life (Flora): 1D6: 1 Interesting ecosystem; 2-4 Plants in extreme environments; 5 carnivorous plants; 6 Tree-type plants."
+      }
+            
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }   
    
     /*
     blank lookup
