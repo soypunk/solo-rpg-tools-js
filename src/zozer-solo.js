@@ -2537,6 +2537,110 @@ const ZozerSolo = (() => {
       }   
    }
    
+   scout_water_world_targets() {
+      var value_table = {
+         11: "Intelligent Alien Life: see sub-table",
+         12: "Intelligent Alien Life: see sub-table",
+         13: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         14: "Ice. 1D6: 1-2 Ice Fissure; 3-4 Ice Discolouration; 5-6 Ice Formation or Structure.",
+         15: "Undersea Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         16: "Undersea Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         21: "Undersea Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         22: "Island Chain. 1D6: 1-2 Volcanic; 3-4 Coral Reefs; 5-6 Drowned Landscape.",
+         23: "Island Chain. 1D6: 1-2 Volcanic; 3-4 Coral Reefs; 5-6 Drowned Landscape.",
+         24: "Island Chain. 1D6: 1-2 Volcanic; 3-4 Coral Reefs; 5-6 Drowned Landscape.",
+         25: "Island Chain. 1D6: 1-2 Volcanic; 3-4 Coral Reefs; 5-6 Drowned Landscape.",
+         26: "Ocean currents. 1D6: 1-2 Hot spots like El Niño; 3-4 Fast moving; 5-6 Water discolouration.",
+         31: "Ocean currents. 1D6: 1-2 Hot spots like El Niño; 3-4 Fast moving; 5-6 Water discolouration.",
+         32: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         33: "Seabed Volcano: 1D6: 1-2 In mountain chain; 3-4 Solitary; 5-6 Seabed.",
+         34: "Seabed Fumaroles (Thermal Vents): 1D6: 1-2 Steam vents; 3-4 Lava landscape; 5-6 Poison gas vents.",
+         35: "Coastal Formations: 1D6: 1-2 Arches and stacks; 3-4 Raised beaches; 5-6 Very High cliffs.",
+         36: "Coastal Formations: 1D6: 1-2 Arches and stacks; 3-4 Raised beaches; 5-6 Very High cliffs.",
+         41: "Tectonic Plate Boundary: 1D6: 1-2 Rift valley on land; 3-4 Ocean trench; 5-6 Mid-ocean ridge.",
+         42: "Weather: 1D6: 1 High rainfall; 2 High winds; 3 Acid rain; 4 Daily fog events; 5-6 Hurricane.",
+         43: "Weather: 1D6: 1 High rainfall; 2 High winds; 3 Acid rain; 4 Daily fog events; 5-6 Hurricane.",
+         44: "Tides: 1D6: 1-2 Fast moving; 3-4 Tide is very high; 5-6 Uncovers strange rock formations",
+         45: "Anomaly (Surface): see sub-table",
+         46: "Anomaly (Surface): see sub-table",
+         51: "Anomaly (Surface): see sub-table",
+         52: "Anomaly (Orbit): see sub-table",
+         53: "Anomaly (Orbit): see sub-table",
+         54: "Anomaly (Orbit): see sub-table",
+         55: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         56: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         61: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         62: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         63: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         64: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         65: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         66: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants"
+      }
+            
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   scout_hellhole_world_targets() {
+      var value_table = {
+         11: "Intelligent Alien Life: see sub-table",
+         12: "Intelligent Alien Life: see sub-table",
+         13: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         14: "Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         15: "Sand Dunes: 1D6: 1-3 Very high; 4-6 Unusual shapes and formations.",
+         16: "Sinkholes. 1D6: 1-2 Lead to cave systems; 3-4 Extinct Lava tubes; 5-6 Seasonal.",
+         21: "Sinkholes. 1D6: 1-2 Lead to cave systems; 3-4 Extinct Lava tubes; 5-6 Seasonal.",
+         22: "Dry Lake or Sea: 1D6: 1-2 Shape or location odd; 3-4 Soft or liquid beneath; 5-6 Patterned.",
+         23: "Linear Features. 1D6: 1-2 Fault line; 3-4 Volcanic rock formation; 5-6 Vegetation.",
+         24: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         25: "Volcano: 1D6: 1-2 In mountain chain; 3-4 Solitary; 5-6 Seabed.",
+         26: "Fumaroles (Thermal Vents): 1D6: 1-2 Steam vents; 3-4 Lava landscape; 5-6 Poison gas vents.",
+         31: "Dust Storm: 1D6: 1-2 Extensive, almost global; 3-4 High, almost to space; 5-6 Very abrasive.",
+         32: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         33: "Lake: 1D6: 1-2 Shape or location odd; 3-4 Seasonal; 5-6 Mineral or gas content.",
+         34: "Coastal Formations: 1D6: 1-2 Arches and stacks; 3-4 Raised beaches; 5-6 Very High cliffs.",
+         35: "Tectonic Plate Boundary: 1D6: 1-2 Rift valley on land; 3-4 Ocean trench; 5-6 Mid-ocean ridge.",
+         36: "Waterfall: 1D6: 1-2 Entire chain or series; 3-4 Very high; 5-6 Very wide.",
+         41: "River: 1D6: 1-2 Very long; 3-4 Huge delta; 5-6 Eroded deep canyon",
+         42: "Weather: 1D6: 1 Daily mist-effects; 2 High winds; 3-4 Acid rain; 5 Mountain cloud effects; 6 Hurricane.",
+         43: "Weather: 1D6: 1 Daily mist-effects; 2 High winds; 3-4 Acid rain; 5 Mountain cloud effects; 6 Hurricane.",
+         44: "Weather: 1D6: 1 Daily mist-effects; 2 High winds; 3-4 Acid rain; 5 Mountain cloud effects; 6 Hurricane.",
+         45: "Tides: 1D6: 1-2 Fast moving; 3-4 Tide is very high; 5-6 Uncovers strange rock formations.",
+         46: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         51: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         52: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         53: "Anomaly (Surface): see sub-table",
+         54: "Anomaly (Surface): see sub-table",
+         55: "Anomaly (Surface): see sub-table",
+         56: "Anomaly (Orbit): see sub-table",
+         61: "Anomaly (Orbit): see sub-table",
+         62: "Anomaly (Orbit): see sub-table",
+         63: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         64: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         65: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3-4 Microfauna (microscopic); 5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         66: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3-4 Microfauna (microscopic); 5 Megafauna (large animals); 6 Interesting or bizarre behaviours"
+      }
+            
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
    scout_rocky_planet_targets() {
       var rocky_planet_targets_table = {
          3: "Intelligent Alien Life: see sub-table",
@@ -2681,7 +2785,7 @@ const ZozerSolo = (() => {
          'result': result,
          'extras': false
       }   
-   }         
+   }      
    
     /*
     blank lookup
