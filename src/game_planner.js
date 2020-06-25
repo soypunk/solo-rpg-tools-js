@@ -1,4 +1,4 @@
-import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.js';
+import { DiceRoller } from 'rpg-dice-roller';
 import { Utils } from './utils.js';
 
 const utils = new Utils();
@@ -310,10 +310,10 @@ const GamePlanner = (() => {
 		"Computer", "Melee", "Firearm",
 		"Piloting", "Navigation", "Social"] }
 	get skills_next() { return [22,20,28,21,19,7] }
-	get small_expensive_item() { return [
+	get small_expensive_item_items() { return [
 		"Antique", "Extinct alien corpse", "Computer program",
 		"Gem", "Legal document", "Key"] }
-	get small_expensive_item() { return [32,35,13,42,18,17] }
+	get small_expensive_item_next() { return [32,35,13,42,18,17] }
 	get space_exploration_items() { return [
 		"Asteroid", "Space station", "Abandoned hulk",
 		"Alien craft", "New planet", "Mysterious cloud"] }

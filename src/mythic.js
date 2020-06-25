@@ -1,4 +1,4 @@
-import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.js';
+import { DiceRoller } from 'rpg-dice-roller';
 import { Utils } from './utils.js'
 
 const utils = new Utils()
