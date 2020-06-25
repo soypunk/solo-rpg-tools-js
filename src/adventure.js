@@ -205,7 +205,7 @@ const AdventureCrafter = (() => {
 			'total': rolls.total,
 			'result': trait,
 			'extras': {
-				'definition': GME_CHARACTER_TRAIT_DEFINITIONS[trait]			
+				'definition': GME_CHARACTER_TRAIT_DEFINITIONS[trait]
 			}			
 		}
 	}
@@ -306,7 +306,7 @@ const AdventureCrafter = (() => {
 			'result': identity,
 			'extras': false
 		}
-	}	
+	}
 	
 	generateCharacter() {
 		return {
@@ -314,7 +314,7 @@ const AdventureCrafter = (() => {
 			'descriptor': this.npcDescriptor(),
 			'trait': this.npcTrait()
 		}
-	}	
+	}
 	
 	plotpoint(theme=null) {
 		var BASE_PLOTPOINTS = {

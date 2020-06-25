@@ -2240,8 +2240,604 @@ const ZozerSolo = (() => {
          'total': rolls[0],
          'result': other_involved_people_table[rolls[0]],
          'extras': null
+      }
+   }
+   
+   scout_time() {
+	  var scout_time_table = [
+		"12 hours",
+		"24 hours",
+		"2 days",
+		"3 days",
+		"4 days",
+		"5+ days"
+	  ];
+      var rolls = [];
+      rolls[0] = Math.floor(Math.random() * scout_time_table.length);
+      return {
+         'rolls': rolls,
+         'total': rolls[0],
+         'result': scout_time_table[rolls[0]],
+         'extras': null
+      }
+   }
+
+   scout_system_type() {
+      var system_type_table = {
+         2: "Inner System",
+         10: "Outer System"
+      }
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = system_type_table[utils.getClosestKey(system_type_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   scout_inner_system_type() {
+      var inner_system_type_table = {
+         2: "Hellhole World",
+         4: "Planetoid Belt",
+         5: "Desert World",
+         7: "Garden World",
+         9: "Water World",
+         11: "Rocky Planet",
+         12: "Hot Jupiter"
+      }
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = inner_system_type_table[utils.getClosestKey(inner_system_type_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
       }      
    }
+   
+   scout_outer_system_type() {
+      var outer_system_type_table = {
+         2: "Hellhole World",
+         4: "Desert World",
+         6: "Iceball World",
+         8: "Rocky Planet",
+         10: "Planetoid Belt",
+         12: "Gas Giant"      
+      }
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = outer_system_type_table[utils.getClosestKey(outer_system_type_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }      
+   }
+
+   scout_anomaly_surface() {
+      var anomaly_surface_table = {
+         2: "Humans. What are they doing here?",
+         5: "Temple or Monument",
+         6: "Scientific Complex",
+         7: "Bunker",
+         8: "Markings/Carvings/Glyphs",
+         10: "Roadway",
+         12: "Abandoned* Alien City or Colony"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+            
+      var result = anomaly_surface_table[utils.getClosestKey(anomaly_surface_table, rolls.total)];
+
+      if (if ([12].indexOf(rolls.total ) > -1) {
+         var is_abandoned_roll = roller.rol('1d6');
+         if (is_abandoned_roll.total > 4) {
+            result = result.replace('Abandoned ','Active ');
+         }
+      }
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   scout_anomaly_space() {
+      var anomaly_space_table = {
+         2: "Abandoned Alien Spacecraft or Station",
+         4: "Abandoned Lifeboat",
+         5: "Debris",
+         8: "Abandoned Alien Drone/Probe",
+         10: "Asteroid Cut and Carved By Alien Tech",
+         11: "Abandoned Alien Starship"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+            
+      var result = anomaly_space_table[utils.getClosestKey(anomaly_space_table, rolls.total)];
+
+      if (if ([2,4,8,11].indexOf(rolls.total ) > -1) {
+         var is_abandoned_roll = roller.rol('1d6');
+         if (is_abandoned_roll.total > 4) {
+            result = result.replace('Abandoned ','Active ');
+         }
+      }
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   scout_intelligent_alien_life() {
+      var intelligent_alien_life_table = {
+         2: "Colony of advanced alien travellers of TL 9 + 1D6",
+         4: "Large non-biped alien with a TL 1 iron-age, city-based society",
+         6: "Upright bipeds. TL 0 tribal hunter-gatherer culture.",
+         7: "Intelligent creatures. Easily overlooked as some ubiquitous and unassuming life-form. On Earth that might be turtles, crows, chimpanzees or coral.",
+         9: "Large non-biped alien with a TL 2 scientifically-aware culture with some urbanization.",
+         10: "Intelligent megafauna. On Earth that would be whales, giant squid or elephants.",
+         12: "Upright bipeds. TL 1 iron-age society with some urbanization."
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = intelligent_alien_life_table[utils.getClosestKey(intelligent_alien_life_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   scout_garden_world_terrain_types() {
+      var scout_garden_world_terrain_types_table = {
+         2: "Polar ice cap",
+         3: "Tundra",
+         4: "Forest – Temperate or Cold",
+         5: "Scrubland",
+         6: "Mountain",
+         7: "Desert",
+         8: "Warm Grassland (Savannah)",
+         9: "Humid Rainforest",
+         10: "Dry (Warm Temperate)",
+         11: "Cool Grassland (Steppe)",
+         12: "Swamp"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = scout_garden_world_terrain_types_table[utils.getClosestKey(scout_garden_world_terrain_types_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   scout_garden_targets() {
+      var value_table = {
+         11: "Intelligent Alien Life: see sub-table",
+         12: "Intelligent Alien Life: see sub-table",
+         13: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         14: "Ice. 1D6: 1-2 Ice Fissure; 3-4 Ice Discolouration; 5-6 Ice Formation or Structure.",
+         15: "Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         16: "Sinkholes. 1D6: 1-2 Lead to cave systems; 3-4 Extinct Lava tubes; 5-6 Seasonal.",
+         21: "Island Chain. 1D6: 1-2 Volcanic; 3-4 Coral Reefs; 5-6 Drowned Landscape.",
+         22: "Linear Features. 1D6: 1-2 Fault line; 3-4 Volcanic rock formation; 5-6 Vegetation.",
+         23: "Ocean currents. 1D6: 1-2 Hot spots like El Niño; 3-4 Fast moving; 5-6 Water discolouration.",
+         24: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         25: "Volcano: 1D6: 1-2 In mountain chain; 3-4 Solitary; 5-6 Seabed.",
+         26: "Fumaroles (Thermal Vents): 1D6: 1-2 Steam vents; 3-4 Lava landscape; 5-6 Poison gas vents.",
+         31: "Dust Storm: 1D6: 1-2 Extensive, almost global; 3-4 High, almost to space; 5-6 Very abrasive.",
+         32: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         33: "Lake: 1D6: 1-2 Shape or location odd; 3-4 Ancient dry lakebed; 5-6 Mineral or gas content.",
+         34: "Coastal Formations: 1D6: 1-2 Arches and stacks; 3-4 Raised beaches; 5-6 Very High cliffs.",
+         35: "Tectonic Plate Boundary: 1D6: 1-2 Rift valley on land; 3-4 Ocean trench; 5-6 Mid-ocean ridge.",
+         36: "Waterfall: 1D6: 1-2 Entire chain or series; 3-4 Very high; 5-6 Very wide.",
+         41: "River: 1D6: 1-2 Very long; 3-4 Huge delta; 5-6 Eroded deep canyon.",
+         42: "Weather: 1D6: 1 High rainfall; 2 High winds; 3 Acid rain; 4 Jungle humidity; 5 Mountain cloud effects; 6 Hurricane.",
+         43: "Tides: 1D6: 1-2 Fast moving; 3-4 Tide is very high; 5-6 Uncovers strange rock formations.",
+         44: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         45: "Anomaly (Surface): see sub-table",
+         46: "Anomaly (Surface): see sub-table",
+         51: "Anomaly (Surface): see sub-table",
+         52: "Anomaly (Orbit): see sub-table",
+         53: "Anomaly (Orbit): see sub-table",
+         54: "Anomaly (Orbit): see sub-table",
+         55: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         56: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         61: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         62: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5; Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         63: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 Carnivorous plants; 5-6 Large tree-type plants",
+         64: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 Carnivorous plants; 5-6 Large tree-type plants",
+         65: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 Carnivorous plants; 5-6 Large tree-type plants",
+         66: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 Carnivorous plants; 5-6 Large tree-type plants"
+      }
+            
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   scout_desert_targets() {
+      var value_table = {
+         11: "Intelligent Alien Life: see sub-table",
+         12: "Intelligent Alien Life: see sub-table",
+         13: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         14: "Volcano: 1D6: 1-2 In mountain chain; 3-4 Solitary; 5-6 Seabed.",
+         15: "Weather: 1D6: 1-2 Dust devils; 3-4 High winds; 5 Fog Banks; 6 Hurricane.",
+         16: "Sinkholes. 1D6: 1-2 Lead to cave systems; 3-4 Extinct Lava tubes; 5-6 Seasonal.",
+         21: "Dry Lake or Sea: 1D6: 1-2 Shape or location odd; 3-4 Soft or liquid beneath; 5-6 Patterned.",
+         22: "Linear Features. 1D6: 1-2 Fault line; 3-4 Volcanic rock formation; 5-6 Vegetation.",
+         23: "Tectonic Plate Boundary: 1D6: 1-2 Rift valley on land; 3-4 Ocean trench; 5-6 Mid-ocean ridge.",
+         24: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         25: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         26: "Fumaroles (Thermal Vents): 1D6: 1-2 Steam vents; 3-4 Lava landscape; 5-6 Poison gas vents.",
+         31: "Fumaroles (Thermal Vents): 1D6: 1-2 Steam vents; 3-4 Lava landscape; 5-6 Poison gas vents.",
+         32: "Dust Storm: 1D6: 1-2 Extensive, almost global; 3-4 High, almost to space; 5-6 Very abrasive.",
+         33: "Dust Storm: 1D6: 1-2 Extensive, almost global; 3-4 High, almost to space; 5-6 Very abrasive.",
+         34: "Sand Dunes: 1D6: 1-3 Very high; 4-6 Unusual shapes and formations.",
+         35: "Depression: 1D6: 1-2 Quicksands; 3-4 Salt marsh; 5 Salt Pans, 6 Oases.",
+         36: "Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         41: "Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         42: "Dry River Bed: 1D6: 1-2 Very long; 3-4 Alluvial fan; 5-6 Eroded deep canyon",
+         43: "Dry River Bed: 1D6: 1-2 Very long; 3-4 Alluvial fan; 5-6 Eroded deep canyon",
+         44: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         45: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         46: "Anomaly (Surface): see sub-table",
+         51: "Anomaly (Surface): see sub-table",
+         52: "Anomaly (Orbit): see sub-table",
+         53: "Anomaly (Orbit): see sub-table",
+         54: "Anomaly (Orbit): see sub-table",
+         55: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         56: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         61: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         62: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         63: "Plant Life (Flora): 1D6: 1 Interesting ecosystem; 2-4 Plants in extreme environments; 5 carnivorous plants; 6 Tree-type plants.",
+         64: "Plant Life (Flora): 1D6: 1 Interesting ecosystem; 2-4 Plants in extreme environments; 5 carnivorous plants; 6 Tree-type plants.",
+         65: "Plant Life (Flora): 1D6: 1 Interesting ecosystem; 2-4 Plants in extreme environments; 5 carnivorous plants; 6 Tree-type plants.",
+         66: "Plant Life (Flora): 1D6: 1 Interesting ecosystem; 2-4 Plants in extreme environments; 5 carnivorous plants; 6 Tree-type plants."
+      }
+            
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   scout_water_world_targets() {
+      var value_table = {
+         11: "Intelligent Alien Life: see sub-table",
+         12: "Intelligent Alien Life: see sub-table",
+         13: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         14: "Ice. 1D6: 1-2 Ice Fissure; 3-4 Ice Discolouration; 5-6 Ice Formation or Structure.",
+         15: "Undersea Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         16: "Undersea Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         21: "Undersea Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         22: "Island Chain. 1D6: 1-2 Volcanic; 3-4 Coral Reefs; 5-6 Drowned Landscape.",
+         23: "Island Chain. 1D6: 1-2 Volcanic; 3-4 Coral Reefs; 5-6 Drowned Landscape.",
+         24: "Island Chain. 1D6: 1-2 Volcanic; 3-4 Coral Reefs; 5-6 Drowned Landscape.",
+         25: "Island Chain. 1D6: 1-2 Volcanic; 3-4 Coral Reefs; 5-6 Drowned Landscape.",
+         26: "Ocean currents. 1D6: 1-2 Hot spots like El Niño; 3-4 Fast moving; 5-6 Water discolouration.",
+         31: "Ocean currents. 1D6: 1-2 Hot spots like El Niño; 3-4 Fast moving; 5-6 Water discolouration.",
+         32: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         33: "Seabed Volcano: 1D6: 1-2 In mountain chain; 3-4 Solitary; 5-6 Seabed.",
+         34: "Seabed Fumaroles (Thermal Vents): 1D6: 1-2 Steam vents; 3-4 Lava landscape; 5-6 Poison gas vents.",
+         35: "Coastal Formations: 1D6: 1-2 Arches and stacks; 3-4 Raised beaches; 5-6 Very High cliffs.",
+         36: "Coastal Formations: 1D6: 1-2 Arches and stacks; 3-4 Raised beaches; 5-6 Very High cliffs.",
+         41: "Tectonic Plate Boundary: 1D6: 1-2 Rift valley on land; 3-4 Ocean trench; 5-6 Mid-ocean ridge.",
+         42: "Weather: 1D6: 1 High rainfall; 2 High winds; 3 Acid rain; 4 Daily fog events; 5-6 Hurricane.",
+         43: "Weather: 1D6: 1 High rainfall; 2 High winds; 3 Acid rain; 4 Daily fog events; 5-6 Hurricane.",
+         44: "Tides: 1D6: 1-2 Fast moving; 3-4 Tide is very high; 5-6 Uncovers strange rock formations",
+         45: "Anomaly (Surface): see sub-table",
+         46: "Anomaly (Surface): see sub-table",
+         51: "Anomaly (Surface): see sub-table",
+         52: "Anomaly (Orbit): see sub-table",
+         53: "Anomaly (Orbit): see sub-table",
+         54: "Anomaly (Orbit): see sub-table",
+         55: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         56: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         61: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         62: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3 Microfauna (microscopic); 4-5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         63: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         64: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         65: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         66: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem ; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants"
+      }
+            
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   scout_hellhole_world_targets() {
+      var value_table = {
+         11: "Intelligent Alien Life: see sub-table",
+         12: "Intelligent Alien Life: see sub-table",
+         13: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         14: "Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         15: "Sand Dunes: 1D6: 1-3 Very high; 4-6 Unusual shapes and formations.",
+         16: "Sinkholes. 1D6: 1-2 Lead to cave systems; 3-4 Extinct Lava tubes; 5-6 Seasonal.",
+         21: "Sinkholes. 1D6: 1-2 Lead to cave systems; 3-4 Extinct Lava tubes; 5-6 Seasonal.",
+         22: "Dry Lake or Sea: 1D6: 1-2 Shape or location odd; 3-4 Soft or liquid beneath; 5-6 Patterned.",
+         23: "Linear Features. 1D6: 1-2 Fault line; 3-4 Volcanic rock formation; 5-6 Vegetation.",
+         24: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         25: "Volcano: 1D6: 1-2 In mountain chain; 3-4 Solitary; 5-6 Seabed.",
+         26: "Fumaroles (Thermal Vents): 1D6: 1-2 Steam vents; 3-4 Lava landscape; 5-6 Poison gas vents.",
+         31: "Dust Storm: 1D6: 1-2 Extensive, almost global; 3-4 High, almost to space; 5-6 Very abrasive.",
+         32: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         33: "Lake: 1D6: 1-2 Shape or location odd; 3-4 Seasonal; 5-6 Mineral or gas content.",
+         34: "Coastal Formations: 1D6: 1-2 Arches and stacks; 3-4 Raised beaches; 5-6 Very High cliffs.",
+         35: "Tectonic Plate Boundary: 1D6: 1-2 Rift valley on land; 3-4 Ocean trench; 5-6 Mid-ocean ridge.",
+         36: "Waterfall: 1D6: 1-2 Entire chain or series; 3-4 Very high; 5-6 Very wide.",
+         41: "River: 1D6: 1-2 Very long; 3-4 Huge delta; 5-6 Eroded deep canyon",
+         42: "Weather: 1D6: 1 Daily mist-effects; 2 High winds; 3-4 Acid rain; 5 Mountain cloud effects; 6 Hurricane.",
+         43: "Weather: 1D6: 1 Daily mist-effects; 2 High winds; 3-4 Acid rain; 5 Mountain cloud effects; 6 Hurricane.",
+         44: "Weather: 1D6: 1 Daily mist-effects; 2 High winds; 3-4 Acid rain; 5 Mountain cloud effects; 6 Hurricane.",
+         45: "Tides: 1D6: 1-2 Fast moving; 3-4 Tide is very high; 5-6 Uncovers strange rock formations.",
+         46: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         51: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         52: "Wind Erosion: 1D6: 1-2 Long yardangs; 3-4 Inselberg plain; 5-6 Fairy chimneys.",
+         53: "Anomaly (Surface): see sub-table",
+         54: "Anomaly (Surface): see sub-table",
+         55: "Anomaly (Surface): see sub-table",
+         56: "Anomaly (Orbit): see sub-table",
+         61: "Anomaly (Orbit): see sub-table",
+         62: "Anomaly (Orbit): see sub-table",
+         63: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         64: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem; 3 Plants in extreme environments; 4 carnivorous plants; 5-6 Large tree-type plants",
+         65: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3-4 Microfauna (microscopic); 5 Megafauna (large animals); 6 Interesting or bizarre behaviours",
+         66: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3-4 Microfauna (microscopic); 5 Megafauna (large animals); 6 Interesting or bizarre behaviours"
+      }
+            
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   scout_rocky_planet_targets() {
+      var rocky_planet_targets_table = {
+         3: "Intelligent Alien Life: see sub-table",
+         4: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         5: "Volcano: 1D6: 1-2 In mountain chain; 3-4 Solitary; 5-6 Seabed.",
+         6: "Linear Features. 1D6: 1-2 Fault line; 3-4 Volcanic rock formation; 5-6 Unusually long ridge",
+         7: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         8: "Sinkholes. 1D6: 1-4 Lead to cave systems; 5-6 Seasonal.",
+         9: "Rille or Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         10: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         11: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         12: "Lava Plain: 1D6: 1-2 Recent Lava Flows; 3-4 Lava channels; 5-6 Very High cliffs .",
+         13: "Lava Plain: 1D6: 1-2 Recent Lava Flows; 3-4 Lava channels; 5-6 Very High cliffs .",
+         14: "Dust: 1D6: 1-2 Fine and deep; 3-4 Oddly dark/light in colour; 5-6 Partially covered another feature (roll again).",
+         15: "Anomaly (Surface): see sub-table",
+         16: "Anomaly (Orbit): see sub-table",
+         17: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem; 3-6 Plants in extreme environments.",
+         18: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3-5 Microfauna (microscopic); 6 Interesting or bizarre behaviours"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = rocky_planet_targets_table[utils.getClosestKey(rocky_planet_targets_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   scout_iceball_world_targets() {
+      var iceball_world_targets_table = {
+         3: "Intelligent Alien Life: see sub-table",
+         4: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         5: "Subsurface ocean. 1D6: 1-2 Thin ice above; 3-6 Fissures in ice lead to subsurface ocean.",
+         6: "Linear Features. 1D6: 1-2 Fault line; 3-4 Volcanic rock formation; 5-6 Unusually long ice ridge",
+         7: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         8: "Sinkholes. 1D6: 1-4 Lead to cave systems; 5-6 Seasonal.",
+         9: "Cryovolcano: 1D6: 1-4 In mountain chain; 5-6 Solitary",
+         10: "Rille/Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         11: "Ice. 1D6: 1-2 Ice Fissure; 3-4 Ice Discolouration; 5-6 Ice Formation or Structure.",
+         12: "Ice. 1D6: 1-2 Ice Fissure; 3-4 Ice Discolouration; 5-6 Ice Formation or Structure.",
+         13: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         14: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         15: "Anomaly (Surface): see sub-table",
+         16: "Anomaly (Orbit): see sub-table",
+         17: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem; 3-6 Plants in extreme environments.",
+         18: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3-5 Microfauna (microscopic); 6 Interesting or bizarre behaviours"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = iceball_world_targets_table[utils.getClosestKey(iceball_world_targets_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }   
+   
+   scout_hot_jupiter_targets() {
+      var hot_jupiter_targets = {
+         2: "Dust Ring",
+         3: "Storm",
+         4: "Planetoid Belt: see sub-table",
+         5: "Cloud Formations",
+         6: "High Speed Winds",
+         7: "High Speed Winds",
+         8: "Radiation Belt Storm",
+         9: "Hot Spot",
+         10: "Aurora",
+         11: "Moon: Rocky Planet: see sub-table",
+         12: "Radio Emissions"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = hot_jupiter_targets[utils.getClosestKey(hot_jupiter_targets, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   scout_gas_giant_targets() {
+      var gas_giant_targets = {
+         2: "Dust Ring",
+         3: "Storm",
+         4: "Radiation Belt",
+         5: "Cloud Formations",
+         6: "Moon: Rocky Planet: see sub-table",
+         7: "Moon: Iceball World: see sub-table",
+         8: "High Speed Winds",
+         9: "Planetoid Belt: see sub-table",
+         10: "Aurora",
+         11: "Ice Ring",
+         12: "Radio Emissions"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = gas_giant_targets[utils.getClosestKey(gas_giant_targets, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   
+   scout_planetoid_belt_targets() {
+      var planetoid_belt_targets = {
+         2: "Fault Line or Crevasse",
+         3: "Unusual Peak",
+         4: "Loose and shifting conglomeration of rocky bodies",
+         5: "Gravel Field",
+         6: "Mineral Deposits. 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         7: "Fault Line or Crevasse",
+         8: "Irregular Shape",
+         9: "Deep crater",
+         10: "Recent impact crater",
+         11: "Sinkhole or Cave",
+         12: "Anomaly (Orbit): see sub-table"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = planetoid_belt_targets[utils.getClosestKey(planetoid_belt_targets, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+    scouts_survey_problems() {
+      var value_table = {
+         11: "Radios or sensor malfunction; or a complex sensor sweep is required. (Comms/sensors)",
+         12: "Radios or sensor malfunction; or a complex sensor sweep is required. (Comms/sensors)",
+         13: "Survey equipment malfunctions or suffers damage either from the environment or from use. (Electronics/Mechanics)",
+         14: "Survey equipment malfunctions or suffers damage either from the environment or from use. (Electronics/Mechanics)",
+         15: "Survey equipment malfunctions or suffers damage either from the environment or from use. (Electronics/Mechanics)",
+         16: "Survey equipment malfunctions or suffers damage either from the environment or from use. (Electronics/Mechanics)",
+         21: "Elusive wildlife must be carefully tracked. (Recon)",
+         22: "Power systems at the survey site malfunction. (Engineering)",
+         23: "Explosive charges are needed for seismic study, or to cut a hole in ice or rock. (Demolitions)",
+         24: "The area is difficult to map or to locate. (Navigation)",
+         25: "The area is difficult to map or to locate. (Navigation)",
+         26: "A PC goes missing at the survey site or near to it. Create a Plan.",
+         31: "A PC is injured at the survey site, or falls ill. (Medicine)",
+         32: "A PC is injured at the survey site, or falls ill. (Medicine)",
+         33: "A PC is injured at the survey site, or falls ill. (Medicine)",
+         34: "Difficult travelling conditions (in the vehicle used by the scouts.) (Vehicle)",
+         35: "Difficult travelling conditions (in the vehicle used by the scouts.)(Vehicle)",
+         36: "Difficult travelling conditions (in the vehicle used by the scouts.) (Vehicle)",
+         41: "Computer problems whilst setting up equipment, or when processing survey data. (Computer)",
+         42: "Computer problems whilst setting up equipment, or when processing survey data. (Computer)",
+         43: "The environment holds some real dangers that could affect the PCs. If failed, 44 see entry 31-33. (Survival)",
+         44: "The environment holds some real dangers that could affect the PCs. If failed, 44 see entry 31-33. (Survival)",
+         45: "Some of the survey gear needs to be shifted by sheer brute force; there’s no way around it. (Strength)",
+         46: "Some of the survey gear needs to be shifted by sheer brute force; there’s no way around it. (Strength)",
+         51: "Wildlife poses a deadly hazard. If failed, see entry 31-33. (Combat)",
+         52: "Wildlife poses a deadly hazard. If failed, see entry 31-33. (Combat)",
+         53: "A scientific puzzle, either geological, chemical or biological (depending on the planetary environment) must be solved before the survey can be completed. (Science/Education)",
+         54: "A scientific puzzle, either geological, chemical or biological (depending on the planetary environment) must be solved before the survey can be completed. (Science/Education)",
+         55: "Difficult zero-G or hostile atmospheric conditions must be survived. This may not be applicable. If so, ignore the roll. (Zero-G/Vacc Suit)",
+         56: "Difficult zero-G or hostile atmospheric conditions must be survived. This may not be applicable. If so, ignore the roll. (Zero-G/Vacc Suit)",
+         61: "Equipment destroyed or lost. (9+ to avoid)",
+         62: "Equipment destroyed or lost. (9+ to avoid)",
+         63: "Equipment destroyed or lost. (9+ to avoid)",
+         64: "Death of a PC. (8+ to avoid)",
+         65: "Natural Catastrophe. Roll 6+ to leave the survey site without leaving behind valuable kit or having a PC injured. (6+ to avoid)",
+         66: "Natural Catastrophe. Roll 6+ to leave the survey site without leaving behind valuable kit or having a PC injured. (6+ to avoid)"
+      }   
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+    }
    
     /*
     blank lookup
@@ -2296,7 +2892,7 @@ const ZozerSolo = (() => {
          'result': result,
          'extras': false
       }
-    }    
+    }
     
     */
     
