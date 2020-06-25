@@ -1,5 +1,5 @@
+import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.js';
 import './math-utils.js';
-import { DiceRoller } from 'rpg-dice-roller';
 
 /**
  * Mune
