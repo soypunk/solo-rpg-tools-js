@@ -2240,7 +2240,26 @@ const ZozerSolo = (() => {
          'total': rolls[0],
          'result': other_involved_people_table[rolls[0]],
          'extras': null
-      }      
+      }
+   }
+   
+   scout_time() {
+	  var scout_time_table = [
+		"12 hours",
+		"24 hours",
+		"2 days",
+		"3 days",
+		"4 days",
+		"5+ days"
+	  ];
+      var rolls = [];
+      rolls[0] = Math.floor(Math.random() * scout_time_table.length);
+      return {
+         'rolls': rolls,
+         'total': rolls[0],
+         'result': scout_time_table[rolls[0]],
+         'extras': null
+      }
    }
    
     /*
