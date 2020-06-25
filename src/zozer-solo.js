@@ -2601,6 +2601,87 @@ const ZozerSolo = (() => {
       }
    }   
    
+   scout_hot_jupiter_targets() {
+      var hot_jupiter_targets = {
+         2: "Dust Ring",
+         3: "Storm",
+         4: "Planetoid Belt: see sub-table",
+         5: "Cloud Formations",
+         6: "High Speed Winds",
+         7: "High Speed Winds",
+         8: "Radiation Belt Storm",
+         9: "Hot Spot",
+         10: "Aurora",
+         11: "Moon: Rocky Planet: see sub-table",
+         12: "Radio Emissions"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = hot_jupiter_targets[utils.getClosestKey(hot_jupiter_targets, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   scout_gas_giant_targets() {
+      var gas_giant_targets = {
+         2: "Dust Ring",
+         3: "Storm",
+         4: "Radiation Belt",
+         5: "Cloud Formations",
+         6: "Moon: Rocky Planet: see sub-table",
+         7: "Moon: Iceball World: see sub-table",
+         8: "High Speed Winds",
+         9: "Planetoid Belt: see sub-table",
+         10: "Aurora",
+         11: "Ice Ring",
+         12: "Radio Emissions"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = gas_giant_targets[utils.getClosestKey(gas_giant_targets, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }
+   
+   
+   scout_planetoid_belt_targets() {
+      var planetoid_belt_targets = {
+         2: "Fault Line or Crevasse",
+         3: "Unusual Peak",
+         4: "Loose and shifting conglomeration of rocky bodies",
+         5: "Gravel Field",
+         6: "Mineral Deposits. 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         7: "Fault Line or Crevasse",
+         8: "Irregular Shape",
+         9: "Deep crater",
+         10: "Recent impact crater",
+         11: "Sinkhole or Cave",
+         12: "Anomaly (Orbit): see sub-table"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+      var result = planetoid_belt_targets[utils.getClosestKey(planetoid_belt_targets, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }   
+   }         
    
     /*
     blank lookup
