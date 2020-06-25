@@ -2785,7 +2785,59 @@ const ZozerSolo = (() => {
          'result': result,
          'extras': false
       }   
-   }      
+   }
+   
+    scouts_survey_problems() {
+      var value_table = {
+         11: "Radios or sensor malfunction; or a complex sensor sweep is required. (Comms/sensors)",
+         12: "Radios or sensor malfunction; or a complex sensor sweep is required. (Comms/sensors)",
+         13: "Survey equipment malfunctions or suffers damage either from the environment or from use. (Electronics/Mechanics)",
+         14: "Survey equipment malfunctions or suffers damage either from the environment or from use. (Electronics/Mechanics)",
+         15: "Survey equipment malfunctions or suffers damage either from the environment or from use. (Electronics/Mechanics)",
+         16: "Survey equipment malfunctions or suffers damage either from the environment or from use. (Electronics/Mechanics)",
+         21: "Elusive wildlife must be carefully tracked. (Recon)",
+         22: "Power systems at the survey site malfunction. (Engineering)",
+         23: "Explosive charges are needed for seismic study, or to cut a hole in ice or rock. (Demolitions)",
+         24: "The area is difficult to map or to locate. (Navigation)",
+         25: "The area is difficult to map or to locate. (Navigation)",
+         26: "A PC goes missing at the survey site or near to it. Create a Plan.",
+         31: "A PC is injured at the survey site, or falls ill. (Medicine)",
+         32: "A PC is injured at the survey site, or falls ill. (Medicine)",
+         33: "A PC is injured at the survey site, or falls ill. (Medicine)",
+         34: "Difficult travelling conditions (in the vehicle used by the scouts.) (Vehicle)",
+         35: "Difficult travelling conditions (in the vehicle used by the scouts.)(Vehicle)",
+         36: "Difficult travelling conditions (in the vehicle used by the scouts.) (Vehicle)",
+         41: "Computer problems whilst setting up equipment, or when processing survey data. (Computer)",
+         42: "Computer problems whilst setting up equipment, or when processing survey data. (Computer)",
+         43: "The environment holds some real dangers that could affect the PCs. If failed, 44 see entry 31-33. (Survival)",
+         44: "The environment holds some real dangers that could affect the PCs. If failed, 44 see entry 31-33. (Survival)",
+         45: "Some of the survey gear needs to be shifted by sheer brute force; there’s no way around it. (Strength)",
+         46: "Some of the survey gear needs to be shifted by sheer brute force; there’s no way around it. (Strength)",
+         51: "Wildlife poses a deadly hazard. If failed, see entry 31-33. (Combat)",
+         52: "Wildlife poses a deadly hazard. If failed, see entry 31-33. (Combat)",
+         53: "A scientific puzzle, either geological, chemical or biological (depending on the planetary environment) must be solved before the survey can be completed. (Science/Education)",
+         54: "A scientific puzzle, either geological, chemical or biological (depending on the planetary environment) must be solved before the survey can be completed. (Science/Education)",
+         55: "Difficult zero-G or hostile atmospheric conditions must be survived. This may not be applicable. If so, ignore the roll. (Zero-G/Vacc Suit)",
+         56: "Difficult zero-G or hostile atmospheric conditions must be survived. This may not be applicable. If so, ignore the roll. (Zero-G/Vacc Suit)",
+         61: "Equipment destroyed or lost. (9+ to avoid)",
+         62: "Equipment destroyed or lost. (9+ to avoid)",
+         63: "Equipment destroyed or lost. (9+ to avoid)",
+         64: "Death of a PC. (8+ to avoid)",
+         65: "Natural Catastrophe. Roll 6+ to leave the survey site without leaving behind valuable kit or having a PC injured. (6+ to avoid)",
+         66: "Natural Catastrophe. Roll 6+ to leave the survey site without leaving behind valuable kit or having a PC injured. (6+ to avoid)"
+      }   
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('1d6 + 1d6*10');
+      var result = value_table[rolls.total]
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+    }
    
     /*
     blank lookup
@@ -2840,7 +2892,7 @@ const ZozerSolo = (() => {
          'result': result,
          'extras': false
       }
-    }    
+    }
     
     */
     
