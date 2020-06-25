@@ -2535,7 +2535,72 @@ const ZozerSolo = (() => {
          'result': result,
          'extras': false
       }   
+   }
+   
+   scout_rocky_planet_targets() {
+      var rocky_planet_targets_table = {
+         3: "Intelligent Alien Life: see sub-table",
+         4: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         5: "Volcano: 1D6: 1-2 In mountain chain; 3-4 Solitary; 5-6 Seabed.",
+         6: "Linear Features. 1D6: 1-2 Fault line; 3-4 Volcanic rock formation; 5-6 Unusually long ridge",
+         7: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         8: "Sinkholes. 1D6: 1-4 Lead to cave systems; 5-6 Seasonal.",
+         9: "Rille or Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         10: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         11: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         12: "Lava Plain: 1D6: 1-2 Recent Lava Flows; 3-4 Lava channels; 5-6 Very High cliffs .",
+         13: "Lava Plain: 1D6: 1-2 Recent Lava Flows; 3-4 Lava channels; 5-6 Very High cliffs .",
+         14: "Dust: 1D6: 1-2 Fine and deep; 3-4 Oddly dark/light in colour; 5-6 Partially covered another feature (roll again).",
+         15: "Anomaly (Surface): see sub-table",
+         16: "Anomaly (Orbit): see sub-table",
+         17: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem; 3-6 Plants in extreme environments.",
+         18: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3-5 Microfauna (microscopic); 6 Interesting or bizarre behaviours"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = rocky_planet_targets_table[utils.getClosestKey(rocky_planet_targets_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   scout_iceball_world_targets() {
+      var iceball_world_targets_table = {
+         3: "Intelligent Alien Life: see sub-table",
+         4: "Mineral Deposits: 1D6: 1-2 radioactive; 3-4 high-value; 5-6 unusual composition",
+         5: "Subsurface ocean. 1D6: 1-2 Thin ice above; 3-6 Fissures in ice lead to subsurface ocean.",
+         6: "Linear Features. 1D6: 1-2 Fault line; 3-4 Volcanic rock formation; 5-6 Unusually long ice ridge",
+         7: "Moon. 1D6: 1-2 Craters; 3-4 Unusual peaks; 5-6 Irregular shape.",
+         8: "Sinkholes. 1D6: 1-4 Lead to cave systems; 5-6 Seasonal.",
+         9: "Cryovolcano: 1D6: 1-4 In mountain chain; 5-6 Solitary",
+         10: "Rille/Canyon. 1D6: 1-2 Deep; 3-4 Extensive; 5-6 Extremely long.",
+         11: "Ice. 1D6: 1-2 Ice Fissure; 3-4 Ice Discolouration; 5-6 Ice Formation or Structure.",
+         12: "Ice. 1D6: 1-2 Ice Fissure; 3-4 Ice Discolouration; 5-6 Ice Formation or Structure.",
+         13: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         14: "Impact Crater: 1D6: 1-2 Deep; 3-4 Rich mineral content; 5-6 Recent.",
+         15: "Anomaly (Surface): see sub-table",
+         16: "Anomaly (Orbit): see sub-table",
+         17: "Plant Life (Flora): 1D6: 1-2 Interesting ecosystem; 3-6 Plants in extreme environments.",
+         18: "Animal Life (Fauna): 1D6: 1-2 Interesting ecosystem; 3-5 Microfauna (microscopic); 6 Interesting or bizarre behaviours"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('3d6');
+      var result = iceball_world_targets_table[utils.getClosestKey(iceball_world_targets_table, rolls.total)];
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
    }   
+   
    
     /*
     blank lookup
