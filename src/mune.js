@@ -1,4 +1,4 @@
-import { DiceRoller } from '../node_modules/rpg-dice-roller/lib/esm/bundle.js';
+import { DiceRoller } from 'lib/esm/bundle.js';
 import './math-utils.js';
 
 /**
