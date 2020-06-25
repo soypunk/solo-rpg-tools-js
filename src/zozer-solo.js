@@ -2261,6 +2261,67 @@ const ZozerSolo = (() => {
          'extras': null
       }
    }
+
+   scout_anomaly_surface() {
+      var anomaly_surface_table = {
+         2: "Humans. What are they doing here?",
+         5: "Temple or Monument",
+         6: "Scientific Complex",
+         7: "Bunker",
+         8: "Markings/Carvings/Glyphs",
+         10: "Roadway",
+         12: "Abandoned* Alien City or Colony"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+            
+      var result = anomaly_surface_table[utils.getClosestKey(anomaly_surface_table, rolls.total)];
+
+      if (if ([12].indexOf(rolls.total ) > -1) {
+         var is_abandoned_roll = roller.rol('1d6');
+         if (is_abandoned_roll.total > 4) {
+            result = result.replace('Abandoned ','Active ');
+         }
+      }
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   scout_anomaly_space() {
+      var anomaly_space_table = {
+         2: "Abandoned Alien Spacecraft or Station",
+         4: "Abandoned Lifeboat",
+         5: "Debris",
+         8: "Abandoned Alien Drone/Probe",
+         10: "Asteroid Cut and Carved By Alien Tech",
+         11: "Abandoned Alien Starship"
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6');
+            
+      var result = anomaly_space_table[utils.getClosestKey(anomaly_space_table, rolls.total)];
+
+      if (if ([2,4,8,11].indexOf(rolls.total ) > -1) {
+         var is_abandoned_roll = roller.rol('1d6');
+         if (is_abandoned_roll.total > 4) {
+            result = result.replace('Abandoned ','Active ');
+         }
+      }
+
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }
+   }
    
    scout_intelligent_alien_life() {
       var intelligent_alien_life_table = {
