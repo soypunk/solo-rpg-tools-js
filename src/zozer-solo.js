@@ -2918,7 +2918,7 @@ const ZozerSolo = (() => {
          66: ""
       }
 
-      var weapons = {
+      var weapon = {
          11: "Clubs/misc. tools",
          12: "Clubs/misc. tools",
          13: "Clubs/misc. tools",
