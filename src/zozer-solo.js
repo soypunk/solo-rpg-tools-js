@@ -2839,6 +2839,207 @@ const ZozerSolo = (() => {
       }
     }
    
+    random_person_encounters(test=false) {
+      var table = {
+         11: "Peasants",
+         12: "Peasants",
+         13: "Workers",
+         14: "Rowdies",
+         15: "Thugs",
+         16: "Riotous mob",
+         21: "Soldiers",
+         22: "Soldiers",
+         23: "Police Patrol",
+         24: "Marines",
+         25: "Naval security troops",
+         26: "Soldiers on patrol",
+         31: "Adventurers",
+         32: "Noble with entourage",
+         33: "Hunters and guides",
+         34: "Tourists",
+         35: "Researchers",
+         36: "Police patrol",
+         41: "Fugitives",
+         42: "Fugitives",
+         43: "Fugitives",
+         44: "Vigilantes",
+         45: "Bandidts",
+         46: "Ambushing brigands",
+         51: "Merchant and employees",
+         52: "Traders",
+         53: "Religious group",
+         54: "Beggars",
+         55: "Pilgrims",
+         56: "Guards",
+         61: "",
+         62: "",
+         63: "",
+         64: "",
+         65: "",
+         66: ""
+      }
+      
+      var how_many = {
+         11: "1d",
+         12: "2d",
+         13: "2d",
+         14: "3d",
+         15: "2d",
+         16: "4d",
+         21: "2d",
+         22: "2d",
+         23: "1d",
+         24: "2d",
+         25: "3d",
+         26: "2d",
+         31: "1d",
+         32: "2d",
+         33: "2d",
+         34: "2d",
+         35: "2d",
+         36: "1d",
+         41: "1d",
+         42: "2d",
+         43: "3d",
+         44: "2d",
+         45: "3d",
+         46: "3d",
+         51: "1d",
+         52: "2d",
+         53: "2d",
+         54: "1d",
+         55: "5d",
+         56: "3d",
+         61: "",
+         62: "",
+         63: "",
+         64: "",
+         65: "",
+         66: ""
+      }
+
+      var weapons = {
+         11: "Clubs/misc. tools",
+         12: "Clubs/misc. tools",
+         13: "Clubs/misc. tools",
+         14: "Clubs",
+         15: "Daggers",
+         16: "Clubs and Daggers",
+         21: "Rifles",
+         22: "Carbines",
+         23: "Auto Pistols",
+         24: "Revolvers",
+         25: "Carbines",
+         26: "Submachineguns",
+         31: "Swords",
+         32: "Foils",
+         33: "Rifles and spears",
+         34: "Cameras",
+         35: "-",
+         36: "Revovlers",
+         41: "Clubs",
+         42: "Blades",
+         43: "Revolvers",
+         44: "Rifles and Carbines",
+         45: "Swords and pistols",
+         46: "Broadswords and pistols",
+         51: "Daggers",
+         52: "Blades",
+         53: "-",
+         54: "-",
+         55: "-",
+         56: "Halberds and daggers",
+         61: "",
+         62: "",
+         63: "",
+         64: "",
+         65: "",
+         66: ""
+      }
+
+      var armor = {
+         11: "-",
+         12: "-",
+         13: "-",
+         14: "-",
+         15: "-",
+         16: "-",
+         21: "Cloth",
+         22: "Mesh",
+         23: "Cloth",
+         24: "Mesh",
+         25: "-",
+         26: "Jack",
+         31: "-",
+         32: "-",
+         33: "Jack",
+         34: "-",
+         35: "-",
+         36: "-",
+         41: "-",
+         42: "Jack",
+         43: "-",
+         44: "Jack",
+         45: "-",
+         46: "Cloth",
+         51: "-",
+         52: "-",
+         53: "-",
+         54: "-",
+         55: "Jack",
+         56: "Jack",
+         61: "",
+         62: "",
+         63: "",
+         64: "",
+         65: "",
+         66: ""
+      }
+      
+      var has_vehicle = [22,23,24,25,26,34,35,36,42,44,52]
+      
+      var roller = new DiceRoller();
+      
+      var encounter = true;
+      
+      if (test == true) {      
+         var encounter_roll = roller.roll('1d6');
+         if (encounter_roll.total > 4) {
+            encounter = true;
+         } else {
+            encounter = false;
+         }
+      }
+      
+      var result = "";
+      
+      if (encounter == true) {
+         var d66_roll = roller.roll('1d6 + 1d6*10');
+         var d66t = d66_roll.total
+         
+         var encounter_num_roll = roller.roll(`${how_many[d66t]}6`);
+         var enc_t = encounter_num_roll.total;
+         
+         var enc_v = "-"
+         if (has_vehicle.includes(d66t)) {
+            enc_v = "w/ vehicle"
+         }
+         
+         result = `${enc_t} ${table[d66t]} (${weapon[d66t]}, ${armor[d66t]}), ${enc_v}`;
+
+      } else {
+         result = "None";
+      }
+
+      return {
+         'rolls': [],
+         'total': 0,
+         'result': result,
+         'extras': false
+      }
+    }   
+   
+   
     /*
     blank lookup
     
