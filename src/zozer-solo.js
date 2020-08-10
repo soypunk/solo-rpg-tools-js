@@ -24,25 +24,25 @@ const ZozerSolo = (() => {
 			 "Low Law",
 			 "Medium Law",
 			 "High Law"		
-    	]
+    	];
     } 
     
     get trade_codes() {
-    	return [
-			 "Agricultural",
-			 "Asteroid/Ice-Capped/Vacuum",
-			 "Desert",
-			 "Fluid Oceans",
-			 "Garden",
-			 "High Technology",
-			 "High Population",
-			 "Industrial",
-			 "Low Technology",
-			 "Poor",
-			 "Rich",
-			 "Waterworld"		
-    	]
-    }    
+       	return [
+   			 "Agricultural",
+   			 "Asteroid/Ice-Capped/Vacuum",
+   			 "Desert",
+   			 "Fluid Oceans",
+   			 "Garden",
+   			 "High Technology",
+   			 "High Population",
+   			 "Industrial",
+   			 "Low Technology",
+   			 "Poor",
+   			 "Rich",
+   			 "Waterworld"		
+       	];
+    }
     
     homeworld(table=false) {
       var table_a = [
@@ -65,14 +65,16 @@ const ZozerSolo = (() => {
 
       var rolls = [];
       rolls[0] = Math.floor(Math.random() * table_a.length);
+  
+		  var result = "";
       if (table === false) {         
          rolls[1] = Math.floor(Math.random() * table_b.length);
-         var result = table_a[rolls[0]];
+         result = table_a[rolls[0]];
          result = result + " " + table_b[rolls[1]];
       } else if (table === "a") {
-         var result = table_a[Math.floor(rolls[0])];      
+         result = table_a[Math.floor(rolls[0])];      
       } else {
-         var result = table_b[Math.floor(rolls[0])];
+         result = table_b[Math.floor(rolls[0])];
       }         
       
       return {
@@ -80,7 +82,7 @@ const ZozerSolo = (() => {
          'total': null,
          'result': result,
          'extras': null
-      }
+      };
     }
     
     law_level_skills(law_level=false) {
@@ -90,14 +92,14 @@ const ZozerSolo = (() => {
          "Low Law",
          "Medium Law",
          "High Law"
-      ]
+      ];
 
       var law_level_skills_table = {
          "No Law": "Gun Combat-0",
          "Low Law": "Gun Combat-0",
          "Medium Law": "Gun Combat-0",
          "High Law": "Melee Combat-0"
-      }
+      };
       
       if (law_level === false && !law_level in law_level_skills_table) {
       	 rolls[0] = (Math.floor(Math.random() * law_levels.length));
@@ -111,7 +113,7 @@ const ZozerSolo = (() => {
          'total': null,
          'result': result,
          'extras': {"law_level":law_level}
-      }
+      };
    }
 
     trade_code_skills(trade_code=false) {
@@ -128,7 +130,7 @@ const ZozerSolo = (() => {
          "Poor": "Animals-0",
          "Rich": "Carousing-0",
          "Water World": "Watercraft-0"
-      }
+      };
       
       if (trade_code === false && !trade_code in trade_code_skills_table) {
          var trade_code_table = Math.random() < 0.5 ? "a" : "b";
@@ -142,7 +144,7 @@ const ZozerSolo = (() => {
          'total': null,
          'result': result,
          'extras': null
-      }      
+      };   
     }    
     
     pc_relationship() {
@@ -183,22 +185,23 @@ const ZozerSolo = (() => {
          64: "Knows a dark secret",
          65: "Enemy – waiting for chance to strike",
          66: "Roll again, but it’s all an act. Why?"
-      }
+      };
             
       var roller = new DiceRoller();
       var rolls = roller.roll('1d6 + 1d6*10');
+      var result = "";
       
       if (rolls.total == 66) {
          // roll again
-         var result = "(It's all an act though.)";
-         var rolls = roller.roll('1d6 + 1d6*10');
+         result = "(It's all an act though.)";
+         rolls = roller.roll('1d6 + 1d6*10');
          // keep rolling
          while (rolls.total > 65) {
             rolls = roller.roll('1d6 + 1d6*10');
          }
          result = pc_relationship_table[rolls.total] + " " + result;
       } else {
-         var result = pc_relationship_table[rolls.total];
+         result = pc_relationship_table[rolls.total];
       }
       
       return {
@@ -206,7 +209,7 @@ const ZozerSolo = (() => {
          'total': rolls.total,
          'result': result,
          'extras': false
-      }
+      };
     }   
     
     life_event() {
@@ -247,14 +250,15 @@ const ZozerSolo = (() => {
          64: "Were helped in a time of terrible crisis by a friend. He/she is a contact.",
          65: "Got into a huge amount of debt equal to 1D6 x Cr20,000.",
          66: "Suffered amnesia, something bad happened to you but your memories are vague."
-      }
+      };
       
       var roller = new DiceRoller();
       var rolls = roller.roll('1d6 + 1d6*10');
-
+      var sub_rolls = {};
+      var result = "";
       if (rolls.total == 13) {
-         var sub_rolls = roller.roll('1d6');
-         var result = "Fell in love, but your lover ";
+         sub_rolls = roller.roll('1d6');
+         result = "Fell in love, but your lover ";
          if (sub_rolls.total < 3) {
             result = result + "died";
          } else if (sub_rolls.total > 2 && sub_rolls.total < 5) {
@@ -263,8 +267,8 @@ const ZozerSolo = (() => {
             result = result + "turned against you";
          }
       } else if (rolls.total == 41) {
-         var sub_rolls = roller.roll('1d6');
-         var result = "Fell in love. It ended badly due to ";
+         sub_rolls = roller.roll('1d6');
+         result = "Fell in love. It ended badly due to ";
          if (sub_rolls.total < 3) {
             result = result + "family.";
          } else if (sub_rolls.total > 2 && sub_rolls.total < 5) {
@@ -273,8 +277,8 @@ const ZozerSolo = (() => {
             result = result + "circumstance.";
          }
       } else if (rolls.total == 46) {
-         var sub_rolls = roller.roll('1d6');
-         var result = "Got married. Today you are ";
+         sub_rolls = roller.roll('1d6');
+         result = "Got married. Today you are ";
          if (sub_rolls.total < 3) {
             result = result + "divorced.";
          } else if (sub_rolls.total > 2 && sub_rolls.total < 5) {
@@ -283,16 +287,16 @@ const ZozerSolo = (() => {
             result = result + "still happy!";
          }
       } else if (rolls.total == 56) {
-         var sub_rolls = roller.roll('1d6');
-         var result = "Were caught up in political turmoil. You were a ";
+         sub_rolls = roller.roll('1d6');
+         result = "Were caught up in political turmoil. You were a ";
          if (sub_rolls.total < 4) {
             result = result + "hero.";
          } else {
             result = result + "villain.";
          }
       } else if (rolls.total == 63) {
-         var sub_rolls = roller.roll('1d6');
-         var result = "Were betrayed by a close friend. Today you are ";
+         sub_rolls = roller.roll('1d6');
+         result = "Were betrayed by a close friend. Today you are ";
          if (sub_rolls.total < 3) {
             result = result + "deadly enemies.";
          } else if (sub_rolls.total > 2 && sub_rolls.total < 5) {
@@ -301,13 +305,13 @@ const ZozerSolo = (() => {
             result = result + "not speaking to each other.";
          }
       } else if (rolls.total == 65) {
-         var sub_rolls = roller.roll('1d6');
-         var result = "Got into a huge amount of debt (";
+         sub_rolls = roller.roll('1d6');
+         result = "Got into a huge amount of debt (";
          var debt = 20000 * sub_rolls.total;
          debt = utils.numberWithCommas(debt);
          result = result + "Cr" + debt + ")";
       } else {
-         var result = life_event_table[rolls.total];
+         result = life_event_table[rolls.total];
       }
 
       return {
@@ -315,7 +319,7 @@ const ZozerSolo = (() => {
          'total': rolls.total,
          'result': result,
          'extras': false
-      }
+      };
     }
     
     character_reaction() {
@@ -349,8 +353,7 @@ const ZozerSolo = (() => {
          9: "Damage to a useful or valuable piece of kit",
          10: "Seriously upset or antagonise an NPC",
          11: "The task takes four times longer than planned"
-
-      }
+      };
       
       var roller = new DiceRoller();
       if (mod == 'safe') {
@@ -365,7 +368,7 @@ const ZozerSolo = (() => {
          'total': rolls.total,
          'result': result,
          'extras': false
-      }      
+      };    
    }
    
    good_consequence(mod="") {
@@ -386,7 +389,58 @@ const ZozerSolo = (() => {
          'total': rolls.total,
          'result': result,
          'extras': false
+      };
+   }
+   
+   meet_an_old_friend(daily=false,starport_class="A",num_contacts=0) {
+      var mod = 0;
+      starport_class = starport_class.toUpperCase();
+      if (starport_class == "B") {
+         mod = mod - 1;
+      } else if (starport_class == "C") {
+         mod = mod - 2;      
+      } else if (starport_class == "D") {
+         mod = mod - 3;      
+      } else if (starport_class == "E") {
+         mod = mod - 6;      
       }
+      
+      if (num_contacts > 8) {
+         mod += 3;
+      } else if (num_contacts > 5 && num_contacts < 9) {
+         mod += 2;
+      } else if (num_contacts > 2 && num_contacts < 6) {
+         mod += 1;      
+      }      
+      
+      if (mod < 0) {
+         mod = `-${mod}`;
+      } else {
+         mod = `+${mod}`;      
+      }
+      
+      var roller = new DiceRoller();
+      var rolls = roller.roll('2d6'+mod);
+      var result = "";
+      
+      var tn = 10;
+      
+      if (daily) {
+         tn = 8;
+      }
+      
+      if (rolls.total >= tn) {
+         result = "Met an old friend!";
+      } else {
+         result = "No contacts available to meet.";
+      }
+   
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      };    
    }
    
    tell_me_more_person() {
@@ -1804,7 +1858,147 @@ const ZozerSolo = (() => {
          'result': result,
          'extras': false
       }
-   } 
+   }
+   
+   
+   fast_space_combat_damage() {
+      var roller = new DiceRoller();
+      var roll = roller.roll(`2d6`);
+      var result = "";
+      
+      if (roll.total >= 5) {
+         result = "ship is crippled";
+      } else {
+         result = "ship is destroyed. Abandon ship!";
+      }
+      
+      return {
+         'rolls': rolls,
+         'total': rolls.total,
+         'result': result,
+         'extras': false
+      }      
+   }
+   
+   fast_space_combat(pilot_skill=0) {
+      var roller = new DiceRoller();
+      var escapeAttack = roller.roll(`2d6+${pilot_skill}`);
+      
+      var result = "";
+      if (escapeAttack.total >= 10) {
+         result = "Attack Avoided";
+      } else {
+         var avoidDamage = roller.roll(`2d6`);
+         
+         if (avoidDamage.total >= 8) {
+            result = "Attacked but avoided damage.";
+         } else {
+            result = "Attacked and ";
+            var damageResult = this.fast_space_combat_damage;
+            result += damageResult.result;
+         }
+      }
+      
+      return {
+         'rolls': escapeAttack,
+         'total': escapeAttack.total,
+         'result': result,
+         'extras': false
+      }
+   }
+   
+   fast_space_head_to_head() {
+      var roller = new DiceRoller();
+      var ship1 = roller.roll(`2d6`);
+      var ship2 = roller.roll(`2d6`);
+      var result = "";
+      
+      if (ship1 > ship2) {
+         result = "PC ship wins. Opposing ";
+      } else {
+         result = "Opposing ship wins. PC ";
+      }
+      
+      var damageResult = this.fast_space_combat_damage;
+      result += damageResult.result;
+      
+      return {
+         'rolls': [ship1,ship2],
+         'total': ship1.total,
+         'result': result,
+         'extras': {
+            "effect": ship1.total - ship2.total
+         }
+      }
+   }
+
+   ship_combat(
+      player_ship_cr=0,
+      opposing_ship_cr=0
+   ) {
+      var roller = new DiceRoller();
+      var roll = roller.roll(`2d6`);
+      var tn = 8;
+      var result = "";
+      
+      if ((opposing_ship_cr*4) >= player_ship_cr) {
+         tn = 12;
+      } else if ((opposing_ship_cr*3) >= player_ship_cr) {
+         tn = 11;      
+      } else if ((opposing_ship_cr*2) >= player_ship_cr) {
+         tn = 10;
+      } else if (opposing_ship_cr > player_ship_cr) {
+         tn = 8;
+      } else if (opposing_ship_cr == player_ship_cr) {
+         tn = 7;
+      } else if (opposing_ship_cr < player_ship_cr) {
+         if (Math.round((opposing_ship_cr/4)) <= player_ship_cr) {
+            tn = 3;
+         } else if (Math.round((opposing_ship_cr/3)) <= player_ship_cr) {
+            tn = 4;
+         } else if (Math.round((opposing_ship_cr/2)) <= player_ship_cr) {
+            tn = 5;         
+         } else {
+            tn = 6;         
+         }
+      }
+
+      if (roll.total >= tn) {
+         result = "Player ship wins.";
+      } else {
+         result = "Opposing ship wins.";
+      }
+      
+      var effect = roll.total - tn;
+      var damage = "";
+      
+      if (effect > 8) {
+         damage = "Triple, Double, and Single Hit";
+      } else if (effect == 8) {
+         damage = "Triple Hit, Single Hit";
+      } else if (effect == 7) {
+         damage = "Triple Hit";
+      } else if (effect == 6) {
+         damage = "Two Double Hits";
+      } else if (effect == 5) {
+         damage = "Two Single Hits, Double Hit";
+      } else if (effect == 4) {
+         damage = "Three Single Hits";
+      } else if (effect == 3) {
+         damage = "Double Hit";
+      } else if (effect == 2) {
+         damage = "Two Single Hits"; 
+      } else {
+         damage = "Single Hit";      
+      }
+      
+      return {
+         'rolls': roll,
+         'total': roll.total,
+         'result': result,
+         'extras': false
+      }
+   }
 
    external_ship_damage(){
       var ship_damage_table = {
@@ -1830,7 +2024,7 @@ const ZozerSolo = (() => {
          'total': rolls.total,
          'result': result,
          'extras': false
-      }   
+      }
    } 
 
    internal_ship_damage(){
