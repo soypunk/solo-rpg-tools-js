@@ -1931,15 +1931,16 @@ const ZozerSolo = (() => {
       }
       
       var damageResult = this.fast_space_combat_damage();
-      result += damageResult.result;
+      
+      var effect = ship1.total - ship2.total
+      
+      result += `${damageResult.result} (effect: ${effect})`;
       
       return {
          'rolls': [ship1,ship2],
          'total': ship1.total,
          'result': result,
-         'extras': {
-            "effect": ship1.total - ship2.total
-         }
+         'extras': false
       }
    }
 
