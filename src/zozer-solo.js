@@ -1930,7 +1930,7 @@ const ZozerSolo = (() => {
          result = "Opposing ship wins. PC ";
       }
       
-      var damageResult = this.fast_space_combat_damage;
+      var damageResult = this.fast_space_combat_damage();
       result += damageResult.result;
       
       return {
