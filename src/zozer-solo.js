@@ -1899,7 +1899,7 @@ const ZozerSolo = (() => {
       if (escapeAttack.total >= 10) {
          result = "Attack Avoided";
       } else {
-         var avoidDamage = roller.roll(`2d6`);
+         var avoidDamage = roller.roll(`2d6${pilot_skill}`);
          
          if (avoidDamage.total >= 8) {
             result = "Attacked but avoided damage.";
@@ -1931,7 +1931,7 @@ const ZozerSolo = (() => {
       }
       
       var damageResult = this.fast_space_combat_damage();
-      
+         
       var effect = ship1.total - ship2.total
       
       result += `${damageResult.result} (effect: ${effect})`;
