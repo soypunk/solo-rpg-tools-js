@@ -1886,7 +1886,14 @@ const ZozerSolo = (() => {
    
    fast_space_combat(pilot_skill=0) {
       var roller = new DiceRoller();
-      var escapeAttack = roller.roll(`2d6+${pilot_skill}`);
+      
+      if (pilot_skill > 0) {
+         pilot_skill = `-${pilot_skill}`;
+      } else {
+         pilot_skill = `+${pilot_skill}`;      
+      }
+      
+      var escapeAttack = roller.roll(`2d6${pilot_skill}`);
       
       var result = "";
       if (escapeAttack.total >= 10) {
