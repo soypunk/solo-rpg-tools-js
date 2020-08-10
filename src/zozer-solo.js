@@ -1877,8 +1877,8 @@ const ZozerSolo = (() => {
       }
       
       return {
-         'rolls': rolls,
-         'total': rolls.total,
+         'rolls': roll,
+         'total': roll.total,
          'result': result,
          'extras': false
       }      
