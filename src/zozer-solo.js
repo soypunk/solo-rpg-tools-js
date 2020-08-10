@@ -1886,7 +1886,7 @@ const ZozerSolo = (() => {
    
    fast_space_combat(pilot_skill=0) {
       var roller = new DiceRoller();
-      
+      var num_pilot_skill = pilot_skill;
       if (pilot_skill > 0) {
          pilot_skill = `-${pilot_skill}`;
       } else {
@@ -1900,7 +1900,7 @@ const ZozerSolo = (() => {
          result = "Attack Avoided";
       } else {
          var randoDMroll = roller.roll(`1d3-1`);
-         var randoDM = Number(pilot_skill) + randoDMroll.total;
+         var randoDM = num_pilot_skill + randoDMroll.total;
          
          if (randoDM > 0) {
             randoDM = `-${randoDM}`;
