@@ -1902,7 +1902,7 @@ const ZozerSolo = (() => {
          var randoDMroll = roller.roll(`1d3-1`);
          var randoDM = Number(pilot_skill) + randoDMroll.total;
          
-         if (randoDm > 0) {
+         if (randoDM > 0) {
             randoDM = `-${randoDM}`;
          } else {
             randoDM = `+${randoDM}`;
