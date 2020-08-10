@@ -1899,7 +1899,16 @@ const ZozerSolo = (() => {
       if (escapeAttack.total >= 10) {
          result = "Attack Avoided";
       } else {
-         var avoidDamage = roller.roll(`2d6${pilot_skill}`);
+         var randoDMs = roller.roll(`1d3-1`);
+         randoDMs = Number(pilot_skill) + randoDMs.total;
+         
+         if (randoDms > 0) {
+            randoDMs = `-${randoDMs}`;
+         } else {
+            randoDMs = `+${randoDMs}`;
+         }
+      
+         var avoidDamage = roller.roll(`2d6${randoDMs}`);               
          
          if (avoidDamage.total >= 8) {
             result = "Attacked but avoided damage.";
