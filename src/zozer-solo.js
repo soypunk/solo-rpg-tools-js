@@ -1890,7 +1890,7 @@ const ZozerSolo = (() => {
       if (pilot_skill > 0) {
          pilot_skill = `-${pilot_skill}`;
       } else {
-         pilot_skill = `+${pilot_skill}`;      
+         pilot_skill = `+${pilot_skill}`;
       }
       
       var escapeAttack = roller.roll(`2d6${pilot_skill}`);
@@ -1905,7 +1905,7 @@ const ZozerSolo = (() => {
             result = "Attacked but avoided damage.";
          } else {
             result = "Attacked and ";
-            var damageResult = this.fast_space_combat_damage;
+            var damageResult = this.fast_space_combat_damage();
             result += damageResult.result;
          }
       }
