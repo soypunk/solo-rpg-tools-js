@@ -416,7 +416,11 @@ const ZozerSolo = (() => {
       if (mod < 0) {
          mod = `-${mod}`;
       } else {
-         mod = `+${mod}`;      
+         mod = `+${mod}`;
+      }
+      
+      if (daily) {
+         mod = 0;
       }
       
       var roller = new DiceRoller();
@@ -424,7 +428,7 @@ const ZozerSolo = (() => {
       var result = "";
       
       var tn = 10;
-      
+            
       if (daily) {
          tn = 8;
       }
