@@ -1985,9 +1985,9 @@ const ZozerSolo = (() => {
       }
 
       if (roll.total >= tn) {
-         result = "Player ship wins.";
+         result = "Player ship wins. ";
       } else {
-         result = "Opposing ship wins.";
+         result = "Opposing ship wins. ";
       }
       
       var effect = roll.total - tn;
@@ -2012,6 +2012,8 @@ const ZozerSolo = (() => {
       } else {
          damage = "Single Hit";      
       }
+      
+      result += damage;
       
       return {
          'rolls': roll,
