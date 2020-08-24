@@ -1954,35 +1954,11 @@ const ZozerSolo = (() => {
    }
 
    ship_combat(
-      player_ship_cr=0,
-      opposing_ship_cr=0
+      tn=7
    ) {
       var roller = new DiceRoller();
       var roll = roller.roll(`2d6`);
-      var tn = 8;
       var result = "";
-      
-      if ((opposing_ship_cr*4) >= player_ship_cr) {
-         tn = 12;
-      } else if ((opposing_ship_cr*3) >= player_ship_cr) {
-         tn = 11;      
-      } else if ((opposing_ship_cr*2) >= player_ship_cr) {
-         tn = 10;
-      } else if (opposing_ship_cr > player_ship_cr) {
-         tn = 8;
-      } else if (opposing_ship_cr == player_ship_cr) {
-         tn = 7;
-      } else if (opposing_ship_cr < player_ship_cr) {
-         if (Math.round((opposing_ship_cr/4)) <= player_ship_cr) {
-            tn = 3;
-         } else if (Math.round((opposing_ship_cr/3)) <= player_ship_cr) {
-            tn = 4;
-         } else if (Math.round((opposing_ship_cr/2)) <= player_ship_cr) {
-            tn = 5;         
-         } else {
-            tn = 6;         
-         }
-      }
 
       if (roll.total >= tn) {
          result = "Player ship wins. ";
